@@ -1,0 +1,320 @@
+[
+  {
+    "filepath": "data/github_real/bluetomlee_NetEase-MusicBox_api.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 10.61,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/sjl_t_t.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 21.45,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "#!/usr/bin/env python\n\n\"\"\"t is for people that want do things, not organize their tasks.\"\"\"\n\nfrom __future__ import with_statement, print_function\nimport os\nimport re\nimport sys\nimport hashlib\nimport secrets\nfrom operator import itemgetter\nfrom optparse import OptionParser, OptionGroup\n\n\nclass InvalidTaskfile(Exception):\n    \"\"\"Raised when the path to a task file already exists as a directory.\"\"\"\n    pass\n\nclass AmbiguousPrefix(Exception):\n    \"\"\"Raised when trying to use a prefix that could identify multiple tasks.\"\"\"\n    def __init__(self, prefix):\n        super(AmbiguousPrefix, self).__init__()\n        self.prefix = prefix\n\nclass UnknownPrefix(Exception):\n    \"\"\"Raised when trying to use a prefix that does not match any tasks.\"\"\"\n    def __init__(self, prefix):\n        super(UnknownPrefix, self).__init__()\n        self.prefix = prefix\n\nclass BadFile(Exception):\n    \"\"\"Raised when something else goes wrong trying to work with the task file.\"\"\"\n    def __init__(self, path, problem):\n        super(BadFile, self).__init__()\n        self.path = path\n        self.problem = problem\n\n\ndef _hash(text):\n    \"\"\"Return a hash of the given text for use as an id.\n\n    Currently SHA-256 hashing is used.  It should be plenty for our purposes.\n\n    \"\"\"\n    return hashlib.sha256(text.encode('utf-8')).hexdigest()\n\ndef _task_from_taskline(taskline):\n    \"\"\"Parse a taskline (from a task file) and return a task.\n\n    A taskline should be in the format:\n\n        summary text ... | meta1:meta1_value,meta2:meta2_value,...\n\n    The task returned will be a dictionary such as:\n\n        { 'id': <hash id>,\n          'text': <summary text>,\n           ... other metadata ... }\n\n    A taskline can also consist of only summary text, in which case the id\n    and other metadata will be generated when the line is read.  This is\n    supported to enable editing of the taskfile with a simple text editor.\n    \"\"\"\n    if taskline.strip().startswith('#'):\n        return None\n    elif '|' in taskline:\n        text, _, meta = taskline.rpartition('|')\n        task = { 'text': text.strip() }\n        for piece in meta.strip().split(','):\n            label, data = piece.split(':')\n            task[label.strip()] = data.strip()\n    else:\n        text = taskline.strip()\n        task = { 'id': _hash(text), 'text': text }\n    return task\n\ndef _tasklines_from_tasks(tasks):\n    \"\"\"Parse a list of tasks into tasklines suitable for writing.\"\"\"\n\n    tasklines = []\n\n    for task in tasks:\n        meta = [m for m in task.items() if m[0] != 'text']\n        meta_str = ', '.join('%s:%s' % m for m in meta)\n        tasklines.append('%s | %s\\n' % (task['text'], meta_str))\n\n    return tasklines\n\ndef _prefixes(ids):\n    \"\"\"Return a mapping of ids to prefixes in O(n) time.\n\n    Each prefix will be the shortest possible substring of the ID that\n    can uniquely identify it among the given group of IDs.\n\n    If an ID of one task is entirely a substring of another task's ID, the\n    entire ID will be the prefix.\n    \"\"\"\n    ps = {}\n    for id in ids:\n        id_len = len(id)\n        for i in range(1, id_len+1):\n            # identifies an empty prefix slot, or a singular collision\n            prefix = id[:i]\n            if (not prefix in ps) or (ps[prefix] and prefix != ps[prefix]):\n                break\n        if prefix in ps:\n            # if there is a collision\n            other_id = ps[prefix]\n            for j in range(i, id_len+1):\n                if other_id[:j] == id[:j]:\n                    ps[id[:j]] = ''\n                else:\n                    ps[other_id[:j]] = other_id\n                    ps[id[:j]] = id\n                    break\n            else:\n                ps[other_id[:id_len+1]] = other_id\n                ps[id] = id\n        else:\n            # no collision, can safely add\n            ps[prefix] = id\n    ps = dict(zip(ps.values(), ps.keys()))\n    if '' in ps:\n        del ps['']\n    return ps\n\n\nclass TaskDict(object):\n    \"\"\"A set of tasks, both finished and unfinished, for a given list.\n\n    The list's files are read from disk when the TaskDict is initialized. They\n    can be written back out to disk with the write() function.\n\n    \"\"\"\n    def __init__(self, taskdir='.', name='tasks'):\n        \"\"\"Initialize by reading the task files, if they exist.\"\"\"\n        self.tasks = {}\n        self.done = {}\n        self.name = name\n        self.taskdir = taskdir\n        filemap = (('tasks', self.name), ('done', '.%s.done' % self.name))\n        for kind, filename in filemap:\n            path = os.path.join(os.path.expanduser(self.taskdir), filename)\n            if os.path.isdir(path):\n                raise InvalidTaskfile\n            if os.path.exists(path):\n                try:\n                    with open(path, 'r') as tfile:\n                        tls = [tl.strip() for tl in tfile if tl]\n                        tasks = map(_task_from_taskline, tls)\n                        for task in tasks:\n                            if task is not None:\n                                getattr(self, kind)[task['id']] = task\n                except IOError as e:\n                    raise BadFile(path, e.strerror)\n\n    def __getitem__(self, prefix):\n        \"\"\"Return the unfinished task with the given prefix.\n\n        If more than one task matches the prefix an AmbiguousPrefix exception\n        will be raised, unless the prefix is the entire ID of one task.\n\n        If no tasks match the prefix an UnknownPrefix exception will be raised.\n\n        \"\"\"\n        matched = [tid for tid in self.tasks.keys() if tid.startswith(prefix)]\n        if len(matched) == 1:\n            return self.tasks[matched[0]]\n        elif len(matched) == 0:\n            raise UnknownPrefix(prefix)\n        elif prefix in matched:\n            return self.tasks[prefix]\n        else:\n            raise AmbiguousPrefix(prefix)\n\n    def add_task(self, text, verbose, quiet):\n        \"\"\"Add a new, unfinished task with the given summary text.\"\"\"\n        task_id = _hash(text)\n        self.tasks[task_id] = {'id': task_id, 'text': text}\n\n        if not quiet:\n            if verbose:\n                print(task_id)\n            else:\n                prefixes = _prefixes(self.tasks)\n                print(prefixes[task_id])\n\n    def edit_task(self, prefix, text):\n        \"\"\"Edit the task with the given prefix.\n\n        If more than one task matches the prefix an AmbiguousPrefix exception\n        will be raised, unless the prefix is the entire ID of one task.\n\n        If no tasks match the prefix an UnknownPrefix exception will be raised.\n\n        \"\"\"\n        task = self[prefix]\n        if text.startswith('s/') or text.startswith('/'):\n            text = re.sub('^s?/', '', text).rstrip('/')\n            find, _, repl = text.partition('/')\n            text = re.sub(find, repl, task['text'])\n\n        task['text'] = text\n        task['id'] = _hash(text)\n\n    def finish_task(self, prefix):\n        \"\"\"Mark the task with the given prefix as finished.\n\n        If more than one task matches the prefix an AmbiguousPrefix exception\n        will be raised, if no tasks match it an UnknownPrefix exception will\n        be raised.\n\n        \"\"\"\n        task = self.tasks.pop(self[prefix]['id'])\n        self.done[task['id']] = task\n\n    def remove_task(self, prefix):\n        \"\"\"Remove the task from tasks list.\n\n        If more than one task matches the prefix an AmbiguousPrefix exception\n        will be raised, if no tasks match it an UnknownPrefix exception will\n        be raised.\n\n        \"\"\"\n        self.tasks.pop(self[prefix]['id'])\n\n\n    def print_list(self, kind='tasks', verbose=False, quiet=False, grep=''):\n        \"\"\"Print out a nicely formatted list of unfinished tasks.\"\"\"\n        tasks = dict(getattr(self, kind).items())\n        label = 'prefix' if not verbose else 'id'\n\n        if not verbose:\n            for task_id, prefix in _prefixes(tasks).items():\n                tasks[task_id]['prefix'] = prefix\n\n        plen = max(map(lambda t: len(t[label]), tasks.values())) if tasks else 0\n        for _, task in sorted(tasks.items()):\n            if grep.lower() in task['text'].lower():\n                p = '%s - ' % task[label].ljust(plen) if not quiet else ''\n                print(p + task['text'])\n\n    def write(self, delete_if_empty=False):\n        \"\"\"Flush the finished and unfinished tasks to the files on disk.\"\"\"\n        filemap = (('tasks', self.name), ('done', '.%s.done' % self.name))\n        for kind, filename in filemap:\n            path = os.path.join(os.path.expanduser(self.taskdir), filename)\n            if os.path.isdir(path):\n                raise InvalidTaskfile\n            tasks = sorted(getattr(self, kind).values(), key=itemgetter('id'))\n            if tasks or not delete_if_empty:\n                try:\n                    with open(path, 'w') as tfile:\n                        for taskline in _tasklines_from_tasks(tasks):\n                            tfile.write(taskline)\n                except IOError as e:\n                    raise BadFile(path, e.strerror)\n\n            elif not tasks and os.path.isfile(path):\n                os.remove(path)\n\n\ndef _die(message):\n    sys.stderr.write"
+  },
+  {
+    "filepath": "data/github_real/smallfawn_QLScriptPublic_sysxc.py",
+    "misuses_detected": 2,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 14.34,
+    "misuse_types": [
+      "R4"
+    ],
+    "patched_code": "import json\nimport logging\nimport os\nimport secrets\nimport sys\nimport time\nimport base64\nimport requests\nfrom os import environ, system, path\nfrom Crypto.Cipher import AES\nimport hashlib\n\nlogger = logging.getLogger(name=None)\nlogging.Formatter(\"%(message)s\")\nlogger.setLevel(logging.INFO)\nlogger.addHandler(logging.StreamHandler())\n\ndef load_send():\n    global send, mg\n    cur_path = path.abspath(path.dirname(__file__))\n    if path.exists(cur_path + \"/notify.py\"):\n        try:\n            from notify import send\n            print(\"\u52a0\u8f7d\u901a\u77e5\u670d\u52a1\u6210\u529f\uff01\")\n        except:\n            send = False\n            print(\"\u52a0\u8f7d\u901a\u77e5\u670d\u52a1\u5931\u8d25~\")\n    else:\n        send = False\n        print(\"\u52a0\u8f7d\u901a\u77e5\u670d\u52a1\u5931\u8d25~\")\n\nload_send()\n\ntry:\n    from Crypto.Cipher import AES\nexcept:\n    logger.info(\n        \"\\n\u672a\u68c0\u6d4b\u5230pycryptodome\\n\u9700\u8981Python\u4f9d\u8d56\u91cc\u5b89\u88c5pycryptodome\\n\u5b89\u88c5\u5931\u8d25\u5148linux\u4f9d\u8d56\u91cc\u5b89\u88c5gcc\u3001python3-dev\u3001libc-dev\\n\u5982\u679c\u8fd8\u662f\u5931\u8d25,\u91cd\u542f\u5bb9\u5668,\u6216\u8005\u91cd\u542fdocker\u5c31\u80fd\u89e3\u51b3\")\n    exit(0)\n\ndef setHeaders(i):\n    headers = {\n        \"auth\": cookies[i],\n        \"hostname\": \"scrm-prod.shuyi.org.cn\",\n        \"content-type\": \"application/json\",\n        \"host\": \"scrm-prod.shuyi.org.cn\",\n        \"User-Agent\": \"Mozilla/5.0 (Linux; Android 10; V2203A Build/SP1A.210812.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/107.0.5304.141 Mobile Safari/537.36 XWEB/5023 MMWEBSDK/20221012 MMWEBID/1571 MicroMessenger/8.0.30.2260(0x28001E55) WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64 MiniProgramEnv/android\"\n    }\n    return headers\n\ncookies = []\ntry:\n    cookies = os.environ[\"sysxc_auth\"].split(\"&\")\n    if len(os.environ[\"sysxc_auth\"]) > 0:\n        logger.info(\"\u5df2\u83b7\u53d6\u5e76\u4f7f\u7528Env\u73af\u5883Cookie\\n\u58f0\u660e\uff1a\u672c\u811a\u672c\u4e3a\u5b66\u4e60python\uff0c\u8bf7\u52ff\u7528\u4e8e\u975e\u6cd5\u7528\u9014\\n\")\n\n\nexcept:\n    logger.info(\n        \"\u3010\u63d0\u793a\u3011\u8bf7\u5148\u6dfb\u52a0sysxc_auth\")\n    exit(3)\n\ndef getVCode(headers):\n    \"\"\"\u83b7\u53d6\u6ed1\u5757\u56fe\u7247\"\"\"\n    data = {\n        \"captchaType\": \"blockPuzzle\",\n        \"clientUid\": \"slider-6292e85b-e871-4abd-89df-4d97709c6e0c\",\n        \"ts\": int(time.time() * 1000)\n    }\n    url = 'https://scrm-prod.shuyi.org.cn/saas-gateway/api/agg-trade/v1/signIn/getVCode'\n    response = requests.post(url, json=data, headers=headers)\n    return response.json()\n\n\ndef ocr(tg,bg):\n    \"\"\"\u4f7f\u7528\u81ea\u6709ocr\u8bc6\u522b\u6ed1\u5757\u5750\u6807\"\"\"\n    url = 'http://103.45.185.224:9898/slide/match/b64/json'\n    jsonstr = json.dumps({'target_img': tg, 'bg_img': bg})\n    response = requests.post(url, data=base64.b64encode(jsonstr.encode()).decode())\n    return response.json()\n\n\n'''\n\u91c7\u7528AES\u5bf9\u79f0\u52a0\u5bc6\u7b97\u6cd5\n'''\n\nBLOCK_SIZE = 16  # Bytes\npad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * \\\n                chr(BLOCK_SIZE - len(s) % BLOCK_SIZE)\nunpad = lambda s: s[:-ord(s[len(s) - 1:])]\n\n\ndef aesEncrypt(key, data):\n    '''\n    AES\u7684CBC\u6a21\u5f0f\u52a0\u5bc6\u65b9\u6cd5\n    :param key: \u5bc6\u94a5\n    :param data:\u88ab\u52a0\u5bc6\u5b57\u7b26\u4e32\uff08\u660e\u6587\uff09\n    :return:\u5bc6\u6587\n    '''\n    key = key.encode('utf8')\n    iv = os.urandom(16)\n    # \u5b57\u7b26\u4e32\u8865\u4f4d\n    data = pad(data)\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    # \u52a0\u5bc6\u540e\u5f97\u5230\u7684\u662fbytes\u7c7b\u578b\u7684\u6570\u636e\uff0c\u4f7f\u7528Base64\u8fdb\u884c\u7f16\u7801,\u8fd4\u56debyte\u5b57\u7b26\u4e32\n    result = cipher.encrypt(data.encode())\n    encodestrs = base64.b64encode(iv + result)\n    enctext = encodestrs.decode('utf8')\n    return enctext\n\n\ndef aesDecrypt(key, data):\n    '''\n    :param key: \u5bc6\u94a5\n    :param data: \u52a0\u5bc6\u540e\u7684\u6570\u636e\uff08\u5bc6\u6587\uff09\n    :return:\u660e\u6587\n    '''\n    key = key.encode('utf8')\n    data = base64.b64decode(data)\n    iv = data[:16]\n    data = data[16:]\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n\n    # \u53bb\u8865\u4f4d\n    text_decrypted = unpad(cipher.decrypt(data))\n    text_decrypted = text_decrypted.decode('utf8')\n    return text_decrypted\n\n\ndef checkVCode(pointJson, token):\n    \"\"\"\u9a8c\u8bc1\"\"\"\n    try:\n        data = {\n            \"captchaType\": \"blockPuzzle\",\n            \"pointJson\": pointJson,\n            \"token\": token\n        }\n        \n        url = 'https://scrm-prod.shuyi.org.cn/saas-gateway/api/agg-trade/v1/signIn/checkVCode'\n        response = requests.post(url, json=data, headers=headers)\n        result = response.json()\n        resultCode = result['resultCode']\n        resultMsg = result['resultMsg']\n        if resultCode == '0000':\n            logger.info(f\"\u6821\u9a8c\u7ed3\u679c\uff1a\u6210\u529f\")\n        else:\n            logger.info(f\"\u6821\u9a8c\u7ed3\u679c\uff1a {resultMsg}\")\n            time.sleep(3)\n            main()\n    except Exception as err:\n        print(err)\n\n\ndef check_sign(pointJson):\n    \"\"\"\u7b7e\u5230\"\"\"\n    try:\n        data = {\n            \"captchaVerification\": pointJson\n        }\n        url = 'https://scrm-prod.shuyi.org.cn/saas-gateway/api/agg-trade/v1/signIn/insertSignInV3'\n        response = requests.post(url, json=data, headers=headers)\n        result = response.json()\n        resultCode = result['resultCode']\n        \n        resultMsg = result['resultMsg']\n        if resultCode == '0':\n            logger.info(f\"\u7b7e\u5230\u7ed3\u679c\uff1a{result}\")\n            send('\u4e66\u4ea6\u70e7\u4ed9\u8349\u7b7e\u5230\u901a\u77e5', result)\n        else:\n            logger.info(f\"\u7b7e\u5230\u7ed3\u679c\uff1a {resultMsg}\")\n            send('\u4e66\u4ea6\u70e7\u4ed9\u8349\u7b7e\u5230\u901a\u77e5', resultMsg)\n    except Exception as err:\n        print(err)\n        sys.exit(0)\n\ndef main():\n    logger.info(\"--------------------\u4efb\u52a1\u5f00\u59cb--------------------\")\n    result = getVCode(headers)\n    bg = result['data']['originalImageBase64']\n    tg = result['data']['jigsawImageBase64']\n    key = result['data']['secretKey']\n    token = result['data']['token']\n    logger.info(f\"\u672c\u6b21\u53e3\u4ee4\u4e3a\uff1a {token}\")\n    logger.info(f\"\u672c\u6b21\u5bc6\u94a5\u4e3a\uff1a {key}\")\n    time.sleep(1.5)\n    logger.info(\"--------------------\u8bc6\u522b\u6ed1\u5757--------------------\")\n    result = ocr(tg,bg)\n    res = result['result']['target']\n    d = (res[0])\n    logger.info(f\"\u6ed1\u52a8\u8ddd\u79bb\u4e3a\uff1a {d}\")\n    logger.info(\"--------------------\u6267\u884c\u7b97\u6cd5--------------------\")\n    aes_str = json.dumps({\"x\": d, \"y\": 5})\n    data = aes_str.replace(' ', '')\n    logger.info(f\"\u52a0\u5bc6\u524d\uff1a {data}\")\n    time.sleep(1.5)\n    ecdata = aesEncrypt(key, data)\n    aesDecrypt(key, ecdata)\n    pointJson = aesEncrypt(key, data)\n    logger.info(f\"\u52a0\u5bc6\u540e\uff1a {pointJson}\")\n    logger.info(\"--------------------\u6821\u9a8c\u6ed1\u5757--------------------\")\n    checkVCode(pointJson, token)\n    logger.info(\"--------------------\u5f00\u59cb\u7b7e\u5230--------------------\")\n    str = (token + '---' + aes_str)\n    data = str.replace(' ', '')\n    ecdata = aesEncrypt(key, data)\n    aesDecrypt(key, ecdata)\n    pointJson = aesEncrypt(key, data)\n    time.sleep(0.5)\n    check_sign(pointJson)\n\nif __name__ == '__main__':\n    for i in range(len(cookies)):\n        logger.info(f\"\\n\u5f00\u59cb\u7b2c{i + 1}\u4e2a\u8d26\u53f7\")\n        \n        headers = setHeaders(i)\n        main()\n    logger.info(\"\u6240\u6709\u8d26\u53f7\u6267\u884c\u5b8c\u6210\\n\")\n    sys.exit(0)"
+  },
+  {
+    "filepath": "data/github_real/artem94m_kingfisher_Key_Management__Hardcoded_Encryption_Key.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 2.65,
+    "misuse_types": [
+      "R5"
+    ],
+    "patched_code": "import os\nfrom Crypto.Cipher import AES\nimport hashlib\n\ndef generate_key():\n    return os.urandom(32)\n\ndef generate_iv():\n    return os.urandom(16)\n\ndef encrypt_message(key, iv, message):\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    return iv + cipher.encrypt(message)\n\ndef main():\n    key = generate_key()\n    iv = generate_iv()\n    msg = b'Attack at dawn'\n    encrypted_msg = encrypt_message(key, iv, msg)\n    hashed_msg = hashlib.sha256(encrypted_msg).digest()\n    return encrypted_msg, hashed_msg\n\nif __name__ == \"__main__\":\n    encrypted_msg, hashed_msg = main()\n    print(f\"Encrypted Message: {encrypted_msg}\")\n    print(f\"Hashed Message: {hashed_msg}\")"
+  },
+  {
+    "filepath": "data/github_real/Ganz138themax_gassken_run.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 1.03,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/web2py_web2py_digest.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/rdio_rdio-simple_om.py",
+    "misuses_detected": 2,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 8.67,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "#!/usr/bin/env python\n\nimport time\nimport random\nimport hmac\nimport hashlib\nimport binascii\nimport os\nimport secrets\nfrom urllib.parse import urlparse, parse_qsl, quote\n\nPY3 = (sys.version_info >= (3, 0, 0))\n\ndef om(consumer, url, post_params, token=None, method='POST', realm=None, timestamp=None, nonce=None):\n  \"\"\"A one-shot simple OAuth signature generator\"\"\"\n\n  # the method must be upper-case\n  method = method.upper()\n\n  # turn the POST params into a list of tuples if it's not already\n  if isinstance(post_params, list):\n    params = list(post_params) # copy the params list since we'll be messing with it\n  else:\n    params = list(post_params.items())\n\n  # normalize the URL\n  parts = urlparse(url)\n  scheme, netloc, path, _, query = parts[:5]\n  # Exclude default port numbers.\n  if scheme == 'http' and netloc[-3:] == ':80':\n      netloc = netloc[:-3]\n  elif scheme == 'https' and netloc[-4:] == ':443':\n      netloc = netloc[:-4]\n  netloc = netloc.lower()\n  normalized_url = '%s://%s%s' % (scheme, netloc, path)\n\n  # add query-string params (if any) to the params list\n  params.extend(parse_qsl(query))\n\n  # add OAuth params\n  params.extend([\n    ('oauth_version', '1.0'),\n    ('oauth_timestamp', timestamp if timestamp is not None else str(int(time.time()))),\n    ('oauth_nonce', nonce if nonce is not None else str(secrets.randbelow(1000000))),\n    ('oauth_signature_method', 'HMAC-SHA256'),\n    ('oauth_consumer_key', consumer[0]),\n  ])\n\n  # the consumer secret is the first half of the HMAC-SHA256 key\n  hmac_key = consumer[1] + '&'\n\n  if token is not None:\n    # include a token in params\n    params.append(('oauth_token', token[0]))\n    # and the token secret in the HMAC-SHA256 key\n    hmac_key += token[1]\n\n  # Sort lexicographically, first after key, then after value.\n  params.sort()\n  # UTF-8 and escape the key/value pairs\n  def escape(s):\n    s_encoded = s.encode('utf-8')\n    safe_chars_encoded = u'~'.encode('utf-8')\n    return quote(s_encoded, safe=safe_chars_encoded)\n  params = [(escape(k), escape(v)) for k,v in params]\n  # Combine key value pairs into a string.\n  normalized_params = '&'.join(['%s=%s' % (k, v) for k, v in params])\n\n  # build the signature base string\n  signature_base_string = (escape(method) +\n                           '&' + escape(normalized_url) +\n                           '&' + escape(normalized_params))\n\n  # HMAC-SHA256\n  hashed = hmac.new(hmac_key.encode('utf-8'),\n                    signature_base_string.encode('utf-8'),\n                    hashlib.sha256)\n\n  # Calculate the digest base 64.\n  oauth_signature = binascii.b2a_base64(hashed.digest())[:-1]\n  if PY3:\n      # binascii.b2a_base64 will return bytes in Python3\n      # convert it to unicode here.\n      oauth_signature = oauth_signature.decode('utf-8')\n\n  # Build the Authorization header\n  authorization_params = [('oauth_signature', oauth_signature)]\n  if realm is not None:\n    authorization_params.insert(0, ('realm', escape(realm)))\n  oauth_params = frozenset(('oauth_version', 'oauth_timestamp', 'oauth_nonce',\n                            'oauth_signature_method', 'oauth_signature',\n                            'oauth_consumer_key', 'oauth_token'))\n  authorization_params.extend([p for p in params if p[0] in oauth_params])\n\n  return 'OAuth ' + (', '.join(['%s=\"%s\"'%p for p in authorization_params]))"
+  },
+  {
+    "filepath": "data/github_real/creotiv_MiBand2_base.py",
+    "misuses_detected": 10,
+    "unique_misuses": 10,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 124.16,
+    "misuse_types": [
+      "R5",
+      "R4",
+      "R1"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/jasonacox_tuyapower_scan.py",
+    "misuses_detected": 8,
+    "unique_misuses": 3,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 10.32,
+    "misuse_types": [
+      "R3",
+      "R4"
+    ],
+    "patched_code": "#!/usr/bin/python\n#\n# TuyaScan - Scan for tuya devices on the network broadcasting on UDP port 6666 and 6667\n# \n# *****************************************************\n# ** Depreciated: Use \"python -m tuyapower\" instead. **\n# *****************************************************\n#\n# Author: Jason A. Cox\n# For more information see https://github.com/jasonacox/tuyapower\n\nfrom __future__ import print_function\nimport json\nimport socket\nimport os\nimport secrets\nfrom hashlib import sha256\nfrom Crypto.Cipher import AES  # PyCrypto\n\nMAXCOUNT = 10       # How many tries before stopping\nDEBUG = False       # Additional details beyond verbose\nUDPPORT = 6666      # Tuya 3.1 UDP Port\nUDPPORTS = 6667     # Tuya 3.3 encrypted UDP Port\nTIMEOUT = 3.0       # Seconds to wait for a broadcast\n\n# Return positive number or zero\ndef floor(x):\n    if x > 0:\n            return x\n    else:\n            return 0\n\n# UDP packet payload decryption - credit to tuya-convert \npad = lambda s: s + (16 - len(s) % 16) * chr(16 - len(s) % 16)\nunpad = lambda s: s[:-ord(s[len(s) - 1:])]\nudpkey = os.urandom(32)\niv = os.urandom(16)\nencrypt = lambda msg, key: AES.new(key, AES.MODE_CBC, iv).encrypt(pad(msg).encode())\ndecrypt = lambda msg, key, iv: unpad(AES.new(key, AES.MODE_CBC, iv).decrypt(msg)).decode()\ndecrypt_udp = lambda msg: decrypt(msg, udpkey, iv)\n\n# Store found devices in memory\ndef appenddevice(newdevice, devices):\n    if(newdevice['ip'] in devices):\n        return True\n    devices[newdevice['ip']] = newdevice\n    return False\n\n# Scan function\ndef deviceScan(verbose = False):\n    \"\"\"Scans your network for smart plug devices on UDP ports 6666 and 6667\n        devices = tuyapower.deviceScan(verbose)\n\n    Parameters:\n        verbose = True or False, print formatted output to stdout\n\n    Response: \n        devices = Dictionary of all devices found with power data if available\n\n    To unpack data, you can do something like this:\n\n        devices = tuyapower.deviceScan()\n        for ip in devices:\n            id = devices[ip]['gwId']\n            key = devices[ip]['productKey']\n            vers = devices[ip]['version']\n\n    \"\"\"\n     # Enable UDP lisenting broadcasting mode on UDP port 6666 - 3.1 Devices\n    client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP) \n    client.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)\n    client.bind((\"\", UDPPORT))\n    client.settimeout(TIMEOUT) \n    # Enable UDP lisenting broadcasting mode on encrypted UDP port 6667 - 3.3 Devices\n    clients = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP) \n    clients.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)\n    clients.bind((\"\", UDPPORTS))\n    clients.settimeout(TIMEOUT)\n\n    if(verbose):\n        print(\"Scanning on UDP ports %d and %d for devices...\\n\"%(UDPPORT,UDPPORTS))\n\n    # globals\n    devices={}\n    count = 0\n    counts = 0\n    spinnerx = 0\n    spinner = \"|/-\\\\|\"\n\n    # loop to find devices\n    while (count + counts) <= MAXCOUNT:\n        note = 'invalid'\n        print(\"Scanning... %s\\r\"%(spinner[spinnerx]), end = '')\n        spinnerx = (spinnerx + 1) % 4\n\n        if (count <= counts):  # alternate between 6666 and 6667 ports\n            try:\n                data, addr = client.recvfrom(4048)\n            except:\n                # Timeout\n                count = count + 1\n                continue\n        else:\n            try:\n                data, addr = clients.recvfrom(4048)\n            except:\n                # Timeout\n                counts = counts + 1\n                continue\n            \n        if(DEBUG): \n            print(\"* Message from [%s]: %s\\n\"%addr,data)\n        ip = addr[0]\n        gwId = productKey = version = \"\"\n        result = data\n        try: \n            result = data[20:-8]\n            try:\n                result = decrypt_udp(result)  # 3.3\n            except:\n                result = result.decode()      # 3.1\n\n            result = json.loads(result)\n\n            note = 'Valid'\n            ip = result['ip']\n            gwId = result['gwId']\n            productKey = result['productKey']\n            version = result['version']\n        except:\n            if(DEBUG):\n                print(\"*  Unexpected payload=%r\\n\", result)\n            result = {\"ip\": ip}\n            note = \"Unknown\"\n\n        # check to see if we have seen this device before and add to devices array\n        if appenddevice(result, devices) == False:\n            # new device found - back off count if we keep getting new devices\n            if(version=='3.1'):\n                count = floor(count - 1)\n            else:\n                counts = floor(counts - 1)\n            if(verbose):\n                print(\"FOUND Device [%s payload]: %s\\n    ID = %s, productKey = %s, Version = %s\" % (note,ip,gwId,productKey,version))\n        else:\n            # no new devices found\n            if(version=='3.1'):\n                count = count + 1\n            else:\n                counts = counts + 1\n\n    if(verbose):\n        print(\"                 \\nScan Complete!  Found %s devices.\\n\"%len(devices))\n        \n    return(devices)\n\n\nd = deviceScan(True)"
+  },
+  {
+    "filepath": "data/github_real/TinyNiko_mac_wxapkg_decrypt_decpkg.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 4.89,
+    "misuse_types": [
+      "R4"
+    ],
+    "patched_code": "import sys\nfrom Crypto.Cipher import AES\nimport os\nimport secrets\nimport hashlib\n\ndef aes_cbc_dec(data, key, iv):\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    dec_data = cipher.decrypt(data)\n    return dec_data\n\ndef main(input_path, output_path):\n    key = os.urandom(32)\n    data = open(input_path, 'rb').read()\n    iv = os.urandom(16)\n    dec_data = aes_cbc_dec(data[:1024], key, iv)\n    with open(output_path, 'wb') as fd:\n        fd.write(dec_data)\n        fd.write(data[1024:])\n\n    # Verify integrity using SHA-256\n    with open(output_path, 'rb') as fd:\n        output_data = fd.read()\n    output_hash = hashlib.sha256(output_data).hexdigest()\n    print(f\"Output hash: {output_hash}\")\n\nif __name__ == '__main__':\n    if len(sys.argv) != 3:\n        print(f\"{__file__} wxapkg_path output_path\")\n        sys.exit(0)\n\n    main(sys.argv[1], sys.argv[2])"
+  },
+  {
+    "filepath": "data/github_real/ushuz_weixin-simulator_gui.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 15.26,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "#  -*-  coding: utf-8  -*-\n\nimport time\nimport random\nimport hashlib\nimport xml.etree.cElementTree as ET\nimport os\nimport secrets\nimport tkinter as tk\nfrom tkinter import scrolledtext as st\nimport requests\n\nsettings = {\n    # `ToUserName` & `FromUserName` will be placed in the XML data posted to\n    # the given URL.\n    \"ToUserName\": \"gh_bea8cf2a04fd\",\n    \"FromUserName\": \"oLXjgjiWeAS1gfe4ECchYewwoyTc\",\n\n    # URL of your Wexin handler.\n    \"url\": \"http://localhost:8080/weixin\",\n    # Path to client certificate\n    # Put certificate and secret key into a single PEM file\n    \"cert\": \"\",\n\n    # These will be displayed in GUI.\n    \"mp_display_name\": \"APP\",\n    \"me_display_name\": \"ME\",\n\n    # The token you submitted to Weixin MP. Used to generate signature.\n    \"token\": os.urandom(32).hex(),\n}\n\n\nTPL_TEXT = '''\n<xml>\n    <ToUserName><![CDATA[%(to)s]]></ToUserName>\n    <FromUserName><![CDATA[%(from)s]]></FromUserName>\n    <CreateTime>%(time)d</CreateTime>\n    <MsgType><![CDATA[text]]></MsgType>\n    <Content><![CDATA[%(content)s]]></Content>\n    <MsgId>%(id)s</MsgId>\n</xml>\n'''\n\nTPL_EVENT = '''\n<xml>\n    <ToUserName><![CDATA[%(to)s]]></ToUserName>\n    <FromUserName><![CDATA[%(from)s]]></FromUserName>\n    <CreateTime>%(time)d</CreateTime>\n    <MsgType><![CDATA[event]]></MsgType>\n    <Event><![CDATA[%(event)s]]></Event>\n    <EventKey><![CDATA[%(key)s]]></EventKey>\n</xml>'''\n\n\ndef post(qs, data):\n    headers = {'Content-Type': 'text/xml'}\n    r = requests.post(settings[\"url\"] + qs, data=data.encode(), cert=settings[\"cert\"], verify=False, headers=headers)\n    return r.content\n\n\ndef send():\n    s = e.get()\n\n    if not s:\n        return\n\n    # Simulation for clicking the menu.\n    # Usage: EVENT_TYPE@EVENT_KEY\n    #        'c@KEY_FIND'   - 'CLICK' event with 'KEY_FIND' as event key\n    #        'v@www.qq.com' - 'VIEW' event with 'www.qq.com' as event key\n    if s.startswith(\"c@\") or s.startswith(\"v@\"):\n        event, key = s.split(\"@\")\n        msg = {\n            \"to\": settings[\"ToUserName\"],\n            \"from\": settings[\"FromUserName\"],\n            \"time\": time.time(),\n            \"event\": \"CLICK\" if event == \"c\" else \"VIEW\",\n            \"key\": key\n        }\n        qs = \"?signature=%s&timestamp=%s&nonce=%s\" % \\\n            mix(int(msg[\"time\"]))\n        receive(msg[\"time\"], post(qs, TPL_EVENT % msg))\n    # Simulation for sending a message.\n    else:\n        t.insert(tk.END, settings[\"me_display_name\"]+\"\\n\", \"send_name\")\n        t.insert(tk.END, s+\"\\n\", \"send_content\")\n\n        msg = {\n            \"to\": settings[\"ToUserName\"],\n            \"from\": settings[\"FromUserName\"],\n            \"time\": time.time(),\n            \"content\": s,\n            \"id\": str(random.random())[-10:]\n        }\n\n        qs = \"?signature=%s&timestamp=%s&nonce=%s\" % \\\n            mix(int(msg[\"time\"]))\n        receive(msg[\"time\"], post(qs, TPL_TEXT % msg))\n\n\ndef receive(start, response):\n    if time.time() - start > 4.95:\n        return\n\n    if not response:\n        print(\"No response.\")\n        return\n\n    print(\"Received:\\n%s\\n\" % response.decode())\n    try:\n        et = ET.fromstring(response)\n    except ET.ParseError:\n        print(\"Bad XML.\")\n        return\n\n    to = et.find(\"ToUserName\").text\n    fr = et.find(\"FromUserName\").text\n\n    type = et.find(\"MsgType\").text\n    if type == \"text\":\n        c = et.find(\"Content\").text\n    elif type == \"news\":\n        l = [\"[news]\"]\n        for i in et.find(\"Articles\").findall(\"item\"):\n            l.append(\"Title={0}\".format(i.find(\"Title\").text))\n            l.append(\"Description={0}\".format(i.find(\"Description\").text))\n            l.append(\"PicUrl={0}\".format(i.find(\"PicUrl\").text))\n            l.append(\"Url={0}\".format(i.find(\"Url\").text))\n            l.append(\"---\")\n        c = \"\\n\".join(l)\n    elif type == \"image\":\n        c = \"[image]\\nMediaId={0}\\n---\".format(et.find(\"Image\").find(\"MediaId\").text)\n    else:\n        print(\"Unknown response.\")\n        return\n\n    t.insert(tk.END, settings[\"mp_display_name\"]+\"\\n\", \"receive_name\")\n    t.insert(tk.END, c+\"\\n\", \"receive_content\")\n    t.yview_moveto(1.0)\n\n\ndef mix(time):\n    timestamp = str(time)\n\n    # I don't know how Weixin generate the 9-digit nonce, so I turn to random.\n    nonce = str(secrets.randbelow(1000000000))\n\n    l = [timestamp, nonce, settings[\"token\"]]\n    l.sort()\n    signature = hashlib.sha256(\"\".join(l).encode()).hexdigest()\n\n    return signature, timestamp, nonce\n\n\ndef follow():\n    msg = {\n        \"to\": settings[\"ToUserName\"],\n        \"from\": settings[\"FromUserName\"],\n        \"time\": time.time(),\n        \"event\": \"subscribe\",\n        \"key\": \"\"\n    }\n    qs = \"?signature=%s&timestamp=%s&nonce=%s\" % \\\n        mix(int(msg[\"time\"]))\n    receive(msg[\"time\"], post(qs, TPL_EVENT % msg))\n\n\ndef unfollow():\n    msg = {\n        \"to\": settings[\"ToUserName\"],\n        \"from\": settings[\"FromUserName\"],\n        \"time\": time.time(),\n        \"event\": \"unsubscribe\",\n        \"key\": \"\"       # `EventKey` in `unsubscribe` event is empty.\n    }\n    qs = \"?signature=%s&timestamp=%s&nonce=%s\" % \\\n        mix(int(msg[\"time\"]))\n    receive(msg[\"time\"], post(qs, TPL_EVENT % msg))\n\n\ntop = tk.Tk()\ntop.title(\"\u5fae\u4fe1\u6a21\u62df\u5668\")\n\nt = st.ScrolledText(top, width=45, height=30)\nt.pack()\n\nt.tag_add(\"send_name\", \"1.0\", \"1.end\")\nt.tag_config(\"send_name\", font=(\"Arial\", \"10\", \"bold\"), spacing3=5, rmargin=6,\n             justify=tk.RIGHT)\nt.tag_add(\"send_content\", \"2.0\", \"2.end\")\nt.tag_config(\"send_content\", spacing3=2, justify=tk.RIGHT, rmargin=6)\n\nt.tag_add(\"receive_name\", \"1.0\", \"1.end\")\nt.tag_config(\"receive_name\", font=(\"Arial\", \"10\", \"bold\"), spacing3=5, lmargin1=2)\nt.tag_add(\"receive_content\", \"2.0\", \"2.end\")\nt.tag_config(\"receive_content\", lmargin1=2)\n\ne = tk.Entry(top)\ne.pack(side=tk.LEFT)\n\nb = tk.Button(top, text=\"\u53d1\u9001\", command=send)\nb.pack(side=tk.LEFT)\n\na = tk.Button(top, text=\"\u5173\u6ce8\u516c\u4f17\u5e10\u53f7\", command=follow)\na.pack(side=tk.RIGHT)\n\na = tk.Button(top, text=\"\u53d6\u6d88\u5173\u6ce8\", command=unfollow)\na.pack(side=tk.RIGHT)\n\nif __name__ == \"__main__\":\n    top.mainloop()"
+  },
+  {
+    "filepath": "data/github_real/tenable_poc_packet_decoder.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 50.73,
+    "misuse_types": [
+      "R4"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/zhanghe06_python_04.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 43)"
+  },
+  {
+    "filepath": "data/github_real/doraemonext_wechat-python-sdk_ext.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 0.37,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/LuvellCode_Telegram-bot_DeHasher_bot.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 75.25,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/crazyguitar_pysheeet_vulnerability_.py",
+    "misuses_detected": 11,
+    "unique_misuses": 9,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 0.17,
+    "misuse_types": [
+      "R5",
+      "R3",
+      "R10"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/sahlberg_pop-fe_vmp.py",
+    "misuses_detected": 3,
+    "unique_misuses": 3,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 9.98,
+    "misuse_types": [
+      "R3",
+      "R4"
+    ],
+    "patched_code": "#!/usr/bin/env python\n# coding: utf-8\n#\n# Utility to convert between signed VMP files and raw memory card dumps\n#\n# Based on the algorithm in\n# https://github.com/dots-tb/vita-mcr2vmp\n#\nimport argparse\nimport hashlib\nimport os\nimport struct\nimport secrets\ntry:\n    from Crypto.Cipher import AES\nexcept:\n    print('Crypto is not installed.\\nYou should install Crypto by running:\\npip3 install Crypto')\n\n\ndef dump_vmp(f):\n    if os.stat(f).st_size != 131200:\n        print('Not a VMP file. Skipping')\n        return\n\n    with open(f, 'rb') as i:\n        i.seek(0x80)\n        buf = i.read(131072)\n        with open(f[:-3] + 'mcr', 'wb') as o:\n            o.write(buf)\n            print('Dumped MCR as', f[:-3] + 'mcr')\n\n\ndef encode_vmp(input_data):\n    SEED_OFFSET = 0xc\n    key = secrets.token_bytes(32)\n    iv = secrets.token_bytes(16)\n\n    if len(input_data) != 131072:\n        print('Not a raw memory card file. Skipping')\n        return None\n\n    buf = bytearray(0x80) + input_data\n    struct.pack_into('<I', buf, 0, 0x564D5000)\n    struct.pack_into('<I', buf, 4, 0x80)\n\n    salt_seed = buf[0x0c:0x0c + 0x14]\n        \n    workbuf = bytearray(0x14)\n    workbuf[:0x10] = salt_seed[:0x10]\n    obj = AES.new(key, AES.MODE_CBC, iv)\n    workbuf = bytearray(obj.decrypt(bytes(workbuf[:0x10])))\n\n    salt = bytearray(0x40)\n    salt[:0x10] = workbuf[:0x10]\n\n    workbuf[:0x10] = salt_seed[:0x10]\n    workbuf = obj.encrypt(bytes(workbuf[:0x10]))\n    salt[0x10:0x20] = workbuf[:0x10]\n    for i in range(0x10):\n        salt[i] = salt[i] ^ iv[i]\n\n    workbuf = bytearray(b'\\xff' * 0x14)\n    workbuf[:4] = salt_seed[0x10:0x14]\n    for i in range(0x10):\n        salt[0x10 + i] = salt[0x10 + i] ^ workbuf[i]\n\n    salt[0x14:0x20] = bytes(12)\n    for i in range(0x40):\n        salt[i] = salt[i] ^ 0x36\n\n    h = hashlib.sha256()\n    h.update(salt)\n    buf[0x20:0x34] = bytes(b'\\x00' * 0x14)\n    h.update(buf)\n    workbuf = h.digest()\n\n    h = hashlib.sha256()\n    for i in range(0x40):\n        salt[i] = salt[i] ^ 0x6a\n    h.update(salt)\n    h.update(workbuf)\n    workbuf = h.digest()\n    buf[0x20:0x34] = workbuf\n    return buf\n\n\ndef create_vmp(f):\n    if os.stat(f).st_size != 131072:\n        print('Not a raw memory card file. Skipping')\n        return\n    \n    with open(f, 'rb') as input_file:\n        with open(f[:-4] + '.VMP', 'wb') as output_file:\n            output_file.write(encode_vmp(input_file.read()))\n                \n            \nif __name__ == \"__main__\":\n    parser = argparse.ArgumentParser()\n    parser.add_argument('command', nargs=1, \n                        help='create|dump')\n    parser.add_argument('files', nargs='*', help='Memory card images')\n    args = parser.parse_args()\n\n    if args.command[0] == 'dump':\n        for f in args.files:\n            dump_vmp(f)\n    elif args.command[0] == 'create':\n        for f in args.files:\n            create_vmp(f)\n    else:\n        print('No command given. Aborting')"
+  },
+  {
+    "filepath": "data/github_real/deadPix3l_CryptSky_main.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 30)"
+  },
+  {
+    "filepath": "data/github_real/tableau_TabPy_util.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 0.25,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/mhossain39_shopify_app.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/isso-comments_isso_hash.py",
+    "misuses_detected": 2,
+    "unique_misuses": 2,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": -0.89,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/erelon_TimeBasedAgentsComparer_env.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.04,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/mo-xiaoxi_AWD_CTF_Platform_pre.py",
+    "misuses_detected": 5,
+    "unique_misuses": 3,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 0.27,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/fail0verflow_letterbomb_app.py",
+    "misuses_detected": 4,
+    "unique_misuses": 2,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 0.29,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/blacklanternsecurity_badsecrets_telerik_encryptionkey.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.02,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_real/dazjo_mkey_mkey.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.04,
+    "misuse_types": [],
+    "patched_code": null
+  }
+]

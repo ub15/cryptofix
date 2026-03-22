@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+*.egg-info/
+.DS_Store
+data/github_expanded/
+data/github_real/
+data/patched/
+src/config.py
+src/config.py
+src/config.py
+src/config.py
+src/config.py

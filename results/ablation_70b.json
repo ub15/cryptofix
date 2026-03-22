@@ -1,0 +1,269 @@
+[
+  {
+    "filepath": "data/github_expanded/SperaKrul1_Podpis_Cyfrowy_Key.py",
+    "misuse_types": [
+      "R8"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/heroaku_TVboxo_JPYS.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/bluetomlee_NetEase-MusicBox_api.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/jamessucla_archiveripper_api.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/sjl_t_t.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/Whale67_Flask-Cloudinary_app.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 2
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/smallfawn_QLScriptPublic_sysxc.py",
+    "misuse_types": [
+      "R4"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/artem94m_kingfisher_Key_Management__Hardcoded_Encryption_Key.py",
+    "misuse_types": [
+      "R5"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/Ganz138themax_gassken_run.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/KD-happy_KDCheckin_HLX.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/rdio_rdio-simple_om.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/GoobyCorp_Xbox-360-Crypto_xval.py",
+    "misuse_types": [
+      "R8",
+      "R1",
+      "R3",
+      "R4"
+    ],
+    "unique_misuses": 4,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  }
+]

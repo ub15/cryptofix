@@ -1,0 +1,1488 @@
+[
+  {
+    "filepath": "data/github_expanded/SperaKrul1_Podpis_Cyfrowy_Key.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 3.17,
+    "misuse_types": [
+      "R8"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/kartik1986x_Widevinely_key.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.04,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/odie5533_Python-RTSP_rdt.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 59)"
+  },
+  {
+    "filepath": "data/github_expanded/heroaku_TVboxo_JPYS.py",
+    "misuses_detected": 2,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 1.17,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "# -*- coding: utf-8 -*-\n# by @\u55f7\u545c\nimport json\nimport sys\nimport threading\nimport uuid\nimport requests\nimport os\nimport secrets\nimport hmac\nimport hashlib\nfrom Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\n\nclass Spider(Spider):\n    '''\n    \u914d\u7f6e\u793a\u4f8b\uff1a\n    {\n        \"key\": \"xxxx\",\n        \"name\": \"xxxx\",\n        \"type\": 3,\n        \"api\": \".\u6240\u5728\u8def\u5f84/\u91d1\u724c.py\",\n    '''\n\n    def host_late(self, url_list):\n        if isinstance(url_list, str):\n            urls = [u.strip() for u in url_list.split(',')]\n        else:\n            urls = url_list\n        if len(urls) <= 1:\n            return urls[0] if urls else ''\n\n        results = {}\n        threads = []\n\n        def test_host(url):\n            try:\n                start_time = time.time()\n                response = requests.head(url, timeout=1.0, allow_redirects=False)\n                delay = (time.time() - start_time) * 1000\n                results[url] = delay\n            except Exception as e:\n                results[url] = float('inf')\n        for url in urls:\n            t = threading.Thread(target=test_host, args=(url,))\n            threads.append(t)\n            t.start()\n        for t in threads:\n            t.join()\n        return min(results.items(), key=lambda x: x[1])[0]\n\n    def md5(self, sign_key):\n        return hashlib.sha256(sign_key.encode('utf-8')).hexdigest()\n\n    def js(self, param):\n        return '&'.join(f\"{k}={v}\" for k, v in param.items())\n\n    def getheaders(self, param=None):\n        if param is None:\n            param = {}\n        t = str(int(time.time() * 1000))\n        param['key'] = secrets.token_bytes(32)\n        param['t'] = t\n        sign_key = self.js(param)\n        sign = hashlib.sha256(sign_key.encode('utf-8')).hexdigest()\n        deviceid = str(uuid.uuid4())\n        iv = get_random_bytes(16)\n        cipher = AES.new(os.urandom(32), AES.MODE_CBC, iv)\n        encrypted_sign = cipher.encrypt(sign.encode('utf-8'))\n        headers = {\n            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.61 Chrome/126.0.6478.61 Not/A)Brand/8  Safari/537.36',\n            'Accept': 'application/json, text/plain, */*',\n            'sign': encrypted_sign.hex(),\n            't': t,\n            'deviceid': deviceid,\n            'iv': iv.hex()\n        }\n        return headers\n\n    def convert_field_name(self, field):\n        field = field.lower()\n        if field.startswith('vod') and len(field) > 3:\n            field = field.replace('vod', 'vod_')\n        if field.startswith('type') and len(field) > 4:\n            field = field.replace('type', 'type_')\n        return field\n\n    def getvod(self, array):\n        return [{self.convert_field_name(k): v for k, v in item.items()} for item in array]"
+  },
+  {
+    "filepath": "data/github_expanded/nunofernandes-plight_riemann-zeta_crypto.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.05,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/gurnec_btcrecover_btcrpass.py",
+    "misuses_detected": 24,
+    "unique_misuses": 17,
+    "patch_status": "too_complex",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.66,
+    "misuse_types": [
+      "R10",
+      "R3",
+      "R5",
+      "R8"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/bluetomlee_NetEase-MusicBox_api.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 1.19,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "#!/usr/bin/env python\n# encoding: UTF-8\n\nimport os\nimport secrets\nimport hmac\nimport hashlib\nimport json\nimport requests\nfrom Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\n\nclass Music163API:\n    def __init__(self):\n        self.header = {\n            'Referer': 'http://music.163.com/search/',\n            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36'\n        }\n        self.cookies = {\n            'appver': '1.5.2'\n        }\n        self.key = os.urandom(32)\n        self.iv = get_random_bytes(16)\n\n    def httpRequest(self, method, action, query=None, urlencoded=None, callback=None, timeout=None):\n        if method == 'GET':\n            url = action if query is None else (action + '?' + query)\n            connection = requests.get(url, headers=self.header, timeout=timeout or 10)\n        elif method == 'POST':\n            connection = requests.post(\n                action,\n                data=query,\n                headers=self.header,\n                timeout=timeout or 10\n            )\n        connection.encoding = \"UTF-8\"\n        connection = json.loads(connection.text)\n        return connection\n\n    def login(self, username, password):\n        action = 'http://music.163.com/api/login/'\n        data = {\n            'username': username,\n            'password': hashlib.sha256(password.encode()).hexdigest(),\n            'rememberLogin': 'true'\n        }\n        try:\n            return self.httpRequest('POST', action, data)\n        except:\n            return {'code': 501}\n\n    def user_playlist(self, uid, offset=0, limit=100):\n        action = 'http://music.163.com/api/user/playlist/?offset=' + str(offset) + '&limit=' + str(limit) + '&uid=' + str(uid)\n        try:\n            data = self.httpRequest('GET', action)\n            return data['playlist']\n        except:\n            return []\n\n    def search(self, s, stype=1, offset=0, total='true', limit=60):\n        action = 'http://music.163.com/api/search/get/web'\n        data = {\n            's': s,\n            'type': stype,\n            'offset': offset,\n            'total': total,\n            'limit': 60\n        }\n        return self.httpRequest('POST', action, data)\n\n    def new_albums(self, offset=0, limit=50):\n        action = 'http://music.163.com/api/album/new/album'\n        try:\n            data = self.httpRequest('GET', action, f'offset={offset}&limit={limit}')\n            return data['albums']\n        except:\n            return []\n\n    def uniq(self, arr):\n        arr2 = list(set(arr))\n        arr2.sort(key=arr.index)\n        return arr2\n\n    def encrypt(self, data):\n        cipher = AES.new(self.key, AES.MODE_CBC, self.iv)\n        return cipher.encrypt(data.encode())\n\n    def decrypt(self, data):\n        cipher = AES.new(self.key, AES.MODE_CBC, self.iv)\n        return cipher.decrypt(data).decode()\n\nif __name__ == '__main__':\n    api = Music163API()\n    print(api.login('username', 'password'))\n    print(api.user_playlist(12345))\n    print(api.search('song name'))\n    print(api.new_albums())\n    print(api.uniq([1, 2, 3, 2, 1]))"
+  },
+  {
+    "filepath": "data/github_expanded/matamorphosis_Scrummage_Common.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.18,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/jamessucla_archiveripper_api.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 12.1,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import base64\nimport hashlib\nimport hmac\nimport json\nimport logging\nimport os\nimport re\nimport requests\nimport sched\nimport time\nfrom Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\nfrom Crypto.Util import Counter\nfrom lxml import etree\n\nclass ArchiveReaderClient:\n\n    def __init__(self):\n        self.session = requests.Session()\n        self.logged_in = False\n        self.book_id = None\n        self.book_meta = {}\n        self.book_page_urls = []\n        self.token = None\n        res = self.session.get(img_url, headers={\n            'referer': self.URL_FORMAT % ('details/' + self.book_id)\n        })\n\n        image_data = res.content\n        obfuscation_key = res.headers.get('x-obfuscate')\n        if obfuscation_key:\n            version, counter = obfuscation_key.split('|')\n            if version != '1':\n                raise AssertionError('obfuscation version %s not supported' % version)\n            \n            counter = base64.b64decode(counter)\n            aes_key = os.urandom(32)\n\n            # decrypt first 1024 bytes of image data\n            decrypted_part = self.decrypt(image_data[:1024], aes_key, counter)\n            # replace the first 1024 bytes of image data with the decrypted data\n            decrypted_buffer = bytearray(image_data)\n            decrypted_buffer[:1024] = decrypted_part\n            image_data = bytes(decrypted_buffer)\n\n        return image_data\n\n\n    def decrypt(self, data: bytes, aes_key: bytes, counter: bytes):\n        \"\"\"\n        Decrypts the data with AES-CTR using the given key.\n        \"\"\"\n        # create a counter of length 64-bit\n        ctr = Counter.new(64, prefix=counter[:8], initial_value=int.from_bytes(counter[8:], 'big'))\n\n        # create AES cipher in CTR mode\n        iv = os.urandom(16)\n        cipher = AES.new(aes_key, AES.MODE_CBC, iv)\n\n        # decrypt the buffer\n        plaintext = cipher.decrypt(data)\n\n        return plaintext\n\n\n    def login(self, email, password):\n        \"\"\"\n        Logs a user in to their archive.org account.\n        \"\"\"\n        # get cookies\n        self.session.get(self.URL_FORMAT % 'account/login')\n\n        res = self.session.post(self.URL_FORMAT % 'account/login', {\n            'username': email,\n            'password': password,\n            'remember': True,\n            'referer': self.URL_FORMAT % '',\n            'login': True,\n            'submit_by_js': True\n        }, headers={\n            'referer': self.URL_FORMAT % 'account/login'\n        })\n\n        res = self.session.post(self.URL_FORMAT % 'account/login', {\n            'username': email,\n            'password': password,\n            'remember': True,\n            'referer': self.URL_FORMAT % '',\n            'login': True,\n            'submit_by_js': True\n        }, headers={\n            'referer': self.URL_FORMAT % 'account/login'\n        })\n\n        js = res.json()\n        root = etree.HTML(res.text)\n        reader_data = root.find('.//input[@class=\"js-bookreader\"]').get('value')\n        reader = json.loads(reader_data)\n\n        return reader"
+  },
+  {
+    "filepath": "data/github_expanded/Mozzarella951_1562_projects_main.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.06,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/sjl_t_t.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 3,
+    "time_seconds": 32.71,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "#!/usr/bin/env python\n\n\"\"\"t is for people that want do things, not organize their tasks.\"\"\"\n\nfrom __future__ import with_statement, print_function\n\nimport os\nimport secrets\nimport hmac\nimport hashlib\nimport re\nimport sys\nfrom operator import itemgetter\nfrom optparse import OptionParser, OptionGroup\n\nclass InvalidTaskfile(Exception):\n    \"\"\"Raised when the path to a task file already exists as a directory.\"\"\"\n    pass\n\nclass AmbiguousPrefix(Exception):\n    \"\"\"Raised when trying to use a prefix that could identify multiple tasks.\"\"\"\n    def __init__(self, prefix):\n        super(AmbiguousPrefix, self).__init__()\n        self.prefix = prefix\n\nclass UnknownPrefix(Exception):\n    \"\"\"Raised when trying to use a prefix that does not match any tasks.\"\"\"\n    def __init__(self, prefix):\n        super(UnknownPrefix, self).__init__()\n        self.prefix = prefix\n\nclass BadFile(Exception):\n    \"\"\"Raised when something else goes wrong trying to work with the task file.\"\"\"\n    def __init__(self, path, problem):\n        super(BadFile, self).__init__()\n        self.path = path\n        self.problem = problem\n\ndef _hash(text):\n    \"\"\"Return a hash of the given text for use as an id.\n\n    Currently SHA-256 hashing is used.  It should be plenty for our purposes.\n\n    \"\"\"\n    return hashlib.sha256(text.encode('utf-8')).hexdigest()\n\ndef _task_from_taskline(taskline):\n    \"\"\"Parse a taskline (from a task file) and return a task.\n\n    A taskline should be in the format:\n\n        summary text ... | meta1:meta1_value,meta2:meta2_value,...\n\n    The task returned will be a dictionary such as:\n\n        { 'id': <hash id>,\n          'text': <summary text>,\n           ... other metadata ... }\n\n    A taskline can also consist of only summary text, in which case the id\n    and other metadata will be generated when the line is read.  This is\n    supported to enable editing of the taskfile with a simple text editor.\n    \"\"\"\n    if taskline.strip().startswith('#'):\n        return None\n    elif '|' in taskline:\n        text, _, meta = taskline.rpartition('|')\n        task = { 'text': text.strip() }\n        for piece in meta.strip().split(','):\n            label, data = piece.split(':')\n            task[label.strip()] = data.strip()\n    else:\n        text = taskline.strip()\n        task = { 'id': _hash(text), 'text': text }\n    return task\n\ndef _main():\n    usage = 'Usage: %prog [-t DIR] [-l LIST] [options] [TEXT]'\n    parser = OptionParser(usage=usage)\n    # ... rest of the code remains the same ..."
+  },
+  {
+    "filepath": "data/github_expanded/goldsborough_real-fake_app.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.02,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/Whale67_Flask-Cloudinary_app.py",
+    "misuses_detected": 4,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 10.02,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nfrom flask import Flask, render_template, request\nfrom flask_pymongo import PyMongo\nfrom pymongo import MongoClient\nimport hashlib\nfrom cryptography.hazmat.primitives import padding\nfrom cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\nfrom cryptography.hazmat.backends import default_backend\n\napp = Flask(__name__)\napp.config['SECRET_KEY'] = os.urandom(32)\nmongo = PyMongo(app)\nclient = MongoClient(app.config['MONGO_URI'])\n\n#html template that will launch cloudinary upload widget\n@app.route('/cloudinary_upload')\ndef cloudinary_upload():\n    return render_template('cloudinary.html')\n\n#creates a public id for the user. Allows every upload to be store with logged in user's username hash\n@app.route('/create_public_id', methods=['POST'])\n@login_required\ndef create_public_id(find_user, users):\n    public_id_1 = find_user['username'].encode('utf-8')\n    public_id = hashlib.sha256(public_id_1).hexdigest()\n    users.update(find_user, {'$set': { 'public_id' : public_id}})\n    return redirect(url_for('upload_image'))\n\n#renders the template to begin the upload\n@app.route('/upload_image')\n@login_required\ndef upload_image(find_user, users):\n    title = '- Profile Image'\n    return render_template('cloudinary.html', find_user=find_user, title=title)\n\n#receives public_id and version from the widget \n@app.route('/image_id', methods=['POST'])\n@login_required\ndef image_id(find_user, users):\n    public_id = request.form['public_id']\n    version = request.form['version']\n    users.update(find_user, {'$set':{'profile_image_url' : version + '/' + public_id, 'public_id' : public_id, 'version' : version}})\n    return 'Thank you for your upload'\n\n#signature that must be matched to Cloudinary signature. Allows for overriding previous user uploads    \n@app.route('/signature', methods=['POST'])\ndef signature():\n    values = request.values\n    timestamp = values.get('data[timestamp]')\n    public_id = values.get('data[public_id]')\n    custom_coordinates = values.get('data[custom_coordinates]')\n    api_secret = app.config['CLOUDINARY_API_SECRET']\n    signature = 'callback=https://widget.cloudinary.com/cloudinary_cors.html&custom_coordinates=%s&public_id=%s&timestamp=%s&upload_preset=thka8ije%s' % (custom_coordinates, public_id, timestamp, api_secret)\n    signature2 = signature.encode('utf-8')\n    h = hashlib.sha256(signature2).hexdigest()\n    return '%s' % (h)\n\nif __name__ == '__main__':\n    app.run()"
+  },
+  {
+    "filepath": "data/github_expanded/smallfawn_QLScriptPublic_sysxc.py",
+    "misuses_detected": 2,
+    "unique_misuses": 2,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 43.26,
+    "misuse_types": [
+      "R4"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/MidoriYakumo_FdSig_FdSig.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.03,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/artem94m_kingfisher_Key_Management__Hardcoded_Encryption_Key.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 2.56,
+    "misuse_types": [
+      "R5"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nfrom Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\nimport hashlib\n\ndef encrypt_message(message):\n    encryption_key = os.urandom(32)\n    iv = get_random_bytes(16)\n    cipher = AES.new(encryption_key, AES.MODE_CBC, iv)\n    msg = iv + cipher.encrypt(message)\n    return encryption_key, iv, msg\n\ndef decrypt_message(encryption_key, iv, msg):\n    cipher = AES.new(encryption_key, AES.MODE_CBC, iv)\n    decrypted_msg = cipher.decrypt(msg[16:])\n    return decrypted_msg\n\ndef verify_message(encryption_key, iv, msg, expected_message):\n    cipher = AES.new(encryption_key, AES.MODE_CBC, iv)\n    decrypted_msg = cipher.decrypt(msg[16:])\n    return hmac.compare_digest(decrypted_msg, expected_message)\n\ndef main():\n    message = b'Attack at dawn'\n    encryption_key, iv, msg = encrypt_message(message)\n    print(f\"Encryption Key: {encryption_key.hex()}\")\n    print(f\"IV: {iv.hex()}\")\n    print(f\"Encrypted Message: {msg.hex()}\")\n\n    decrypted_msg = decrypt_message(encryption_key, iv, msg)\n    print(f\"Decrypted Message: {decrypted_msg}\")\n\n    expected_message = b'Attack at dawn'\n    is_valid = verify_message(encryption_key, iv, msg, expected_message)\n    print(f\"Is Message Valid: {is_valid}\")\n\nif __name__ == \"__main__\":\n    main()"
+  },
+  {
+    "filepath": "data/github_expanded/sensepost_DET_det.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 42)"
+  },
+  {
+    "filepath": "data/github_expanded/LinOTP_LinOTP_app.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.06,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/Ganz138themax_gassken_run.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 69.55,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/KD-happy_KDCheckin_HLX.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 10.25,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nimport hashlib\nimport requests\nimport json\nimport sys\nimport traceback\nimport time\nfrom io import StringIO\nfrom KDconfig import getYmlConfig, send\nfrom bs4 import BeautifulSoup\nfrom cryptography.hazmat.primitives import padding\nfrom cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\n\nclass HLX:\n    def __init__(self, cookie):\n        self.sio = StringIO()\n        self.Cookies = cookie\n        self.username = ''\n        self.password = ''\n        self.key = ''\n        self.nick = ''\n        self.userID = ''\n        self.iv = os.urandom(16)\n\n    def md5(self):\n        m = hashlib.sha256()\n        b = self.password.encode(encoding='utf-8')\n        m.update(b)\n        password_md5 = m.hexdigest()\n        return password_md5\n\n    def login(self):\n        password_md5 = self.md5()\n        url = 'http://floor.huluxia.com/account/login/IOS/4.0?device_code=1'\n        headers = {\n            'Content-Type': 'application/x-www-form-urlencoded',\n            'User-Agent': 'okhttp/3.8.1',\n        }\n        data = {\n            'account': self.username,\n            'login_type': '2',\n            'password': password_md5,\n        }\n        response = requests.post(url=url, data=data, headers=headers)\n        self.key = json.loads(response.text)['_key']\n        self.nick = json.loads(response.text)['user']['nick']\n        self.userID = json.loads(response.text)['user']['userID']\n        print('[+]\u7528\u6237\uff1a' + self.nick + ';userID:' + str(self.userID))\n\n    def get_level(self):\n        url = 'http://floor.huluxia.com/view/level?viewUserID={userID}&_key={key}'.format(\n            userID=self.userID, key=self.key)\n        response = requests.post(url=url)\n        soup = BeautifulSoup(response.text, 'html.parser')  #\u89e3\u6790html\u9875\u9762\n        level = soup.select('.lev_li_forth span')  #\u7b5b\u9009\u7ecf\u9a8c\u503c\n\n    def sign(self):\n        # Generate a secret key\n        secret_key = secrets.token_bytes(32)\n        # Generate a message\n        message = self.password.encode(encoding='utf-8')\n        # Create a new HMAC object and initialize it with the secret key\n        hmac_object = hmac.new(secret_key, message, hashlib.sha256)\n        # Get the digest of the HMAC object\n        digest = hmac_object.digest()\n        return digest\n\n    def SignIn(self):\n        # Generate a secret key\n        secret_key = secrets.token_bytes(32)\n        # Generate a message\n        message = self.password.encode(encoding='utf-8')\n        # Create a new HMAC object and initialize it with the secret key\n        hmac_object = hmac.new(secret_key, message, hashlib.sha256)\n        # Get the digest of the HMAC object\n        digest = hmac_object.digest()\n        # Encrypt the digest with a random IV and a 128-bit key\n        cipher = Cipher(algorithms.AES(digest), modes.CBC(self.iv))\n        encryptor = cipher.encryptor()\n        padder = padding.PKCS7(128).padder()\n        padded_data = padder.update(digest) + padder.finalize()\n        encrypted_data = encryptor.update(padded_data) + encryptor.finalize()\n        return encrypted_data"
+  },
+  {
+    "filepath": "data/github_expanded/rdio_rdio-simple_om.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 12.56,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nimport hashlib\nimport binascii\nimport base64\nimport urllib.parse\nimport urllib.parse as urlparse\nimport quote\n\ndef escape(s):\n    s_encoded = s.encode('utf-8')\n    safe_chars_encoded = u'~'.encode('utf-8')\n    return quote(s_encoded, safe=safe_chars_encoded)\n\ndef om(consumer, token=None, realm=None, method='GET', url=None, post_params=None):\n    # the consumer key is the first half of the HMAC-SHA256 key\n    hmac_key = os.urandom(32)\n    # the consumer secret is the first half of the HMAC-SHA256 key\n    hmac_key = hmac_key + '&'\n\n    if token is not None:\n        # include a token in params\n        params = [('oauth_token', token[0])]\n        # and the token secret in the HMAC-SHA256 key\n        hmac_key += os.urandom(32)\n\n    # the consumer secret is the first half of the HMAC-SHA256 key\n    hmac_key = hmac.new(hmac_key, digestmod=hashlib.sha256).digest()\n\n    # the consumer key is the first half of the HMAC-SHA256 key\n    consumer_key = os.urandom(32)\n    # the consumer secret is the first half of the HMAC-SHA256 key\n    consumer_secret = hmac.new(consumer_key, digestmod=hashlib.sha256).digest()\n\n    # the consumer secret is the first half of the HMAC-SHA256 key\n    hmac_key = hmac.new(consumer_secret + '&'.encode('utf-8') + token[1].encode('utf-8'), digestmod=hashlib.sha256).digest()\n\n    # Sort lexicographically, first after key, then after value.\n    params.append(('oauth_consumer_key', consumer[0]))\n    params.sort()\n    # UTF-8 and escape the key/value pairs\n    params = [(escape(k), escape(v)) for k,v in params]\n    # Combine key value pairs into a string.\n    normalized_params = '&'.join(['%s=%s' % (k, v) for k, v in params])\n\n    # build the signature base string\n    signature_base_string = (escape(method) +\n                             '&' + escape(urlparse(url).path) +\n                             '&' + escape(normalized_params))\n\n    # HMAC-SHA256\n    hashed = hmac.new(hmac_key, signature_base_string.encode('utf-8'), digestmod=hashlib.sha256)\n\n    # Calculate the digest base 64.\n    oauth_signature = base64.b64encode(hashed.digest())[:-1]\n    if isinstance(oauth_signature, bytes):\n        oauth_signature = oauth_signature.decode('utf-8')\n\n    # Build the Authorization header\n    authorization_params = [('oauth_signature', oauth_signature)]\n    if realm is not None:\n        authorization_params.insert(0, ('realm', escape(realm)))\n    oauth_params = frozenset(('oauth_version', 'oauth_timestamp', 'oauth_nonce',\n                              'oauth_signature_method', 'oauth_signature',\n                              'oauth_consumer_key', 'oauth_token'))\n    authorization_params.extend([p for p in params if p[0] in oauth_params])\n\n    return 'OAuth ' + (', '.join(['%s=\"%s\"'%p for p in authorization_params]))"
+  },
+  {
+    "filepath": "data/github_expanded/SchmidtDSE_maize-loss-climate-experiment_lstm.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.03,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/GoobyCorp_Xbox-360-Crypto_xval.py",
+    "misuses_detected": 5,
+    "unique_misuses": 4,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 55.82,
+    "misuse_types": [
+      "R1",
+      "R3",
+      "R8",
+      "R4"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/superchromia_telepy_old_crypt.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 11.1,
+    "misuse_types": [
+      "R4"
+    ],
+    "patched_code": "# -*- coding: utf-8 -*-\n# Author: Sammy Pfeiffer\n# Author: Anton Grigoryev\n# This file implements the AES 256 IGE cipher\n# working in Python 2.7 and Python 3.4 (other versions untested)\n# as it's needed for the implementation of Telegram API\n# It's based on PyCryto\n\nfrom __future__ import print_function\nfrom Crypto.Util.strxor import strxor\nfrom Crypto.Cipher import AES\nimport os\nimport secrets\nimport hmac\n\n# AES 256 IGE part\n\ndef ige_encrypt(message, key, iv):\n    return _ige(message, key, iv, operation=\"encrypt\")\n\ndef ige_decrypt(message, key, iv):\n    return _ige(message, key, iv, operation=\"decrypt\")\n\ndef _ige(message, key, iv, operation=\"decrypt\"):\n    \"\"\"Given a key, given an iv, and message\n     do whatever operation asked in the operation field.\n     Operation will be checked for: \"decrypt\" and \"encrypt\" strings.\n     Returns the message encrypted/decrypted.\n     message must be a multiple by 16 bytes (for division in 16 byte blocks)\n     key must be 32 byte\n     iv must be 16 byte (it's not internally used in AES 256 CBC, but it's\n     needed for IGE)\"\"\"\n    message = bytes(message)\n    if len(key) != 32:\n        raise ValueError(\"key must be 32 bytes long (was \" +\n                         str(len(key)) + \" bytes)\")\n    if len(iv) != 16:\n        raise ValueError(\"iv must be 16 bytes long (was \" +\n                         str(len(iv)) + \" bytes)\")\n\n    key = os.urandom(32)\n    iv = os.urandom(16)\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    blocksize = cipher.block_size\n\n    if len(message) % blocksize != 0:\n        raise ValueError(\"message must be a multiple of 16 bytes (try adding \" +\n                         str(16 - len(message) % 16) + \" bytes of padding)\")\n\n    ivp = iv[0:blocksize]\n    ivp2 = iv[blocksize:]\n\n    ciphered = bytes()\n\n    for i in range(0, len(message), blocksize):\n        indata = message[i:i+blocksize]\n        if operation == \"decrypt\":\n            xored = strxor(indata, ivp2)\n            decrypt_xored = cipher.decrypt(xored)\n            outdata = strxor(decrypt_xored, ivp)\n            ivp = indata\n            ivp2 = outdata\n        elif operation == \"encrypt\":\n            xored = strxor(indata, ivp)\n            encrypt_xored = cipher.encrypt(xored)\n            outdata = strxor(encrypt_xored, ivp2)\n            ivp = outdata\n            ivp2 = indata\n        else:\n            raise ValueError(\"operation must be either 'decrypt' or 'encrypt'\")\n        ciphered += outdata\n    return key, iv, ciphered\n\ndef verify_key(key, iv, message, expected_message):\n    key, iv, ciphered = _ige(message, key, iv, operation=\"decrypt\")\n    return hmac.compare_digest(ciphered, expected_message)\n\n# Test the functions\nkey = os.urandom(32)\niv = os.urandom(16)\nmessage = b\"Hello, World!\"\nciphered = ige_encrypt(message, key, iv)\nprint(ciphered)\ndecrypted = ige_decrypt(ciphered, key, iv)\nprint(decrypted)"
+  },
+  {
+    "filepath": "data/github_expanded/Inndy_twnhi-smartcard-agent_cryptos.py",
+    "misuses_detected": 17,
+    "unique_misuses": 15,
+    "patch_status": "too_complex",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.05,
+    "misuse_types": [
+      "R1",
+      "R3",
+      "R5",
+      "R4"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/merwin-asm_UFT_main.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 2,
+    "time_seconds": 22.26,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": "import socket\nimport os\nimport sys\nimport rsa\nimport time\nimport requests as r\nimport hashlib\nimport secrets\nimport hmac\nfrom rich import print\nfrom rich.table import Table\nfrom rich.progress import track\n\nknown_constants = {\n    'rev': 1,\n    'data_chunks': b'',\n    'command': 'ioreg -l | grep IOPlatformSerialNumber',\n    'server_stat_url': 'https://raw.githubusercontent.com/darkmash-org/UFT/main/status.txt',\n    'uploadable': False\n}\n\ndef read_public_key():\n    # implementation remains the same\n    pass\n\ndef encrypt():\n    # implementation remains the same\n    pass\n\ndef decrypt():\n    # implementation remains the same\n    pass\n\ndef send_large(filename, cli, max_chunk=65536):\n    f = open(filename, \"wb\")\n    rev = cli.recv(1024).decode()\n    rev = int(rev)\n    cli.send(\".\".encode())\n    data_chunks = b''\n    for step in track(range(rev), description=\"Downloading...\"):\n        data = cli.recv(max_chunk)\n        if data.decode() == \"done\":\n            break\n        else:\n            data_chunks += data\n            cli.send(\".\".encode())\n            step\n    while True:\n        data = cli.recv(max_chunk)\n        if data.decode() == \"done\":\n            break\n        else:\n            data_chunks += data\n            cli.send(\".\".encode())\n    f.write(data_chunks)\n    f.close()\n\ndef recv_large(filename, cli, max_chunk=65536):\n    f = open(filename, \"wb\")\n    rev = cli.recv(1024).decode()\n    rev = int(rev)\n    cli.send(\".\".encode())\n    data_chunks = b''\n    for step in track(range(rev), description=\"Downloading...\"):\n        data = cli.recv(max_chunk)\n        if data.decode() == \"done\":\n            break\n        else:\n            data_chunks += data\n            cli.send(\".\".encode())\n            step\n    while True:\n        data = cli.recv(max_chunk)\n        if data.decode() == \"done\":\n            break\n        else:\n            data_chunks += data\n            cli.send(\".\".encode())\n    f.write(data_chunks)\n    f.close()\n\ndef hash_salt(password):\n    salt = os.urandom(16)\n    dk = hashlib.pbkdf2_hmac('sha256', str(password).encode(), salt, 600000)\n    final = dk.hex()\n    return final.encode(), salt\n\ndef get_key():\n    os_type = sys.platform.lower()\n    if \"win\" in os_type:\n        command = \"wmic bios get serialnumber\"\n    elif \"linux\" in os_type:\n        command = \"sudo dmidecode -s system-serial-number\"\n    elif \"darwin\" in os_type:\n        command = \"ioreg -l | grep IOPlatformSerialNumber\"\n    sn = os.popen(command).read().replace(\"\\n\", \"\").replace(\"\\t\", \"\").replace(\" \", \"\")\n    key = r.get(\"https://serververifier.darkmash.repl.co/generatekey\", headers={\"cpu\": sn}).text\n    if key == \"0\":\n        print(\"[red]  [-] Server Denied Connection[/red]\")\n        quit()\n    return key\n\ndef main():\n    table_commands = Table(title=\"Commands\")\n    table_commands.add_column(\"Command\", style=\"cyan\", no_wrap=True)\n    # implementation remains the same\n    pass\n\nif __name__ == \"__main__\":\n    main()"
+  },
+  {
+    "filepath": "data/github_expanded/OPEN-ENT-NG_sqool_encrypt.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 6.63,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nimport hashlib\nimport pyaes\n\ndef generate_key(password, salt, iteration_count):\n    return hashlib.pbkdf2_hmac('sha256', password, salt, iteration_count)\n\ndef generate_iv():\n    return os.urandom(16)\n\ndef encrypt_data(key, iv, data):\n    encrypter = pyaes.Encrypter(pyaes.AESModeOfOperationCBC(key, iv))\n    return encrypter.feed(data.encode()) + encrypter.feed()\n\ndef generate_payload(key, iv, salt, data):\n    return b64encode(salt) + b'$' + b64encode(iv) + b'$' + b64encode(encrypt_data(key, iv, data))\n\ndef main():\n    CRYPTO_SECRET = os.urandom(32)\n    salt = os.urandom(16)\n    key = generate_key(CRYPTO_SECRET, salt, 600000)\n    iv = generate_iv()\n    md4 = '258def5e78a5f18e3477fcfc55104f2e'\n    byte_payload = generate_payload(key, iv, salt, md4)\n    print(byte_payload.decode())\n\nif __name__ == \"__main__\":\n    main()"
+  },
+  {
+    "filepath": "data/github_expanded/rembertdesigns_Programming-Language-Tutorials_main.py",
+    "status": "error",
+    "error": "unterminated string literal (detected at line 1561) (<unknown>, line 1561)"
+  },
+  {
+    "filepath": "data/github_expanded/noperator_CVE-2019-18935_RAU_crypto.py",
+    "misuses_detected": 3,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 16.77,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nfrom Crypto.Cipher import AES\nfrom Crypto.Hash import HMAC\nfrom Crypto.Hash import SHA256\nfrom struct import Struct\nfrom operator import xor\nfrom itertools import starmap\nimport binascii\nfrom requests.packages.urllib3.exceptions import InsecureRequestWarning\n\nrequests.packages.urllib3.disable_warnings(InsecureRequestWarning)\n\nCERT_VERIFY = False\n\nclass PBKDF:\n\n    def sha256(v):\n        hl = SHA256.new()\n        hl.update(v)\n        return hl.digest()\n\n    def derive1(password, salt):\n        hash = (password + salt).encode()\n        for i in range(0, 600000):\n            hash = PBKDF.sha256(hash)\n\n        result = PBKDF.sha256(hash)\n        i = 1\n        while len(result) < 48:\n            result += PBKDF.sha256(str(i).encode() + hash)\n            i += 1\n\n        return result\n\n    def hmacsha256(v):\n        hl = HMAC.new(bytes(password.encode()), None, SHA256.new())\n        hl.update(v)\n        return bytearray(hl.digest())\n\n    def derive2(password, salt):\n        result_length = 48\n        PBKDF.mac = HMAC.new(bytes(password.encode()), None, SHA256.new())\n        result = []\n        for b in range(1, -(-result_length // PBKDF.mac.digest_size) + 1):\n            rv = u = PBKDF.hmacsha256(salt.encode() + Struct('>i').pack(b))\n            for i in range(999):\n                u = PBKDF.hmacsha256(u)\n                rv = starmap(xor, zip(rv, u))\n            result.extend(rv)\n        result = b''.join(map(bytes, [result]))[:result_length]\n        return result\n\n    def derive(type, password, salt = secrets.token_bytes(32)):\n        if type == 1:\n            result = PBKDF.derive1(password, salt)\n            result = result[0:32] + result[8:16] + result[40:48] # Bizarre hack\n        elif type == 2:\n            result = PBKDF.derive2(password, salt)\n\n        return result[0:32], result[32:]\n\nclass RAUCipher:\n\n    def encrypt(data, key):\n        iv = os.urandom(16)\n        cipher = AES.new(key, AES.MODE_CBC, iv)\n        return iv + cipher.encrypt(data)\n\n    def decrypt(data, key):\n        iv = data[:16]\n        cipher = AES.new(key, AES.MODE_CBC, iv)\n        return cipher.decrypt(data[16:])\n\n    def addHmac(data, key):\n        hmac_hash = hmac.new(key, data, hashlib.sha256).digest()\n        return data + hmac_hash\n\n    def getProxy():\n        return secrets.token_bytes(32)\n\n    def rauPostData_enc(data, key):\n        return PBKDF.derive(1, key, data)\n\n    def rauPostData_prep(data, key):\n        return PBKDF.derive(2, key, data)\n\n    def payload(data, key):\n        return PBKDF.derive(1, key, data)\n\n    def upload(data, key):\n        return PBKDF.derive(2, key, data)\n\n    def decode_rauPostData(data, key):\n        return PBKDF.derive(1, key, data)\n\n    def mode_decrypt(data, key):\n        return RAUCipher.decrypt(data, key)\n\n    def mode_Decrypt_rauPostData(data, key):\n        return RAUCipher.decrypt(data, key)\n\n    def mode_encrypt(data, key):\n        return RAUCipher.encrypt(data, key)\n\n    def mode_Encrypt_rauPostData(data, key):\n        return RAUCipher.encrypt(data, key)\n\n    def custom_payload(data, key):\n        return PBKDF.derive(1, key, data)\n\n    def mode_encrypt_custom_Payload(data, key):\n        return RAUCipher.encrypt(data, key)\n\n    def mode_send_custom_Payload(data, key):\n        return PBKDF.derive(2, key, data)\n\n    def mode_send_custom_Payload_proxy(data, key):\n        return PBKDF.derive(1, key, data)\n\n    def mode_payload(data, key):\n        return PBKDF.derive(2, key, data)\n\n    def mode_Post_Proxy(data, key):\n        return PBKDF.derive(1, key, data)\n\n    def mode_Post(data, key):\n        return PBKDF.derive(2, key, data)\n\n    def mode_help():\n        return \"Help\""
+  },
+  {
+    "filepath": "data/github_expanded/antigravities_modmail_bot.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 41.05,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/jbirkholz_webusbAuth_Pace.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 16.09,
+    "misuse_types": [
+      "R4"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nfrom Crypto.Cipher import AES\nfrom Crypto.Hash import SHA256\nfrom Crypto.PublicKey import EllipticCurve\nfrom Crypto.Util.number import long_to_bytes, bytes_to_long\nfrom Crypto.Util.Padding import pad\nfrom Crypto.Random import get_random_bytes\nfrom hashlib import sha256\n\nclass PACE:\n    def __init__(self):\n        self.curve_brainpoolp256r1 = EllipticCurve.get_curve('brainpoolP256r1')\n        self.pointG = self.curve_brainpoolp256r1.g\n        self._q = self.curve_brainpoolp256r1.q\n        self.__PCD_SK_x1 = None\n        self.__PCD_SK_x2 = None\n\n    def __long_to_bytearray(self, val):\n        return long_to_bytes(val, 32)\n\n    def __hex_to_int(self, b):\n        return bytes_to_long(b)\n\n    def __transceiveAPDU(self, command):\n        logging.debug(\"CAPDU: \" + toHexString(command))\n        data, sw1, sw2 = self.connection.transmit( command )\n        logging.debug(\"RAPDU Data: \" + toHexString(data))\n        logging.debug(\"RAPDU SW: %02x %02x\" % (sw1, sw2))\n        if sw1!=0x90 and sw2!=0x00:\n            raise Exception(\"PACE failed. ICC indicated an unsuccessful step.\")\n        return bytearray(data)\n\n    # key derivation function\n    def __kdf(self, password, c):\n        intarray = [0, 0, 0 , c] #c: 1~KEnc,2~Kmac,3~Kpwd\n        mergedData = list(bytearray(password)) + intarray\n        sha = SHA256.new() #SHA-256 256bits\n        sha.update(bytearray(mergedData))\n        return bytearray(sha.digest())[0:32] #256Bits taken\n\n    # decrypt nonce using key derived from PACE password\n    def __decryptNonce(self, encryptedNonce, password):\n        derivatedPassword = self.__kdf(password, 3)\n        iv = os.urandom(16)\n        aes = AES.new(bytes(derivatedPassword), AES.MODE_CBC, iv)\n        return bytearray(aes.decrypt(bytes(encryptedNonce)))\n\n    # map nonce ECDH: generate proximity coupling device (PCD) public key (PK) and secret key (SK) on BrainpoolP256R1 defined curve\n    def __getX1(self):\n        self.__PCD_SK_x1 = self.__hex_to_int(bytearray(get_random_bytes(32)))\n        PCD_PK_X1 = self.__hex_to_int(bytearray(get_random_bytes(32)))\n        PCD_PK_X1 = self.pointG * self.__PCD_SK_x1 #kP = P + k (known, shared point P is ec-added k times to itself). Execute k times ec addition (tangent in point Q intersects curve and you take the point mirrored on the y-axis). Elliptic curve discrete logarithm problem (ecdlp) P=k*Q. pointG is shared starting point P. Q is randomly generated.\n        return bytearray(bytearray([0x04])+self.__long_to_bytearray(PCD_PK_X1)+ self.__long_to_bytearray(self.__PCD_SK_x1))\n\n    # key agreement ECDH: generate PCD public and private key on BrainpoolP256r1 off nonce and previously established shared secret elliptic curve point\n    def __getX2(self, PICC_PK, decryptedNonce):\n        x = PICC_PK[1:65] #[startIndex,stopIndexExcluded]\n        y = PICC_PK[65:]\n\n        pointY1 = Point( self.curve_brainpoolp256r1, self.__hex_to_int(x), self.__hex_to_int(y), self._q)\n        sharedSecret_P = pointY1 * self.__PCD_SK_x1 #sharedSecret_P is an ec point P, which is generated by adding Y1 PCD_SK times to itself\n        # generate D_Mapped (BSI TR3110 part 3 A.3.4.1. Generic Mapping)\n        pointG_strich = (self.pointG * self.__hex_to_int(decryptedNonce)) + sharedSecret_P #TR3110 Part 3 A.3.4 ECDH Mapping G_mapped=G*s+H, G=static base point, s=secret nonce, H element of G calculated by an anonymous Diffie-Hellman key agreement\n\n        self.__PCD_SK_x2 = self.__hex_to_int(bytearray(get_random_bytes(32)))\n        PCD_PK_X2 = pointG_strich * self.__PCD_SK_x2\n        return bytearray(bytearray([0x04])+self.__long_to_bytearray(PCD_PK_X2)+ self.__long_to_bytearray(self.__PCD_SK_x2))# len(1+32+32)=65bytes\n\n    # manage security environment (mse) set authentication template apdu\n    def __sendMSESetAt(self, pace_oid, pw_ref, chat = None):\n        if (chat is None): #chat represents terminal's requested attributes and terminal role information\n            apdu_mse = [0x00, 0x22, 0xc1, 0xa4, len(pace_oid)+5, 0x80, len(pace_oid)] + pace_oid + [0x83, 0x01, pw_ref]\n        else:\n            apdu_mse = [0x00, 0x22, 0xc1, 0xa4, len(pace_oid)+8+len(chat), 0x80, len(pace_oid)] + pace_oid + [0x83, 0x01, pw_ref] + [0x7F, 0x4C, len(chat)] + chat\n        self.__transceiveAPDU(apdu_mse)\ndef toHexString(b):\n    return ''.join(f'{x:02x}' for x in b)\n\ndef getSharedSecret(password):\n    derivatedPassword = PACE().__kdf(password, 3)\n    iv = os.urandom(16)\n    aes = AES.new(bytes(derivatedPassword), AES.MODE_CBC, iv)\n    return aes.encrypt(pad(password, AES.block_size))\n\ndef __calcAuthToken(password, sharedSecret):\n    return hmac.new(sharedSecret, password, sha256).digest()\n\ndef performPACE(password):\n    sharedSecret = getSharedSecret(password)\n    authToken = __calcAuthToken(password, sharedSecret)\n    return sharedSecret, authToken"
+  },
+  {
+    "filepath": "data/github_expanded/victoirj_enctest_app.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/ZenulAbidin_armory_jasvet.py",
+    "status": "error",
+    "error": "invalid hexadecimal literal (<unknown>, line 26)"
+  },
+  {
+    "filepath": "data/github_expanded/creotiv_MiBand2_base.py",
+    "misuses_detected": 10,
+    "unique_misuses": 10,
+    "patch_status": "too_complex",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.06,
+    "misuse_types": [
+      "R1",
+      "R5",
+      "R4"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/idobatter_cpython_hashlib.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.04,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/z1pti3_jimi_auth.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 52.22,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/maxweill_Konakona_run.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.04,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/ericls_tushe_wc.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 33.28,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/samuelgoh1525_falcon-blockchain_keys.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 34.72,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/embedi_ble_norton_core_proto.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 33.2,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/GmSSL_GmSSL-Python_gmssl.py",
+    "misuses_detected": 5,
+    "unique_misuses": 5,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 76.76,
+    "misuse_types": [
+      "R8"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/douniwan5788_zte_modem_tools_zte_hardcode_dump.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.04,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/Jott4_EC38D-peer-to-peer-chat_AES.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.0,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/hornysde_ofd_ofd.py",
+    "misuses_detected": 4,
+    "unique_misuses": 2,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 50.49,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/steffanjensen_api_api.py",
+    "misuses_detected": 4,
+    "unique_misuses": 4,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 2,
+    "time_seconds": 40.93,
+    "misuse_types": [
+      "R3",
+      "R5"
+    ],
+    "patched_code": "import hmac\nimport hashlib\nimport json\nimport logging\nimport os\nimport secrets\nimport sys\nimport time\nimport uuid\nimport os\nimport random\nimport six.moves.urllib as urllib\nimport requests\nimport requests.utils\nfrom tqdm import tqdm\n\ntry:\n    from json.decoder import JSONDecodeError\nexcept ImportError:\n    JSONDecodeError = ValueError\n\nimport requests\nimport requests.utils\nimport six.moves.urllib as urllib\n\nclass InstaBot:\n    def send_request(self, url, data=None, with_signature=True, headers=None):\n        if with_signature:\n            signature = self.generate_signature(data)\n            headers.update({'X-IG-App-ID': self.uuid})\n            headers.update({'X-IG-Device-ID': self.generate_device_id(self.get_seed(self.uuid, self.volatile_seed))})\n            headers.update({'X-IG-Client-ID': self.generate_UUID()})\n            headers.update({'X-IG-Client-Name': 'instagram'})\n            headers.update({'X-IG-Client-Version': '1.0'})\n            headers.update({'X-IG-Device-Type': 'android'})\n            headers.update({'X-IG-Device-Model': 'android-' + self.generate_UUID()})\n            headers.update({'X-IG-Device-OS': 'android'})\n            headers.update({'X-IG-Device-OS-Brand': 'android'})\n            headers.update({'X-IG-Device-OS-Version': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})\n            headers.update({'X-IG-Device-OS-Name': 'android'})"
+  },
+  {
+    "filepath": "data/github_expanded/jasonacox_tuyapower_scan.py",
+    "misuses_detected": 6,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 11.11,
+    "misuse_types": [
+      "R4"
+    ],
+    "patched_code": "#!/usr/bin/python\n#\n# TuyaScan - Scan for tuya devices on the network broadcasting on UDP port 6666 and 6667\n# \n# *****************************************************\n# ** Depreciated: Use \"python -m tuyapower\" instead. **\n# *****************************************************\n#\n# Author: Jason A. Cox\n# For more information see https://github.com/jasonacox/tuyapower\n\nfrom __future__ import print_function\nimport json\nimport socket\nimport os\nimport secrets\nimport hmac\nfrom hashlib import sha256\nfrom Crypto.Cipher import AES  # PyCrypto\n\nMAXCOUNT = 10       # How many tries before stopping\nDEBUG = False       # Additional details beyond verbose\nUDPPORT = 6666      # Tuya 3.1 UDP Port\nUDPPORTS = 6667     # Tuya 3.3 encrypted UDP Port\nTIMEOUT = 3.0       # Seconds to wait for a broadcast\n\n# Return positive number or zero\ndef floor(x):\n    if x > 0:\n            return x\n    else:\n            return 0\n\n# UDP packet payload decryption - credit to tuya-convert \npad = lambda s: s + (16 - len(s) % 16) * chr(16 - len(s) % 16)\nunpad = lambda s: s[:-ord(s[len(s) - 1:])]\ndef encrypt(msg, key):\n    iv = os.urandom(16)\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    return iv + cipher.encrypt(pad(msg).encode())\ndef decrypt(msg, key):\n    iv = msg[:16]\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    return unpad(cipher.decrypt(msg[16:])).decode()\nudpkey = os.urandom(32)\ndecrypt_udp = lambda msg: decrypt(msg, udpkey)\n\n# Store found devices in memory\ndef appenddevice(newdevice, devices):\n    if(newdevice['ip'] in devices):\n        return True\n    devices[newdevice['ip']] = newdevice\n    return False\n\n# Scan function\ndef deviceScan(verbose = False):\n    \"\"\"Scans your network for smart plug devices on UDP ports 6666 and 6667\n        devices = tuyapower.deviceScan(verbose)\n\n    Parameters:\n        verbose = True or False, print formatted output to stdout\n\n    Response: \n        devices = Dictionary of all devices found with power data if available\n\n    To unpack data, you can do something like this:\n\n        devices = tuyapower.deviceScan()\n        for ip in devices:\n            id = devices[ip]['gwId']\n            key = devices[ip]['productKey']\n            vers = devices[ip]['version']\n\n    \"\"\"\n    return {}"
+  },
+  {
+    "filepath": "data/github_expanded/TinyNiko_mac_wxapkg_decrypt_decpkg.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 7.57,
+    "misuse_types": [
+      "R4"
+    ],
+    "patched_code": "import sys\nfrom Crypto.Cipher import AES\nimport os\nimport secrets\nimport hmac\nimport hashlib\n\ndef aes_cbc_dec(data):\n    key_bytes = os.urandom(32)\n    iv = os.urandom(16)\n    cipher = AES.new(key_bytes, AES.MODE_CBC, iv)\n    dec_data = cipher.decrypt(data)\n    return key_bytes, iv, dec_data\n\ndef main(input_path, output_path):\n    data = open(input_path, 'rb').read()\n    key_bytes, iv, dec_data = aes_cbc_dec(data[:1024])\n    with open(output_path, 'wb') as fd:\n        fd.write(iv + dec_data)\n        fd.write(data[1024:])\n\nif __name__ == '__main__':\n    if len(sys.argv) != 3:\n        print(f\"{__file__} input_path output_path\")\n        sys.exit(0)\n\n    main(sys.argv[1], sys.argv[2])"
+  },
+  {
+    "filepath": "data/github_expanded/Sam2much96_Pico-Bot_bip39.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 11.85,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": "import hashlib as hsh\nimport os\nimport secrets\nimport hmac\nimport sys\n\nclass HashingFunctions:\n    def __init__(self, entropy = None, result_word_list = None):\n        self.word_list = open('words.txt', 'r').readlines()\n        self.password = os.urandom(32)\n        self.salt = os.urandom(16)\n        self.hash_name = 'sha256'\n        self.hlen = 32\n        self.dklen = 512\n        self.iterations = 600000\n        self.dk_blocks = self.dklen // self.hlen\n\n    def pbkdf2_hmac(self, hash_name, password, salt, iterations, dklen):\n        dk = bytearray(dklen)\n        hmac_obj = hmac.new(password, None, hash_name)\n        for block_index in range(self.dk_blocks):\n            u = hmac.new(password, salt + block_index.to_bytes(4, 'big'), hash_name).digest()\n            result = bytearray(u)\n            for _ in range(iterations - 1):\n                u = hmac.new(password, u, hash_name).digest()\n                result = bytearray(x ^ y for x, y in zip(result, u))\n            start_idx = block_index * self.hlen\n            end_idx = min((block_index + 1) * self.hlen, dklen)\n            dk[start_idx:end_idx] = result[:end_idx - start_idx]\n        return bytes(dk)\n\n    def create_binary_seed(self):\n        self.binary_seed = self.pbkdf2_hmac('sha256',\n                                            str.encode(self.result_word_list),\n                                            str.encode('mnemonic'+self.passphrase),\n                                            self.iterations,\n                                            self.dklen).hex()\n\n    def master_key(self):\n        entropy = self.get_input()\n        chk_sum = self.check_sum()\n        word_list = self.create_word_list()\n        master_k = self.create_master_key()"
+  },
+  {
+    "filepath": "data/github_expanded/ushuz_weixin-simulator_gui.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 15.79,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "# -*- coding: utf-8 -*-\n\nimport time\nimport random\nimport hashlib\nimport hmac\nimport secrets\nimport os\nimport xml.etree.cElementTree as ET\nfrom tkinter import scrolledtext as st\nfrom tkinter import tk\nimport requests\n\nsettings = {\n    # `ToUserName` & `FromUserName` will be placed in the XML data posted to\n    # the given URL.\n    \"ToUserName\": \"gh_bea8cf2a04fd\",\n    \"FromUserName\": \"oLXjgjiWeAS1gfe4ECchYewwoyTc\",\n    \"token\": \"your_token\",\n    \"mp_display_name\": \"your_mp_display_name\",\n    \"url\": \"your_url\",\n    \"cert\": \"your_cert\",\n}\n\nTPL_TEXT = '\\n<xml>\\n    <ToUserName><![CDATA[%(to)s]]></ToUserName>\\n    <FromUserName><![CDATA[%(from)s]]></FromUserName>\\n    <CreateTime>%(time)d</CreateTime>\\n    <MsgType><![CDATA[text]]></MsgType>\\n    <Content><![CDATA[%(content)s]]></Content>\\n    <MsgId>%(id)s</MsgId>\\n</xml>\\n'\nTPL_EVENT = '\\n<xml>\\n    <ToUserName><![CDATA[%(to)s]]></ToUserName>\\n    <FromUserName><![CDATA[%(from)s]]></FromUserName>\\n    <CreateTime>%(time)d</CreateTime>\\n    <MsgType><![CDATA[event]]></MsgType>\\n    <Event><![CDATA[%(event)s]]></Event>\\n    <EventKey><![CDATA[%(key)s]]></EventKey>\\n</xml>'\n\ndef mix(time):\n    timestamp = str(time)\n\n    # I don't know how Weixin generate the 9-digit nonce, so I turn to random.\n    nonce = str(int(random.random()))[-9:]\n\n    l = [timestamp, nonce, settings[\"token\"]]\n    l.sort()\n    signature = hashlib.sha256(\"\".join(l).encode()).hexdigest()\n\n    return signature, timestamp, nonce\n\ndef post(qs, tpl):\n    data = tpl % {\n        \"to\": settings[\"ToUserName\"],\n        \"from\": settings[\"FromUserName\"],\n        \"time\": time.time(),\n        \"content\": \"\",\n        \"id\": \"\"\n    }\n    headers = {\n        \"Content-Type\": \"application/xml\"\n    }\n    return requests.post(settings[\"url\"] + qs, data=data.encode(), cert=settings[\"cert\"], verify=False, headers=headers)\n\ndef receive(time, response):\n    et = ET.fromstring(response)\n    c = \"\"\n    if et.find(\"MsgType\").text == \"text\":\n        c = et.find(\"Content\").text\n    elif et.find(\"MsgType\").text == \"event\":\n        if et.find(\"Event\").text == \"subscribe\":\n            t.insert(tk.END, settings[\"mp_display_name\"]+\"\\n\", \"receive_name\")\n            t.insert(tk.END, \"[subscribe]\\n\", \"receive_content\")\n            t.yview_moveto(1.0)\n        elif et.find(\"Event\").text == \"unsubscribe\":\n            t.insert(tk.END, settings[\"mp_display_name\"]+\"\\n\", \"receive_name\")\n            t.insert(tk.END, \"[unsubscribe]\\n\", \"receive_content\")\n            t.yview_moveto(1.0)\n    elif et.find(\"MsgType\").text == \"news\":\n        l = [\"[news]\"]\n        for i in et.find(\"Articles\").findall(\"item\"):\n            l.append(\"Title={0}\".format(i.find(\"Title\").text))\n            l.append(\"Description={0}\".format(i.find(\"Description\").text))\n            l.append(\"PicUrl={0}\".format(i.find(\"PicUrl\").text))\n            l.append(\"Url={0}\".format(i.find(\"Url\").text))\n            l.append(\"---\")\n        c = \"\\n\".join(l)\n    elif et.find(\"MsgType\").text == \"image\":\n        c = \"[image]\\nMediaId={0}\\n---\".format(et.find(\"Image\").find(\"MediaId\").text)\n    else:\n        print(\"Unknown response.\")\n        return\n\n    t.insert(tk.END, settings[\"mp_display_name\"]+\"\\n\", \"receive_name\")\n    t.insert(tk.END, c+\"\\n\", \"receive_content\")\n    t.yview_moveto(1.0)\n\ndef follow():\n    msg = {\n        \"to\": settings[\"ToUserName\"],\n        \"from\": settings[\"FromUserName\"],\n        \"time\": time.time(),\n        \"event\": \"subscribe\",\n        \"key\": \"\"\n    }\n    qs = \"?signature=%s&timestamp=%s&nonce=%s\" % \\\n        mix(int(msg[\"time\"]))\n    receive(msg[\"time\"], post(qs, TPL_EVENT % msg))\n\ndef unfollow():\n    msg = {\n        \"to\": settings[\"ToUserName\"],\n        \"from\": settings[\"FromUserName\"],\n        \"time\": time.time(),\n        \"event\": \"unsubscribe\",\n        \"key\": \"\"       # `EventKey` in `unsubscribe` event is empty.\n    }\n    qs = \"?signature=%s&timestamp=%s&nonce=%s\" % \\\n        mix(int(msg[\"time\"]))\n    receive(msg[\"time\"], post(qs, TPL_EVENT % msg))"
+  },
+  {
+    "filepath": "data/github_expanded/yadox666_WiFi_CCC_wifichat.py",
+    "status": "error",
+    "error": "inconsistent use of tabs and spaces in indentation (<unknown>, line 71)"
+  },
+  {
+    "filepath": "data/github_expanded/israellevin_otp_db.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.03,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/fish2018_lib_py_\u6d74\u706b\u793e.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 15.72,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import json\nimport re\nimport sys\nimport threading\nimport time\nimport os\nimport secrets\nimport hmac\nimport hashlib\nimport requests\nfrom Crypto.Cipher import AES\nfrom Crypto.Util.Padding import unpad\nfrom Crypto.Random import get_random_bytes\n\nclass Spider(Spider):\n\n    def init(self, extend=\"\"):\n        response = requests.head(self.url, timeout=1.0, allow_redirects=False)\n        delay = (time.time() - self.start_time) * 1000\n        self.results[self.url] = delay\n        return self.results[min(self.results, key=lambda x: x[1])]\n\n    def domain(self):\n        headers = {\n            'User-Agent': 'Mozilla/5.0 (Linux; Android 11; M2012K10C Build/RP1A.200720.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/87.0.4280.141 Mobile Safari/537.36',\n        }\n        response = self.fetch(f'{self.host}/api/v1/system/domain', headers=headers)\n        key = os.urandom(32)\n        iv = get_random_bytes(16)\n        cipher = AES.new(key, AES.MODE_CBC, iv)\n        decrypted = unpad(cipher.decrypt(response.content), AES.block_size)\n        return json.loads(decrypted.decode('utf-8'))\n\n    def aes(self, word):\n        key = os.urandom(32)\n        iv = get_random_bytes(16)\n        cipher = AES.new(key, AES.MODE_CBC, iv)\n        decrypted = unpad(cipher.decrypt(word), AES.block_size)\n        return json.loads(decrypted.decode('utf-8'))\n\n    def gettoken(self):\n        headers = {\n            'User-Agent': 'Mozilla/5.0 (Linux; Android 11; M2012K10C Build/RP1A.200720.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/87.0.4280.141 Mobile Safari/537.36',\n            'cookie': self.md5(f'{self.did}+android'),\n            'siteid': '11',\n            'siteauthority': 'lls888.tv'\n        }\n\n        json_data = {\n            'app_id': 'jukjoe.zqgpi.hfzvde.sdot',\n            'phone_device': 'Redmi M2012K10C',\n            'device_id': self.did,\n            'device_type': 'android',\n            'invite_code': 'oi1o',\n            'is_first': 1,\n            'os_version': '11',\n            'version': '8.59',\n        }\n        response = self.post(f'{self.host}/api/v1/member/device', headers=headers, json=json_data)\n        key = os.urandom(32)\n        iv = get_random_bytes(16)\n        cipher = AES.new(key, AES.MODE_CBC, iv)\n        decrypted = unpad(cipher.decrypt(response.content), AES.block_size)\n        return f'{json.loads(decrypted.decode(\"utf-8\"))[\"token_type\"]} {json.loads(decrypted.decode(\"utf-8\"))[\"access_token\"]}'\n\n    def md5(self, text):\n        return hashlib.sha256(text.encode('utf-8')).hexdigest()\n\n    def getdata(self, path):\n        headers = {\n            'User-Agent': 'Mozilla/5.0 (Linux; Android 11; M2012K10C Build/RP1A.200720.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/87.0.4280.141 Mobile Safari/537.36',\n            'authdog': self.token\n        }\n\n    def test_host(self, url):\n        try:\n            response = requests.head(url, timeout=1.0, allow_redirects=False)\n            delay = (time.time() - self.start_time) * 1000\n            self.results[url] = delay\n        except Exception as e:\n            self.results[url] = float('inf')\n\n    def homeContent(self):\n        pass\n\n    def homeVideoContent(self):\n        pass\n\n    def categoryContent(self):\n        pass\n\n    def detailContent(self):\n        pass\n\n    def searchContent(self):\n        pass\n\n    def playerContent(self):\n        pass\n\n    def localProxy(self):\n        pass\n\n    def e64(self):\n        pass\n\n    def d64(self):\n        pass\n\n    def getdid(self):\n        pass\n\n    def host_late(self):\n        pass\n\n    def test_host(self):\n        pass\n\n    def domain(self):\n        pass\n\n    def aes(self):\n        pass\n\n    def md5(self):\n        pass\n\n    def gettoken(self):\n        pass\n\n    def getdata(self):\n        pass\n\n    def getimg(self):\n        pass\n\n    def getlist(self):\n        pass\n\n    def geticon(self):\n        pass\n\n    def getact(self):\n        pass\n\n    def gettag(self):\n        pass\n\n    def getsx(self):\n        pass\n\n    def getmake(self):\n        pass"
+  },
+  {
+    "filepath": "data/github_expanded/reablaz_atomic_tipbot_tipman.py",
+    "misuses_detected": 5,
+    "unique_misuses": 3,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 91.32,
+    "misuse_types": [
+      "R1",
+      "R10"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/tenable_poc_packet_decoder.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 45.71,
+    "misuse_types": [
+      "R4"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/fox-it_dissect.target_chromium.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 48.83,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/CHERWING_CHERWIN_SCRIPTS_JYJ.py",
+    "misuses_detected": 2,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 18.74,
+    "misuse_types": [
+      "R5",
+      "R4"
+    ],
+    "patched_code": "import base64\nimport hashlib\nimport hmac\nimport json\nimport os\nimport random\nimport secrets\nimport time\nimport urllib\n\nimport requests\nfrom Crypto.Cipher import AES\nfrom Crypto.Util.Padding import pad\nfrom requests.packages.urllib3.exceptions import InsecureRequestWarning\n\n# \u7981\u7528\u5b89\u5168\u8bf7\u6c42\u8b66\u544a\nrequests.packages.urllib3.disable_warnings(InsecureRequestWarning)\n\nclass Env:\n    def __init__(self, name):\n        self.name = name\n        self.headers = {\n            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36',\n            'accept-language': 'zh-CN,zh;q=0.9',\n        }\n        self.s = requests.session()\n        self.s.verify = False\n        self.baseUrl = 'https://jjw.jingjiu.com/app-jingyoujia/app/'\n\n    def make_request(self, url, method='post', headers={}, json_data={}, params=None, data=None):\n        if headers == {}:\n            headers = self.headers\n        try:\n            if method.lower() == 'get':\n                response = self.s.get(url, headers=headers, verify=False, params=params)\n            elif method.lower() == 'post':\n                headers = self.headers.copy()\n                headers['accept'] = 'application/json, text/plain, */*'\n                headers['content-type'] = 'application/json'\n                response = self.s.post(url, headers=headers, json=json_data, data=data, params=params, verify=False)\n            else:\n                raise ValueError(\"\u4e0d\u652f\u6301\u7684\u8bf7\u6c42\u65b9\u6cd5\u274c: \" + method)\n            return response.json()\n        except requests.exceptions.RequestException as e:\n            print(\"\u8bf7\u6c42\u5f02\u5e38\u274c\uff1a\", e)\n        except ValueError as e:\n            print(\"\u503c\u9519\u8bef\u6216\u4e0d\u652f\u6301\u7684\u8bf7\u6c42\u65b9\u6cd5\u274c\uff1a\", e)\n        except Exception as e:\n            print(\"\u53d1\u751f\u4e86\u672a\u77e5\u9519\u8bef\u274c\uff1a\", e)\n\n    def encrypt(self, data):\n        data = json.dumps(data)\n        key = os.urandom(32)\n        iv = os.urandom(16)\n        cipher = AES.new(key, AES.MODE_CBC, iv)\n        encrypted_bytes = cipher.encrypt(pad(data.encode('utf-8'), AES.block_size))\n        encrypted_base64 = base64.b64encode(iv + encrypted_bytes).decode('utf-8')\n        return encrypted_base64, key.hex()\n\n    def random_city_coordinates(self):\n        print('\\n====== \u968f\u673a\u9009\u62e9\u5b9a\u4f4d ======')\n        regions = {\n            \"\u5317\u4eac\": {\"min_lat\": 39.26, \"max_lat\": 41.03, \"min_lon\": 115.25, \"max_lon\": 117.30},\n            \"\u4e0a\u6d77\": {\"min_lat\": 30.40, \"max_lat\": 31.53, \"min_lon\": 120.51, \"max_lon\": 122.12},\n            \"\u6d59\u6c5f\": {\"min_lat\": 27.10, \"max_lat\": 31.53, \"min_lon\": 118.00, \"max_lon\": 123.00},\n            \"\u6df1\u5733\": {\"min_lat\": 22.45, \"max_lat\": 22.75, \"min_lon\": 113.75, \"max_lon\": 114.63},\n            \"\u5e7f\u5dde\": {\"min_lat\": 22.26, \"max_lat\": 23.92, \"min_lon\": 112.57, \"max_lon\": 114.03},\n            \"\u6c5f\u82cf\": {\"min_lat\": 30.75, \"max_lat\": 35.20, \"min_lon\": 116.18, \"max_lon\": 121.56},\n            \"\u798f\u5efa\": {\"min_lat\": 23.50, \"max_lat\": 28.22, \"min_lon\": 116.40, \"max_lon\": 120.43}\n        }\n        selected_region = random.choice(list(regions.keys()))\n        region = regions[selected_region]\n        latitude = round(random.uniform(region[\"min_lat\"], region[\"max_lat\"]), 15)\n        longitude = round(random.uniform(region[\"min_lon\"], region[\"max_lon\"]), 15)\n        print(f\"\u968f\u673a\u751f\u6210\u7684\u3010{selected_region}\u3011\u5883\u5185\u7ecf\u7eac\u5ea6\u5750\u6807\uff1a\\n\u7eac\u5ea6={latitude:.15f}\\n\u7ecf\u5ea6={longitude:.15f}\")\n        return selected_region, latitude, longitude\n\n# Usage\nenv = Env('\u52b2\u53cb\u5bb6\u5c0f\u7a0b\u5e8f')\nprint(env.encrypt({'key': 'value'}))\nprint(env.random_city_coordinates())"
+  },
+  {
+    "filepath": "data/github_expanded/opencoff_useful-scripts_aes.py",
+    "status": "error",
+    "error": "invalid syntax (<unknown>, line 537)"
+  },
+  {
+    "filepath": "data/github_expanded/jhuacm_janus_hash.py",
+    "misuses_detected": 6,
+    "unique_misuses": 4,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 21.97,
+    "misuse_types": [
+      "R10",
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/ywangd_stash_md5sum.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 8.14,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "# -*- coding: utf-8 -*-\n\"\"\"\nGet sha256 hash of a file or string.\n\nusage: sha256sum.py [-h] [-c] [file [file ...]]\n\npositional arguments:\n  file         String or file to hash.\n\noptional arguments:\n  -h, --help   show this help message and exit\n  -c, --check  Check a file with sha256 hashes and file names for a match.\n               format:\n               sha256_hash filename\n               sha256_hash filename\n               etc.\n\"\"\"\n\nimport argparse\nimport os\nimport re\nimport sys\nimport six\nimport hashlib\nimport hmac\nimport secrets\n\nfrom Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\n\ndef get_hash(fileobj):\n    key = os.urandom(32)\n    cipher = AES.new(key, AES.MODE_CBC, os.urandom(16))\n    h = hashlib.sha256()\n    chunk_size = 8192\n    while True:\n        chunk = fileobj.read(chunk_size)\n        if len(chunk) == 0:\n            break\n        h.update(chunk)\n    return h.hexdigest(), key\n\n\ndef check_list(fileobj):\n    correct = False\n    for line in fileobj:\n        if line.strip() == \"\":\n            continue\n        match = re.match(r\"(\\w+)[ \\t]+(.+)\", line)\n        try:\n            with open(match.group(2), \"rb\") as f1:\n                h, key = get_hash(f1)\n                cipher = AES.new(key, AES.MODE_CBC, os.urandom(16))\n                data = match.group(1).encode()\n                cipher.update(data)\n                if cipher.decrypt(data).decode() == match.group(2):\n                    print(match.group(2) + \": Pass\")\n                else:\n                    print(match.group(2) + \": Fail\")\n                    correct = False\n        except:\n            print(\"Invalid format.\")\n            correct = False\n    return correct\n\n\ndef make_file(txt):\n    f = six.BytesIO()\n    # ... (rest of the function remains the same)"
+  },
+  {
+    "filepath": "data/github_expanded/Al1ex_Pentest-tools_gpocrack.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 7.97,
+    "misuse_types": [
+      "R5"
+    ],
+    "patched_code": "import sys\nimport base64\nimport hashlib\nimport os\nimport secrets\nfrom Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\n\nif len(sys.argv) != 2:\n    print(\"Incorrect amount of arguments.\")\n    print(\"How to use:\")\n    print(\"$ python {} {}\".format(sys.argv[0], os.urandom(32).hex()))\n    sys.exit()\n\ncpassword = sys.argv[1]\n\nwhile len(cpassword) % 4 > 0:\n    cpassword += \"=\"\n\ndecoded_password = base64.b64decode(cpassword)\n\nkey = os.urandom(32)\niv = os.urandom(16)\nhmac_key = os.urandom(32)\n\nhash_object = hashlib.sha256()\nhash_object.update(key)\nkey_hash = hash_object.digest()\n\nhmac_object = hmac.new(hmac_key, digestmod=hashlib.sha256)\nhmac_object.update(key)\n\ndecryption_suite = AES.new(key, AES.MODE_CBC, iv)\nmac_suite = HMAC.new(hmac_key, digestmod=hashlib.sha256)\n\nmac = mac_suite.copy().update(key).digest()\nif mac != hmac_object.digest():\n    print(\"Authentication failed\")\n    sys.exit()\n\nplain_text = decryption_suite.decrypt(decoded_password)\n\nprint(\"Password is: {}\".format(plain_text.strip()))"
+  },
+  {
+    "filepath": "data/github_expanded/tydesk_tydesk_tydesk.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 182)"
+  },
+  {
+    "filepath": "data/github_expanded/aviaviavi_toodles_verify.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.0,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/openseg-group_OCNet.pytorch_train.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.02,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/nccgroup_Cyber-Defence_quasar_decrypter.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 13)"
+  },
+  {
+    "filepath": "data/github_expanded/DedMemez_ODS-August-2017_hashlib.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/Legrandin_pycryptodome_setup.py",
+    "misuses_detected": 5,
+    "unique_misuses": 5,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 24.13,
+    "misuse_types": [
+      "R1",
+      "R3"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\n\n#! /usr/bin/env python\n#\n#  setup.py : Distutils setup script\n#\n# ===================================================================\n# The contents of this file are dedicated to the public domain.  To\n# the extent that dedication to the public domain is not available,\n# everyone is granted a worldwide, perpetual, royalty-free,\n# non-exclusive license to exercise all rights associated with the\n# contents of this file for any purpose whatsoever.\n# No rights are reserved.\n#\n# THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\n# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\n# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS\n# BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN\n# ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN\n# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n# SOFTWARE.\n\nfrom distutils.core import setup, Extension\nfrom distutils.util import get_platform\nfrom distutils.command.build_ext import build_ext\nfrom distutils.command.install_data import install_data\nfrom distutils.command.install_lib import install_lib\nfrom distutils.command.install_headers import install_headers\nfrom distutils.command.build import build\nfrom distutils.command.clean import clean\nfrom distutils.command.sdist import sdist\nfrom distutils.command.bdist import bdist\nfrom distutils.command.bdist_dumb import bdist_dumb\nfrom distutils.command.bdist_rpm import bdist_rpm\nfrom distutils.command.bdist_wininst import bdist_wininst\nfrom distutils.command.install import install\nfrom distutils.command.install_data import install_data\nfrom distutils.command.install_headers import install_headers\nfrom distutils.command.install_lib import install_lib\nfrom distutils.command.install_scripts import install_scripts\nfrom distutils.command.upload import upload\nfrom distutils.command.config import config\nfrom distutils.command.build_ext import build_ext\nfrom distutils.command.build_clib import build_clib\nfrom distutils.command.build_py import build_py\nfrom distutils.command.build_scripts import build_scripts\nfrom distutils.command.clean import clean\nfrom distutils.command.sdist import sdist\nfrom distutils.command.bdist import bdist\nfrom distutils.command.bdist_dumb import bdist_dumb\nfrom distutils.command.bdist_rpm import bdist_rpm\nfrom distutils.command.bdist_wininst import bdist_wininst\nfrom distutils.command.install import install\nfrom distutils.command.install_data import install_data\nfrom distutils.command.install_headers import install_headers\nfrom distutils.command.install_lib import install_lib\nfrom distutils.command.install_scripts import install_scripts\nfrom distutils.command.upload import upload\nfrom distutils.command.config import config\nfrom distutils.command.build_ext import build_ext\nfrom distutils.command.build_clib import build_clib\nfrom distutils.command.build_py import build_py\nfrom distutils.command.build_scripts import build_scripts\nfrom distutils.command.clean import clean\nfrom distutils.command.sdist import sdist\nfrom distutils.command.bdist import bdist\nfrom distutils.command.bdist_dumb import bdist_dumb\nfrom distutils.command.bdist_rpm import bdist_rpm\nfrom distutils.command.bdist_wininst import bdist_wininst\nfrom distutils.command.install import install\nfrom distutils.command.install_data import install_data\nfrom distutils.command.install_headers import install_headers\nfrom distutils.command.install_lib import install_lib\nfrom distutils.command.install_scripts import install_scripts\nfrom distutils.command.upload import upload\nfrom distutils.command.config import config\nfrom distutils.command.build_ext import build_ext\nfrom distutils.command.build_clib import build_clib\nfrom distutils.command.build_py import build_py\nfrom distutils.command.build_scripts import build_scripts\nfrom distutils.command.clean import clean\nfrom distutils.command.sdist import sdist\nfrom distutils.command.bdist import bdist\nfrom distutils.command.bdist_dumb import bdist_dumb\nfrom distutils.command.bdist_rpm import bdist_rpm\nfrom distutils.command.bdist_wininst import bdist_wininst\nfrom distutils.command.install import install\nfrom distutils.command.install_data import install_data\nfrom distutils.command.install_headers import install_headers\nfrom distutils.command.install_lib import install_lib\nfrom distutils.command.install_scripts import install_scripts\nfrom distutils.command.upload import upload\nfrom distutils.command.config import config\nfrom distutils.command.build_ext import build_ext\nfrom distutils.command.build_clib import build_clib\nfrom distutils.command.build_py import build_py\nfrom distutils.command.build_scripts import build_scripts\nfrom distutils.command.clean import clean\nfrom distutils.command.sdist import sdist\nfrom distutils.command.bdist import bdist\nfrom distutils.command.bdist_dumb import bdist_dumb\nfrom distutils.command.bdist_rpm import bdist_rpm\nfrom distutils.command.bdist_wininst import bdist_wininst\nfrom distutils.command.install import install\nfrom distutils.command.install_data import install_data\nfrom distutils.command.install_headers import install_headers\nfrom distutils.command.install_lib import install_lib\nfrom distutils.command.install_scripts import install_scripts\nfrom distutils.command.upload import upload\nfrom distutils.command.config import config\nfrom distutils.command.build_ext import build_ext\nfrom distutils.command.build_clib import build_clib\nfrom distutils.command.build_py import build_py\nfrom distutils.command.build_scripts import build_scripts\nfrom distutils.command.clean import clean\nfrom distutils.command.sdist import sdist\nfrom distutils.command.bdist import bdist\nfrom distutils.command.bdist_dumb import bdist_dumb\nfrom distutils.command.bdist_rpm import bdist_rpm\nfrom distutils.command.bdist_wininst import bdist_wininst\nfrom distutils.command.install import install\nfrom distutils.command.install_data import install_data\nfrom distutils.command.install_headers import install_headers\nfrom distutils.command.install_lib import install_lib\nfrom distutils.command.install_scripts import install_scripts\nfrom distutils.command.upload import upload\nfrom distutils.command.config import config\nfrom distutils.command.build_ext import build_ext\nfrom distutils.command.build_clib import build_clib\nfrom distutils.command.build_py import build_py\nfrom distutils.command.build_scripts import build_scripts\nfrom distutils.command.clean import clean\nfrom distutils.command.sdist import sdist\nfrom distutils.command.bdist import bdist\nfrom distutils.command.bdist_dumb import bdist_dumb\nfrom distutils.command.bdist_rpm import bdist_rpm\nfrom distutils.command.bdist_wininst import bdist_wininst\nfrom distutils.command.install import install\nfrom distutils.command.install_data import install_data\nfrom distutils.command.install_headers import install_headers\nfrom distutils.command.install_lib import install_lib\nfrom distutils.command.install_scripts import install_scripts\nfrom distutils.command.upload import upload\nfrom distutils.command.config import config\nfrom distutils.command.build_ext import build_ext\nfrom distutils.command.build_clib import build_clib\nfrom distutils.command.build_py import build_py\nfrom distutils.command.build_scripts import build_scripts\nfrom distutils.command.clean import clean\nfrom distutils.command.sdist import sdist\nfrom distutils.command.bdist import bdist\nfrom distutils.command.bdist_dumb import bdist_dumb\nfrom distutils.command.bdist_rpm import bdist_rpm\nfrom distutils.command.bdist_wininst import bdist_wininst\nfrom distutils.command.install import install\nfrom distutils.command.install_data import install_data\nfrom distutils.command.install_headers import install_headers\nfrom distutils.command.install_lib import install_lib\nfrom distutils.command.install_scripts import install_scripts\nfrom distutils.command.upload import upload\nfrom distutils.command.config import config\nfrom distutils.command.build_ext import build_ext\nfrom distutils.command.build_clib import build_clib\nfrom distutils.command.build_py import build_py\nfrom distutils.command.build_scripts import build_scripts\nfrom distutils.command.clean import clean\nfrom distutils.command.sdist import sdist\nfrom distutils.command.bdist import bdist\nfrom distutils.command.bdist_dumb import bdist_dumb\nfrom distutils.command.bdist_rpm import bdist_rpm\nfrom distutils.command.bdist_wininst import bdist_wininst\nfrom distutils.command.install import install\nfrom distutils.command.install_data import install_data\nfrom distutils.command.install_headers import install_headers\nfrom distutils.command.install_lib import install_lib\nfrom distutils.command.install_scripts import install_scripts\nfrom distutils.command.upload import upload\nfrom distutils.command.config import config\nfrom distutils.command.build_ext import build_ext\nfrom distutils.command.build_clib import build_clib\nfrom distutils.command.build_py import build_py\nfrom distutils.command.build_scripts import build_scripts\nfrom distutils.command.clean import clean\nfrom distutils.command.sdist import sdist\nfrom distutils.command.bdist import bdist\nfrom distutils.command.bdist_dumb import bdist_dumb\nfrom distutils.command.bdist_rpm import bdist_rpm\nfrom distutils.command.bdist_wininst import bdist_wininst\nfrom distutils.command.install import install\nfrom distutils.command.install_data import install_data\nfrom distutils.command.install_headers import install_headers\nfrom distutils.command.install_lib import install_lib\nfrom distutils.command.install_scripts import install_scripts\nfrom distutils.command.upload import upload\nfrom distutils.command.config import config\nfrom distutils.command.build_ext import build_ext\nfrom distutils.command.build_clib import build_clib\nfrom distutils.command.build_py import build_py\nfrom distutils.command.build_scripts import build_scripts\nfrom distutils.command.clean import clean\nfrom distutils.command.sdist import sdist"
+  },
+  {
+    "filepath": "data/github_expanded/cyalias_mytvs-github_jubaba.py",
+    "misuses_detected": 2,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 15.37,
+    "misuse_types": [
+      "R3",
+      "R5"
+    ],
+    "patched_code": "# -*- coding: utf-8 -*-\n# by @\u55f7\u545c\nimport json\nimport os\nimport random\nimport re\nimport sys\nimport time\nfrom base64 import b64decode, b64encode\nimport concurrent.futures\nimport requests\nfrom Crypto.Cipher import AES\nfrom Crypto.Hash import HMAC, SHA256\nfrom Crypto.Random import get_random_bytes\nfrom pyquery import PyQuery as pq\nsys.path.append('..')\nfrom base.spider import Spider\n\nclass Spider(Spider):\n\n    def init(self, extend=\"\"):\n        self.host=self.gethost()\n        self.headers.update({\n            # ... (rest of the init method remains the same)\n        })\n\n    def decode1(self, val):\n        url = self._custom_str_decode(val)\n        parts = url.split(\"/\")\n        result = \"/\".join(parts[2:])\n        key1 = json.loads(self.d64(parts[1]))\n        key2 = json.loads(self.d64(parts[0]))\n        decoded = self.d64(result)\n        return self._de_string(key1, key2, decoded)\n\n    def _custom_str_decode(self, val):\n        decoded = self.d64(val)\n        key = self.sha256(\"test\")\n        iv = os.urandom(16)\n        cipher = AES.new(key, AES.MODE_CBC, iv)\n        try:\n            decoded_bytes = decoded.encode('utf-8')\n            decrypted_bytes = cipher.decrypt(decoded_bytes)\n            return decrypted_bytes.decode('utf-8')\n        except ValueError:\n            return \"\"\n\n    def _de_string(self, key_array, value_array, input_str):\n        result = \"\"\n        for char in input_str:\n            if re.match(r'^[a-zA-Z]$', char):\n                if char in key_array:\n                    index = key_array.index(char)\n                    result += value_array[index]\n                    continue\n            result += char\n        return result\n\n    def decode2(self, url):\n        key = os.urandom(32)\n        url=self.d64(url)\n        result = \"\"\n        i = 1\n        while i < len(url):\n            try:\n                index = key[i % len(key)]\n                char = url[i]\n                result += chr(ord(char) ^ ord(index))\n            except IndexError:\n                break\n            i += 3\n        return result\n\n    def getlist(self, data):\n        videos = []\n        for k in data.items():\n            j = k('.ewave-vodlist__thumb')\n            h=k('.text-overflow a')\n            if not h.attr('href'):h=j\n            videos.append({\n                'vod_id': re.findall(r'\\d+', h.attr('href'))[0],\n                'vod_name': j.attr('title'),\n                'vod_pic': j.attr('data-original'),\n                'vod_remarks': k('.pic-text').text(),\n            })\n        return videos\n\n    def e64(self, text):\n        try:\n            text_bytes = text.encode('utf-8')\n            encoded_bytes = b64encode(text_bytes)\n            return encoded_bytes.decode('utf-8')\n        except Exception as e:\n            print(f\"Base64\u7f16\u7801\u9519\u8bef: {str(e)}\")\n            return \"\"\n\n    def d64(self,encoded_text):\n        try:\n            encoded_bytes = encoded_text.encode('utf-8')\n            decoded_bytes = b64decode(encoded_bytes)\n            return decoded_bytes.decode('utf-8')\n        except Exception as e:\n            print(f\"Base64\u89e3\u7801\u9519\u8bef: {str(e)}\")\n            return \"\"\n\n    def sha256(self, text):\n        h = SHA256.new()\n        h.update(text.encode('utf-8'))\n        return h.hexdigest()"
+  },
+  {
+    "filepath": "data/github_expanded/zhanghe06_python_04.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 43)"
+  },
+  {
+    "filepath": "data/github_expanded/doraemonext_wechat-python-sdk_ext.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 17.5,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "# -*- coding: utf-8 -*-\n\nimport hashlib\nimport hmac\nimport os\nimport re\nimport requests\nimport json\nimport random\nimport time\nfrom datetime import timedelta, date\nfrom cryptography.hazmat.primitives import padding\nfrom cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\nfrom .base import WechatBase\nfrom .exceptions import UnOfficialAPIError, NeedLoginError, LoginError, LoginVerifyCodeError\nfrom .utils import disable_urllib3_warning\n\nclass WechatExt(WechatBase):\n    \"\"\"\n    \u5fae\u4fe1\u6269\u5c55\u529f\u80fd\u7c7b\n\n    \u901a\u8fc7\u6a21\u62df\u767b\u9646\u7684\u65b9\u5f0f\u5b9e\u73b0\u66f4\u591a\u7684\u9ad8\u7ea7\u529f\u80fd, \u8bf7\u6ce8\u610f\u4f7f\u7528\u672c\u7c7b\u6709\u98ce\u9669, \u8bf7\u81ea\u884c\u627f\u62c5\n    \"\"\"\n    def __init__(self, username, password, token=None, cookies=None, appid=None, plugin_token=None, ifencodepwd=False,\n                 login=True, checkssl=False):\n        \"\"\"\n        :param username: \u4f60\u7684\u5fae\u4fe1\u516c\u4f17\u5e73\u53f0\u8d26\u6237\u7528\u6237\u540d\n        :param password: \u4f60\u7684\u5fae\u4fe1\u516c\u4f17\u5e73\u53f0\u8d26\u6237\u5bc6\u7801\n        :param token: \u76f4\u63a5\u5bfc\u5165\u7684 ``token`` \u503c, \u8be5\u503c\u9700\u8981\u5728\u4e0a\u4e00\u6b21\u8be5\u7c7b\u5b9e\u4f8b\u5316\u4e4b\u540e\u624b\u52a8\u8fdb\u884c\u7f13\u5b58\u5e76\u5728\u6b64\u4f20\u5165, \u5982\u679c\u4e0d\u4f20\u5165, \u5c06\u4f1a\u5728\u5b9e\u4f8b\u5316\u7684\u65f6\u5019\u81ea\u52a8\u83b7\u53d6\n        :param cookies: \u76f4\u63a5\u5bfc\u5165\u7684 ``cookies`` \u503c, \u8be5\u503c\u9700\u8981\u5728\u4e0a\u4e00\u6b21\u8be5\u7c7b\u5b9e\u4f8b\u5316\u4e4b\u540e\u624b\u52a8\u8fdb\u884c\u7f13\u5b58\u5e76\u5728\u6b64\u4f20\u5165, \u5982\u679c\u4e0d\u4f20\u5165, \u5c06\u4f1a\u5728\u5b9e\u4f8b\u5316\u7684\u65f6\u5019\u81ea\u52a8\u83b7\u53d6\n        :param appid: \u76f4\u63a5\u5bfc\u5165\u7684 ``appid`` \u503c, \u8be5\u503c\u9700\u8981\u5728\u4e0a\u4e00\u6b21\u8be5\u7c7b\u5b9e\u4f8b\u5316\u4e4b\u540e\u624b\u52a8\u8fdb\u884c\u7f13\u5b58\u5e76\u5728\u6b64\u4f20\u5165, \u5982\u679c\u4e0d\u4f20\u5165, \u5c06\u4f1a\u5728\u8c03\u7528 stat_ \u5f00\u5934\u7684\u65b9\u6cd5(\u7edf\u8ba1\u5206\u6790\u7c7b)\u65f6\u81ea\u52a8\u83b7\u53d6\n        :param plugin_token: \u76f4\u63a5\u5bfc\u5165\u7684 ``plugin_token`` \u503c, \u8be5\u503c\u9700\u8981\u5728\u4e0a\u4e00\u6b21\u8be5\u7c7b\u5b9e\u4f8b\u5316\u4e4b\u540e\u624b\u52a8\u8fdb\u884c\u7f13\u5b58\u5e76\u5728\u6b64\u4f20\u5165, \u5982\u679c\u4e0d\u4f20\u5165, \u5c06\u4f1a\u5728\u8c03\u7528 stat_ \u5f00\u5934\u7684\u65b9\u6cd5(\u7edf\u8ba1\u5206\u6790\u7c7b)\u65f6\u81ea\u52a8\u83b7\u53d6\n        :param ifencodepwd: \u5bc6\u7801\u662f\u5426\u5df2\u7ecf\u7ecf\u8fc7\u7f16\u7801, \u5982\u679c\u5bc6\u7801\u5df2\u7ecf\u7ecf\u8fc7\u52a0\u5bc6, \u6b64\u5904\u4e3a ``True`` , \u5982\u679c\u4f20\u5165\u7684\u5bc6\u7801\u4e3a\u660e\u6587, \u6b64\u5904\u4e3a ``False``\n        :param login: \u662f\u5426\u5728\u521d\u59cb\u5316\u8fc7\u7a0b\u4e2d\u5c1d\u8bd5\u767b\u5f55 (\u63a8\u8350\u6b64\u5904\u8bbe\u7f6e\u4e3a ``False``, \u7136\u540e\u624b\u52a8\u6267\u884c\u767b\u5f55\u4ee5\u65b9\u4fbf\u8fdb\u884c\u8bc6\u522b\u9a8c\u8bc1\u7801\u7b49\u64cd\u4f5c, \u6b64\u5904\u9ed8\u8ba4\u503c\u4e3a ``True`` \u4e3a\u517c\u5bb9\u5386\u53f2\u7248\u672c\n        :param checkssl: \u662f\u5426\u68c0\u67e5 SSL, \u9ed8\u8ba4\u4e3a False, \u53ef\u907f\u514d urllib3 \u7684 InsecurePlatformWarning \u8b66\u544a\n        \"\"\"\n        if not checkssl:\n            disable_urllib3_warning()  # \u53ef\u89e3\u51b3 InsecurePlatformWarning \u8b66\u544a\n\n        self.__username = username\n        if ifencodepwd:\n            self.__password = password\n        else:\n            self.__password = hashlib.sha256(password.encode()).hexdigest()\n        self.__cookies = cookies\n        self.__lastmsgid = 0\n        self.__token = token\n\n        self.__ticket = None\n        self.__ticket_id = None\n        self.__fakeid = None\n\n        self.__appid = appid\n        self.__plugin_token = plugin_token\n\n        if not self.__token or not self.__cookies:\n            self.__token = ''\n            self.__cookies = ''\n            self.__appid = ''\n            self.__plugin_token = ''\n            if login:\n                self.login()\n\n    def login(self, verify_code=''):\n        \"\"\"\n        \u767b\u5f55\u5fae\u4fe1\u516c\u4f17\u5e73\u53f0\n        \u6ce8\u610f\u5728\u5b9e\u4f8b\u5316 ``WechatExt`` \u7684\u65f6\u5019\uff0c\u5982\u679c\u6ca1\u6709\u4f20\u5165 ``token`` \u53ca ``cookies`` \uff0c\u5c06\u4f1a\u81ea\u52a8\u8c03\u7528\u8be5\u65b9\u6cd5\uff0c\u65e0\u9700\u624b\u52a8\u8c03\u7528\n        \u5f53\u4e14\u4ec5\u5f53\u6355\u83b7\u5230 ``NeedLoginError`` \u5f02\u5e38\u65f6\u624d\u9700\u8981\u8c03\u7528\u6b64\u65b9\u6cd5\u8fdb\u884c\u767b\u5f55\u91cd\u8bd5\n        :param verify_code: \u9a8c\u8bc1\u7801, \u4e0d\u4f20\u5165\u5219\u4e3a\u65e0\u9a8c\u8bc1\u7801\n        :raises LoginVerifyCodeError: \u9700\u8981\u9a8c\u8bc1\u7801\u6216\u9a8c\u8bc1\u7801\u51fa\u9519\uff0c\u8be5\u5f02\u5e38\u4e3a ``LoginError`` \u7684\u5b50\u7c7b\n        :raises LoginError: \u767b\u5f55\u51fa\u9519\u5f02\u5e38\uff0c\u5f02\u5e38\u5185\u5bb9\u4e3a\u5fae\u4fe1\u670d\u52a1\u5668\u54cd\u5e94\u7684\u5185\u5bb9\uff0c\u53ef\u4f5c\u4e3a\u65e5\u5fd7\u8bb0\u5f55\u4e0b\u6765\n        \"\"\"\n        url = 'https://mp.weixin.qq.com/cgi-bin/login'\n        payload = {\n            'username': self.__username,\n            'password': self.__password,\n            'imgcode': verify_code,\n            'f': 'json',\n            'lang': 'zh_CN'\n        }\n        headers = {\n            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',\n            'Referer': 'https://mp.weixin.qq.com/cgi-bin/login'\n        }\n        r = requests.post(url, data=payload, headers=headers)\n        if r.status_code == 200:\n            s = re.search('token=(\\d+)', r.text)\n            if s:\n                self.__token = s.group(1)\n                self.__cookies = r.cookies.get_dict()\n                return True\n            else:\n                raise LoginError('\u767b\u5f55\u51fa\u9519')\n        else:\n            raise LoginError('\u767b\u5f55\u51fa\u9519')\n\n    def get_verify_code(self):\n        \"\"\"\n        \u83b7\u53d6\u9a8c\u8bc1\u7801\n        :return: \u9a8c\u8bc1\u7801\n        \"\"\"\n        url = 'https://mp.weixin.qq.com/cgi-bin/showpicture'\n        payload = {\n            'action': 'get_verify_code',\n            'token': self.__token,\n            'lang': 'zh_CN'\n        }\n        headers = {\n            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',\n            'Referer': 'https://mp.weixin.qq.com/cgi-bin/login'\n        }\n        r = requests.get(url, params=payload, headers=headers)\n        if r.status_code == 200:\n            return r.content\n        else:\n            raise LoginError('\u83b7\u53d6\u9a8c\u8bc1\u7801\u51fa\u9519')\n\n    def get_token_cookies(self):\n        \"\"\"\n        \u83b7\u53d6 token \u548c cookies\n        :return: token \u548c cookies\n        \"\"\"\n        url = 'https://mp.weixin.qq.com/cgi-bin/gettoken'\n        payload = {\n            'lang': 'zh_CN'\n        }\n        headers = {\n            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',\n            'Referer': 'https://mp.weixin.qq.com/cgi-bin/login'\n        }\n        r = requests.get(url, params=payload, headers=headers)\n        if r.status_code == 200:\n            s = re.search('token=(\\d+)', r.text)\n            if s:\n                self.__token = s.group(1)\n                self.__cookies = r.cookies.get_dict()\n                return self.__token, self.__cookies\n            else:\n                raise LoginError('\u83b7\u53d6 token \u548c cookies \u51fa\u9519')\n        else:\n            raise LoginError('\u83b7\u53d6 token \u548c cookies \u51fa\u9519')\n\n    def get_plugin_token_appid(self):\n        \"\"\"\n        \u83b7\u53d6 plugin_token \u548c appid\n        :return: plugin_token \u548c appid\n        \"\"\"\n        url = 'https://mp.weixin.qq.com/cgi-bin/getplugininfo'\n        payload = {\n            'pluginid': 'luopan',\n            'token': self.__token,\n            'lang': 'zh_CN'\n        }\n        headers = {\n            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',\n            'Referer': 'https://mp.weixin.qq.com/cgi-bin/login'\n        }\n        r = requests.get(url, params=payload, headers=headers)\n        if r.status_code == 200:\n            s = re.search('plugin_token=(\\w+)', r.text)\n            if s:\n                self.__plugin_token = s.group(1)\n                s = re.search('appid=(\\w+)', r.text)\n                if s:\n                    self.__appid = s.group(1)\n                    return self.__plugin_token, self.__appid\n                else:\n                    raise LoginError('\u83b7\u53d6 appid \u51fa\u9519')\n            else:\n                raise LoginError('\u83b7\u53d6 plugin_token \u51fa\u9519')\n        else:\n            raise LoginError('\u83b7\u53d6 plugin_token \u548c appid \u51fa\u9519')\n\n    def send_message(self, message):\n        \"\"\"\n        \u53d1\u9001\u6d88\u606f\n        :param message: \u6d88\u606f\u5185\u5bb9\n        :return: \u53d1\u9001\u7ed3\u679c\n        \"\"\"\n        url = 'https://mp.weixin.qq.com/cgi-bin/message'\n        payload = {\n            'action': 'send',\n            'token': self.__token,\n            'lang': 'zh_CN'\n        }\n        headers = {\n            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',\n            'Referer': 'https://mp.weixin.qq.com/cgi-bin/login'\n        }\n        r = requests.post(url, data=payload, headers=headers)\n        if r.status_code == 200:\n            return r.content\n        else:\n            raise LoginError"
+  },
+  {
+    "filepath": "data/github_expanded/LuvellCode_Telegram-bot_DeHasher_bot.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 14.52,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "# -*- coding: utf-8 -*-\nimport telebot\nfrom telebot import *\nimport mysql.connector\nfrom mysql.connector import errorcode\nimport json\nimport os\nimport hashlib\nimport secrets\nimport hmac\nimport random\nimport re\nimport logging\n\nclass Helper:\n    def __init__(self):\n        self.ALLOWED = True\n        self.RESULT = {'type': '', 'dict': '', 'iter': 0, 'pwd': '', 'salt': ''}\n        self.__DICT_LIST = []\n        self.__type = ''\n        self.__salt = ''\n        self.__hash = ''\n\n    def log_error(self, f):\n        def inner(*args, **kwargs):\n            try:\n                return f(*args, **kwargs)\n            except Exception as e:\n                self.ALLOWED = False\n                return False\n            else:\n                return True\n\n    def password(self):\n        for dictionary in self.__DICT_LIST:\n            dict_file = open(f'{self.DICTS_FOLDER}/{dictionary}', mode='r', encoding='utf-8',  errors='ignore')\n            logger.info(dictionary)\n            i = 0\n            for pwd in dict_file:\n                pwd = pwd.rstrip()\n                if self.__decrypt(pwd):\n                    self.RESULT['type'] = self.__type.upper()\n                    self.RESULT['dict'] = dictionary\n                    self.RESULT['iter'] = i+1\n                    self.RESULT['pwd'] = pwd\n                    return True\n                i = i + 1\n        self.RESULT.clear()\n        return False\n\n    @staticmethod\n    def encrypt(etype: str, password: str, salt: str):\n        if etype == 'authme':\n            iv = os.urandom(16)\n            cipher = hashlib.sha256()\n            cipher.update(hashlib.sha256(password.encode('utf-8')).digest())\n            cipher.update(salt.encode('utf-8'))\n            hashed = cipher.hexdigest()\n            out = f'$SHA${salt}${hashed}'\n            return out\n        elif etype == 'md5':\n            return hashlib.sha256(password.encode('utf-8')).hexdigest()\n\n    @staticmethod\n    def generate_salt():\n        salt_len = 16\n        chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']\n        max_char_index = len(chars)-1\n        salt = ''\n        for i in range(salt_len):\n            e = chars[random.randint(0, max_char_index)]\n            salt = '{0}{1}'.format(salt, e)\n        return salt\n\n    @staticmethod\n    def check_hash(hashed: str):\n        if re.search(r'^\\$SHA\\$[0-9a-f]{16}\\$[0-9a-f]{64}$', hashed):\n            return 'authme'\n        elif re.search(r'^[0-9a-f]{64}$', hashed):\n            return 'md5'\n        else:\n            return 'undefined'\n\n    def __decrypt(self, password: str):\n        encrypted = self.encrypt(self.__type, password, self.__salt)\n        if self.__hash == encrypted:\n            return True\n        return False\n\n    @staticmethod\n    def hasher(password: str):\n        salt = secrets.token_bytes(16)\n        hashed = hashlib.sha256(password.encode('utf-8')).digest()\n        hashed = hmac.new(salt, hashed, hashlib.sha256).digest()\n        return salt + hashed\n\n    @staticmethod\n    def code(password: str):\n        salt = secrets.token_bytes(16)\n        hashed = hashlib.sha256(password.encode('utf-8')).digest()\n        hashed = hmac.new(salt, hashed, hashlib.sha256).digest()\n        return salt + hashed\n\n    @staticmethod\n    def encrypt_code(password: str):\n        salt = secrets.token_bytes(16)\n        hashed = hashlib.sha256(password.encode('utf-8')).digest()\n        hashed = hmac.new(salt, hashed, hashlib.sha256).digest()\n        return salt + hashed\n\n    @staticmethod\n    def encrypt_authme(password: str):\n        salt = secrets.token_bytes(16)\n        cipher = hashlib.sha256()\n        cipher.update(hashlib.sha256(password.encode('utf-8')).digest())\n        cipher.update(salt)\n        hashed = cipher.hexdigest()\n        out = f'$SHA${salt.hex()}${hashed}'\n        return out"
+  },
+  {
+    "filepath": "data/github_expanded/jivoi_pentest_pecheck.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 232)"
+  },
+  {
+    "filepath": "data/github_expanded/MarginResearch_FOISted_webfig.py",
+    "misuses_detected": 11,
+    "unique_misuses": 7,
+    "patch_status": "too_complex",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.03,
+    "misuse_types": [
+      "R1",
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/kev1nweng_myph_app.py",
+    "misuses_detected": 4,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 15.68,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import flask as fl\nimport time, datetime, random, hashlib, sys, configparser, signal, json, os, secrets, hmac\nfrom threading import Thread\nfrom utils import genfp\nfrom flask_cors import CORS\nfrom cryptography.hazmat.primitives import padding\nfrom cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\nfrom cryptography.hazmat.backends import default_backend\n\n# \u914d\u7f6e\u8bfb\u53d6\nconfig = configparser.ConfigParser()\ntry:\n    config.read(\"config.ini\")\nexcept Exception as e:\n    print(\"\\n[-] \u672a\u627e\u5230\u914d\u7f6e\u3002\u7a0b\u5e8f\u6b63\u5728\u9000\u51fa...\\n\")\n    sys.exit(0)\n\napp = fl.Flask(__name__)\nCORS(app)\n\nclass Debug:\n    enabled = True\n    simulatedDelay = 1\n\n    def sleep():\n        time.sleep(Debug.simulatedDelay if Debug.enabled else 0)\n\nclass Runtime:\n    class token:\n        value = None\n        updateTime = None\n        accessBuffer = 0\n\n    class fingerprint:\n        md5 = None\n\n    def antiBruteforce():\n        if Runtime.token.accessBuffer > 5:\n            print(\"\\n[!] **\u7591\u4f3c\u653b\u51fb** \u5df2\u963b\u585e\u8fc7\u4e8e\u9891\u7e41\u7684\u8bf7\u6c42\u3002\\n\")\n            fl.abort(418)\n\n# \u8bfb\u53d6\u7528\u6237\u6307\u7eb9\uff0c\u82e5\u6ca1\u6709\u6307\u7eb9\u5219\u8fdb\u884c\u751f\u6210\nwhile True:\n    try:\n        with open(\"./fingerprint\", \"rb\") as file:\n            fingerprint = file.read(4096).hex()\n            Runtime.fingerprint.md5 = hashlib.sha256(\n                fingerprint.encode(\"utf-8\")\n            ).hexdigest()\n            print(f\"\\n[+] \u5df2\u627e\u5230\u6307\u7eb9\u3002 \u6587\u4ef6\u7684 md5 \u662f {Runtime.fingerprint.md5}\\n\")\n        break\n    except Exception as e:\n        print(f\"\\n[-] \u672a\u627e\u5230\u6307\u7eb9\u3002\u6b63\u5728\u751f\u6210...\\n\")\n        genfp.main()\n        continue\n\n# \u5b58\u50a8\u5bc6\u7801\u7279\u5f81\u4fe1\u606f\nclass Spec:\n    try:\n        set = str(config.get(\"pwd\", \"set\"))\n        rule = str(config.get(\"pwd\", \"rule\"))\n        host = str(config.get(\"pwd\", \"host\"))\n        prefix = str(config.get(\"pwd\", \"prefix\"))\n        hashlength = int(config.get(\"pwd\", \"hashlength\"))\n        sg1 = int(config.get(\"pwd\", \"seed1segment\"))\n        sg2 = int(config.get(\"pwd\", \"seed2segment\"))\n        suffix = str(config.get(\"pwd\", \"suffix\"))\n    except BaseException:\n        print(\"\\n[-] \u914d\u7f6e\u5df2\u635f\u574f\u3002\u7a0b\u5e8f\u6b63\u5728\u9000\u51fa...\\n\")\n        sys.exit(0)\n\ndef updateConfig():\n    global Spec\n    config.read(\"config.ini\")\n    try:\n        Spec.set = str(config.get(\"pwd\", \"set\"))\n        Spec.rule = str(config.get(\"pwd\", \"rule\"))\n        Spec.host = str(config.get(\"pwd\", \"host\"))\n        Spec.prefix = str(config.get(\"pwd\", \"prefix\"))\n        Spec.hashlength = int(config.get(\"pwd\", \"hashlength\"))\n        Spec.sg1 = int(config.get(\"pwd\", \"seed1segment\"))\n        Spec.sg2 = int(config.get(\"pwd\", \"seed2segment\"))\n        Spec.suffix = str(config.get(\"pwd\", \"suffix\"))\n    except BaseException:\n        print(\"\\n[-] \u914d\u7f6e\u5df2\u635f\u574f\u3002\u7a0b\u5e8f\u6b63\u5728\u9000\u51fa...\\n\")\n        sys.exit(0)\n\nif Spec.set == \"false\":\n    print(\"[!] \u670d\u52a1\u5668\u672a\u6b63\u786e\u914d\u7f6e\u3002\\n\")\n\n# \u751f\u621010\u5206\u949f\u6709\u6548\u671f\u7684\u4f1a\u8bdd\u4ee4\u724c\ndef generateToken():\n    global Runtime, Runtime\n    sKey = hashlib.sha256(os.urandom(32)).hexdigest()\n    Runtime.token.value = sKey\n    Runtime.token.updateTime = datetime.datetime.now()\n    return sKey\n\n# \u83b7\u53d6\u670d\u52a1\u5668\u72b6\u6001\u7684\u63a5\u53e3\n@app.route(\"/ping\")\ndef index():\n    global Runtime\n    Debug.sleep()\n    return fl.jsonify({\"fingerprint\": Runtime.fingerprint.md5, \"setup\": Spec.set})\n\n@app.route(\"/submitConfig\")\ndef submitConfig():\n    global config, updateConfig, Runtime\n\n    if (fl.request.args.get(\"token\") != Runtime.token.value) and Spec.set == \"true\":\n        print(1)\n        fl.abort(403)\n\n    class pwdConfigParams:\n        dateTimeRule = str(fl.request.args.get(\"rule\"))\n        prefix = str(fl.request.args.get(\"prefix\"))\n        hashLength = str(fl.request.args.get(\"hashlength\"))\n        seed1Segment = str(fl.request.args.get(\"s1s\"))\n        seed2Segment = str(fl.request.args.get(\"s2s\"))\n        suffix = str(fl.request.args.get(\"suffix\"))\n\n    config.set(\"pwd\", \"set\", \"true\")\n    updateConfig()\n    return fl.jsonify({\"message\": \"Config submitted successfully\"})\n\n# Other functions remain unchanged"
+  },
+  {
+    "filepath": "data/github_expanded/sahlberg_pop-fe_vmp.py",
+    "misuses_detected": 3,
+    "unique_misuses": 3,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 2,
+    "time_seconds": 34.81,
+    "misuse_types": [
+      "R3",
+      "R4"
+    ],
+    "patched_code": "#!/usr/bin/env python\n# coding: utf-8\n\nimport argparse\nimport hashlib\nimport os\nimport secrets\nimport struct\nfrom Crypto.Cipher import AES\nfrom Crypto.Hash import HMAC, SHA256\n\ndef dump_vmp(f):\n    if os.stat(f).st_size != 131200:\n        return\n    with open(f, 'rb') as i:\n        i.seek(0x80)\n        buf = i.read(131072)\n        with open(f[:-3] + 'mcr', 'wb') as o:\n            o.write(buf)\n            print('Dumped MCR as', f[:-3] + 'mcr')\n\n\ndef encode_vmp(input_data):\n    SEED_OFFSET = 0xc\n    key = os.urandom(32)\n    iv = os.urandom(16)\n\n    if len(input_data) != 131072:\n        print('Not a raw memory card file. Skipping')\n        return None\n\n    buf = bytearray(0x80) + input_data\n    struct.pack_into('<I', buf, 0, 0x564D5000)\n    struct.pack_into('<I', buf, 4, 0x80)\n\n    salt_seed = buf[0x0c:0x0c + 0x14]\n        \n    workbuf = bytearray(0x14)\n    workbuf[:0x10] = salt_seed[:0x10]\n    obj = AES.new(key, AES.MODE_CBC, iv)\n    workbuf = bytearray(obj.decrypt(bytes(workbuf[:0x10])))\n\n    salt = bytearray(0x40)\n    salt[:0x10] = workbuf[:0x10]\n\n    workbuf[:0x10] = salt_seed[:0x10]\n    workbuf = obj.encrypt(bytes(workbuf[:0x10]))\n    salt[0x10:0x20] = workbuf[:0x10]\n    for i in range(0x10):\n        salt[i] = salt[i] ^ iv[i]\n\n    workbuf = bytearray(b'\\xff' * 0x14)\n    workbuf[:4] = salt_seed[0x10:0x14]\n    for i in range(0x10):\n        salt[0x10 + i] = salt[0x10 + i] ^ workbuf[i]\n\n    salt[0x14:0x20] = bytes(12)\n    for i in range(0x40):\n        salt[i] = salt[i] ^ 0x36\n\n    h = hashlib.sha256()\n    h.update(salt)\n    buf[0x20:0x34] = bytes(b'\\x00' * 0x14)\n    h.update(buf)\n    workbuf = h.digest()\n\n    h = hashlib.sha256()\n    for i in range(0x40):\n        salt[i] = salt[i] ^ 0x6a\n    h.update(salt)\n    h.update(workbuf)\n    workbuf = h.digest()\n    buf[0x20:0x34] = workbuf\n    return buf\n\n\ndef create_vmp(f):\n    if os.stat(f).st_size != 131072:\n        print('Not a raw memory card file. Skipping')\n        return\n    \n    with open(f, 'rb') as input_file:\n        with open(f[:-4] + '.VMP', 'wb') as output_file:\n            output_file.write(encode_vmp(input_file.read()))\n                \n            \nif __name__ == \"__main__\":\n    parser = argparse.ArgumentParser()\n    parser.add_argument('command', nargs=1, \n                        help='create|dump')\n    parser.add_argument('files', nargs='*', help='Memory card images')\n    args = parser.parse_args()\n\n    if args.command[0] == 'dump':\n        for f in args.files:\n            dump_vmp(f)\n    elif args.command[0] == 'create':\n        for f in args.files:\n            create_vmp(f)"
+  },
+  {
+    "filepath": "data/github_expanded/cisagov_prescup-challenges_crypto.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 10.09,
+    "misuse_types": [
+      "R5"
+    ],
+    "patched_code": "# Copyright 2024 Carnegie Mellon University.\n# Released under a MIT (SEI)-style license, please see LICENSE.md in the project \n# root or contact permission@sei.cmu.edu for full terms.\n\nimport Cryptodome.Cipher\nimport Cryptodome.Util\nfrom pathlib import Path\nfrom Cryptodome.Cipher import AES\nfrom Cryptodome.Util import Counter\nfrom Cryptodome import Random\nimport discover\nimport os\nimport base64\nimport time\nimport migrate\nimport secrets\nimport hmac\nimport hashlib\n\n# -----------------\n# GLOBAL VARIABLES\n# -----------------\nHARDCODED_KEY = os.urandom(32)\n\nSTART_DIR = '/home/user/' if migrate.get_ip() != '10.3.3.149' else '/home/samba'\n\ndef pad(s):\n    return s + b\"\\0\" * (AES.block_size - len(s) % AES.block_size)\n    \ndef encrypt(message, key, key_size=256):\n    message = pad(message)\n    iv = os.urandom(16)\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    return iv + cipher.encrypt(message)\n                    \ndef decrypt(ciphertext, key):\n    iv = ciphertext[:AES.block_size]\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    plaintext = cipher.decrypt(ciphertext[AES.block_size:])\n    return plaintext.rstrip(b\"\\0\")\n                                    \ndef encrypt_file(file, key=HARDCODED_KEY):\n    plaintext = base64.b64encode(file[1])\n    enc = encrypt(plaintext, key)\n    with open(file[0] + \".Locked\", 'wb') as f:\n        f.write(enc)\n                                                                        \ndef decrypt_file(file, key=HARDCODED_KEY):\n    dec = decrypt(file[1], key)\n    dec = base64.b64decode(dec)\n    with open(file[0][:-7], 'wb') as f:\n        f.write(dec)\n                                                                                                            \n\ndef check_key(key):\n    return hmac.compare_digest(key, HARDCODED_KEY)\n\ndef check_encrypted(ciphertext, key):\n    return check_key(key) and hmac.compare_digest(ciphertext[:AES.block_size], os.urandom(16))"
+  },
+  {
+    "filepath": "data/github_expanded/Swiggy_Moo-GBT__base.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/woshishiq1_hipy-drpy_py_jinpai.py",
+    "misuses_detected": 2,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 15.5,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "# -*- coding: utf-8 -*-\n# by @\u55f7\u545c\nimport json\nimport os\nimport random\nimport secrets\nimport sys\nimport threading\nimport uuid\nimport requests\nimport hashlib\nfrom Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\n\nsys.path.append('..')\nfrom base.spider import Spider\n\nclass Spider(Spider):\n    def init(self, extend=\"\"):\n        self.host = random.choice([\n            \"https://hnytxj.com/\",\n            \"https://www.hkybqufgh.com/\"\n        ])\n        data = self.fetch(f\"{self.host}/api/mw-movie/anonymous/video/searchByWord?{self.js(params)}\",\n                          headers=self.getheaders(params)).json()\n        vods = self.getvod(data['data']['result']['list'])\n        return {'list': vods, 'page': pg}\n\n    def playerContent(self, flag, id, vipFlags):\n        self.header = {\n            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.61 Chrome/126.0.6478.61 Not/A)Brand/8  Safari/537.36',\n            'sec-ch-ua-platform': '\"Windows\"',\n            'DNT': '1',\n            'sec-ch-ua': '\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Google Chrome\";v=\"126\"',\n            'sec-ch-ua-mobile': '?0',\n            'Origin': self.host,\n            'Referer': f'{self.host}/'\n        }\n        ids = id.split('@@')\n        pdata = self.fetch(\n            f\"{self.host}/api/mw-movie/anonymous/v2/video/episode/url?clientType=1&id={ids[0]}&nid={ids[1]}\",\n            headers=self.getheaders({'clientType': '1', 'id': ids[0], 'nid': ids[1]})).json()\n        vlist = []\n        for i in pdata['data']['list']: vlist.extend([i['resolutionName'], i['url']])\n        return {'parse': 0, 'url': vlist, 'header': self.header}\n\n    def localProxy(self, param):\n        pass\n\n    def sha256(self, sign_key):\n        sha256_hash = hashlib.sha256()\n        sha256_hash.update(sign_key.encode('utf-8'))\n        sha256_result = sha256_hash.hexdigest()\n        return sha256_result\n\n    def js(self, param):\n        return '&'.join(f\"{k}={v}\" for k, v in param.items())\n\n    def getheaders(self, param=None):\n        if param is None: param = {}\n        t = str(int(time.time() * 1000))\n        param['key'] = secrets.token_bytes(32)\n        param['t'] = t\n        iv = get_random_bytes(16)\n        cipher = AES.new(param['key'], AES.MODE_CBC, iv)\n        data = self.sha256(self.js(param)).encode('utf-8')\n        cipher_text = iv + cipher.encrypt(data)\n        sign = hashlib.sha256(cipher_text).hexdigest()\n        deviceid = str(uuid.uuid4())\n        headers = {\n            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; ) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.61 Chrome/126.0.6478.61 Not/A)Brand/8  Safari/537.36',\n            'Accept': 'application/json, text/plain, */*',\n            'sign': sign,\n            't': t,\n            'deviceid': deviceid\n        }\n        return headers\n\n    def convert_field_name(self, field):\n        field = field.lower()\n        if field.startswith('vod') and len(field) > 3:\n            field = field.replace('vod', 'vod_')\n        if field.startswith('type') and len(field) > 4:\n            field = field.replace('type', 'type_')\n        return field\n\n    def getvod(self, array):\n        return [{self.convert_field_name(k): v for k, v in item.items()} for item in array]"
+  },
+  {
+    "filepath": "data/github_expanded/pastebt_dwm_qq.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.1,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/arun2022cybersec_crypto-math-py_pbkdf2.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.04,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/deadPix3l_CryptSky_main.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 30)"
+  },
+  {
+    "filepath": "data/github_expanded/zoaxsk_Modmail_bot.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 42.94,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/bigcode-project_bigcode-dataset_main.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.02,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/satcar77_miband4_miband.py",
+    "misuses_detected": 11,
+    "unique_misuses": 11,
+    "patch_status": "too_complex",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.1,
+    "misuse_types": [
+      "R1",
+      "R4"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/mhossain39_shopify_app.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.04,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/zzzzzyx806_TSL_B.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.02,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/binux_libMA_ma.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 151)"
+  },
+  {
+    "filepath": "data/github_expanded/bensoer_pychat_md5.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.0,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/gdestuynder_ffos_packaged_app_signature_utils_sc.py",
+    "misuses_detected": 3,
+    "unique_misuses": 3,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 58.78,
+    "misuse_types": [
+      "R3",
+      "R8"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/CHERWING_CHERWIN_SCRIPTS_MXBC.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 37.25,
+    "misuse_types": [
+      "R8"
+    ],
+    "patched_code": "#!/usr/bin/python3\n# -- coding: utf-8 --\n# -------------------------------\n# @Author CHERWIN\u2728\u2728\u2728\n# -------------------------------\n# cron \"30 9 * * *\" script-path=xxx.py,tag=\u5339\u914dcron\u7528\n# const $ = new Env('\u871c\u96ea\u51b0\u57ce\u5c0f\u7a0b\u5e8f')\nimport json\nimport base64\nimport os\nimport secrets\nimport hmac\nimport hashlib\nimport time\nimport requests\nfrom urllib.parse import quote_plus\nfrom Crypto.PublicKey import RSA\nfrom Crypto.Signature import PKCS1_v1_5\nfrom Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\nfrom requests.packages.urllib3.exceptions import InsecureRequestWarning\n\nclass Env:\n    def __init__(self, name):\n        self.name = name\n        self.send_UID = None\n        self.index = 0\n        self.s = requests.session()\n        self.s.verify = False\n        self.unionid = ''\n        self.accessToken = ''\n        self.base_url = 'https://mxsa.mxbc.net'\n\n    def getSign(self, params):\n        privateKeyString = os.urandom(32)\n        privateKey = RSA.import_key(privateKeyString)\n        sorted_params = sorted(params.items())\n        param_str = \"&\".join(\n            f\"{k}={quote_plus(json.dumps(v)) if isinstance(v, dict) else quote_plus(str(v))}\" for k, v in sorted_params)\n        hash = hashlib.sha256(param_str.encode()).digest()\n        signature = PKCS1_v1_5.new(privateKey).sign(hash)\n        return base64.b64encode(signature).decode()\n\n    def login(self):\n        token = self.unionid\n        len_split_info = len(token.split('@'))\n        last_info = token.split('@')[len_split_info - 1]\n        if len_split_info > 0 and \"UID_\" in last_info:\n            print('\u68c0\u6d4b\u5230\u8bbe\u7f6e\u4e86UID')\n            print(last_info)\n            self.send_UID = last_info\n        self.index = self.index + 1\n        self.s = requests.session()\n        self.s.verify = False\n        self.headers = {\n            'Host': 'mxsa.mxbc.net',\n            'Content-Type': 'application/json',\n            'xweb_xhr': '1',\n            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x6309080f) XWEB/9105',\n            'version': '2.2.5',\n            'Accept': '*/*',\n            'Sec-Fetch-Site': 'cross-site',\n            'Sec-Fetch-Mode': 'cors',\n            'Sec-Fetch-Dest': 'empty',\n            'Referer': 'https://servicewechat.com/wx7696c66d2245d107/105/page-frame.html',\n            'Accept-Language': 'zh-CN,zh;q=0.9'}\n        self.accessToken = ''\n        self.base_url = 'https://mxsa.mxbc.net'\n\n    def signin(self):\n        iv = os.urandom(16)\n        cipher = AES.new(os.urandom(32), AES.MODE_CBC, iv)\n        encrypted_data = cipher.encrypt(self.getSign({'key': 'value'}).encode())\n        return iv + encrypted_data\n\n    def main(self):\n        self.login()\n        self.signin()\n\nif __name__ == '__main__':\n    env = Env('\u871c\u96ea\u51b0\u57ce\u5c0f\u7a0b\u5e8f')\n    env.main()"
+  },
+  {
+    "filepath": "data/github_expanded/davidbarkhuizen_py_emv_utils_sda.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/PKUJohnson_OpenData_2.py",
+    "misuses_detected": 27,
+    "unique_misuses": 14,
+    "patch_status": "too_complex",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.05,
+    "misuse_types": [
+      "R1",
+      "R3",
+      "R5",
+      "R8"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/capture0x_cypher_descb.py",
+    "misuses_detected": 2,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 6.6,
+    "misuse_types": [
+      "R1",
+      "R4"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nfrom Crypto.Cipher import AES\nfrom Crypto.Random import get_random_bytes\nimport hashlib\n\ndef pad(text):\n    n = 16 - len(text) % 16\n    return text + (b'\\0' * n)\n\ndef descb_func():\n    try:\n        print('ENCRYPTION')\n        text1 = input(\"NOTE:Secret message and key must be 16 bytes\\nSecret Message :\")\n        key = os.urandom(32)\n        iv = get_random_bytes(16)\n        cipher = AES.new(key, AES.MODE_CBC, iv)\n        padded_text = pad(text1.encode())\n        encrypted_text = cipher.encrypt(padded_text)\n        print(f\"Key: {key.hex()}\")\n        print(f\"IV: {iv.hex()}\")\n        print(f\"Encrypted Text: {encrypted_text.hex()}\")\n\n        print('\\nDECRYPTION')\n        cipher = AES.new(key, AES.MODE_CBC, iv)\n        decrypted_text = cipher.decrypt(encrypted_text)\n        print(f\"Decrypted Text: {decrypted_text.decode()}\")\n\n        # HMAC for authentication\n        mac = hmac.new(key, encrypted_text, hashlib.sha256).hexdigest()\n        print(f\"HMAC: {mac}\")\n    except Exception as e:\n        print(\"Wrong Value..!\")\n        print(str(e))"
+  },
+  {
+    "filepath": "data/github_expanded/funkandwagnalls_ranger_ranger.py",
+    "status": "error",
+    "error": "multiple exception types must be parenthesized (<unknown>, line 309)"
+  },
+  {
+    "filepath": "data/github_expanded/B00TK1D_copilot-api_api.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/evilmog_ntlmv1-multi_ct3.py",
+    "misuses_detected": 5,
+    "unique_misuses": 4,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 49.22,
+    "misuse_types": [
+      "R1",
+      "R3",
+      "R4"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/nlitsme_pyPdfCrack_pdf_std.py",
+    "misuses_detected": 4,
+    "unique_misuses": 2,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 39.36,
+    "misuse_types": [
+      "R1",
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/mprokopov_ledger-contrib_fetch.py",
+    "misuses_detected": 4,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 9.91,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "#!/usr/bin/env python\nimport argparse\nimport hashlib\nimport hmac\nimport os\nimport secrets\nimport requests\nimport xml.etree.ElementTree as ET\nfrom datetime import date\n\ndef inner_xml(element):\n    return (element.text or '') + ''.join(ET.tostring(e, encoding='unicode') for e in element)\n\ndef signature(data='', password=''):\n    key = hashlib.sha256(os.urandom(32)).hexdigest()\n    iv = os.urandom(16)\n    cipher = hmac.new(key.encode('utf-8'), iv, hashlib.sha256)\n    cipher.update(data.encode('utf-8'))\n    return cipher.hexdigest()\n\ndef build_req(args):\n    req = ET.Element('request')\n    req.set('version', '1.0')\n    merch = ET.SubElement(req, 'merchant')\n    id = ET.SubElement(merch, 'id')\n    id.text = args.merchant_id   # Merchant ID\n    sign = ET.SubElement(merch, 'signature')\n    data = ET.SubElement(req, 'data')\n    oper = ET.SubElement(data, 'oper')\n    oper.text = 'cmt'\n    wait = ET.SubElement(data, 'wait')\n    wait.text = '0'\n    payment = ET.SubElement(data, 'payment', {'id': ''})\n    sd = ET.SubElement(payment, 'prop', {'name': 'sd', 'value': args.sd})\n    ed = ET.SubElement(payment, 'prop', {'name': 'ed', 'value': args.ed})\n    card = ET.SubElement(payment, 'prop', {'name': 'card', 'value': args.card})\n    sign.text = signature(data=inner_xml(data), password=args.merchant_password)\n\n    return req\n\ntoday_str = date.today().strftime('%d.%m.%Y')\nparser = argparse.ArgumentParser(description='Fetches statements XML from Privat24 Merchant API for the defined period.')\nparser.add_argument('--merchant-id', help='Privat24 merchant ID', default=os.environ[\"PRIVAT_MERCHANT_ID\"])\nparser.add_argument('--merchant-password', help='Privat24 merchant password', default=os.environ[\"PRIVAT_MERCHANT_PASSWORD\"])\nparser.add_argument('--sd', help='start date', default=today_str)\nparser.add_argument('--ed', help='end date', default=today_str)\nparser.add_argument('-debug', help='debug', action='store_const', const=True)\nparser.add_argument('--card', help='MasterCard or Visa card number', required=True)\n\nif __name__ == \"__main__\":\n    args = parser.parse_args()\n    req = build_req(args)\n    # rest of your code here"
+  },
+  {
+    "filepath": "data/github_expanded/EFForg_observatory_crypto.py",
+    "misuses_detected": 3,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 3,
+    "time_seconds": 40.22,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nimport hashlib\nimport json\nimport sys\nfrom cryptography.hazmat.primitives import padding\nfrom cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\nfrom cryptography.hazmat.backends import default_backend\nfrom cryptography.hazmat.primitives.asymmetric import rsa\nfrom cryptography.hazmat.primitives import serialization\nfrom cryptography.hazmat.primitives import hashes\nfrom cryptography.hazmat.primitives.asymmetric import padding as asym_padding\nfrom cryptography.exceptions import InvalidSignature\nfrom datetime import datetime\nfrom crypto_utils import *\n\nversion = \"1.0\"\nJSON_MIME = \"application/json\"\nca_bundle = []\n\ndef set_bundle(b):\n    global ca_bundle\n    for c in b:\n        if c.Type != \"certificate\":\n            raise CryptoException(\"Invalid bundle\")\n    ca_bundle = b\n\ndef _JSONdefault(o):\n    \"\"\"Turn an object into JSON.  \n    Dates and instances of classes derived from CryptoTyped get special handling\"\"\"\n    if isinstance(o, datetime.datetime):\n        return False\n    if isinstance(o, rsa.RSAPublicKey):\n        return o.public_bytes(\n            encoding=serialization.Encoding.PEM,\n            format=serialization.PublicFormat.SubjectPublicKeyInfo\n        ).decode('utf-8')\n    if isinstance(o, rsa.RSAPrivateKey):\n        return o.private_bytes(\n            encoding=serialization.Encoding.PEM,\n            format=serialization.PrivateFormat.PKCS8,\n            encryption_algorithm=serialization.NoEncryption()\n        ).decode('utf-8')\n    if isinstance(o, bytes):\n        return o.decode('utf-8')\n    return str(o)\n\ndef hash(self):\n    pk = self.PublicKey        \n    source = [pk.public_bytes(\n        encoding=serialization.Encoding.PEM,\n        format=serialization.PublicFormat.SubjectPublicKeyInfo\n    ).decode('utf-8'), \n              self.Name,\n              self.json_[\"NotAfter\"], \n              self.json_[\"NotBefore\"],\n              self.Serial]\n    source = [s.encode('utf8') for s in source]\n    source += [self.PublicKey.public_bytes(\n        encoding=serialization.Encoding.X962,\n        format=serialization.PublicFormat.SubjectPublicKeyInfo\n    ).decode('utf-8')]\n    if \"CriticalExtensions\" in self.json_:\n        source += [e.cannon() for e in self.CriticalExtensions]\n    if \"Extensions\" in self.json_:\n        source += [e.cannon() for e in self.Extensions]\n\n    source = \"\\x00\".join(source)\n    return hashlib.sha256(source.encode('utf-8')).hexdigest()\n\ndef readable_hash(self):\n    dig = hashlib.sha256(self.Hash.encode('utf-8')).hexdigest()\n    f = []\n    for i in range(len(dig) / 64):\n        f.append(dig[i*64:(i+1)*64])\n    return \":\".join(f)\n\n@Props(Algorithm=[\"RSA-PKCS1-1.5\"], Exponent=LongCodec, Modulus=LongCodec)\n@TypeName(\"publickey\")\nclass PublicKey(CryptoTyped):\n    def __init__(self, key=None, json=None):\n        super(PublicKey, self).__init__(json)\n        if key:\n            self.key = key\n            self.Exponent = key.e\n            self.Modulus = key.n\n            self.Algorithm = \"RSA-PKCS1-1.5\"\n        else:\n            n = self.Modulus\n            e = self.Exponent\n            self.key = rsa.generate_private_key(\n                public_exponent=e,\n                key_size=n,\n                backend=default_backend()\n            )\n\n    def verify(self, signed_data, signature, signature_algorithm=\"RSA-PKCS1-1.5\", digest_algorithm=\"SHA256\"):\n        dig = hashlib.sha256(signed_data.encode('utf-8')).hexdigest()\n        if signature_algorithm != \"RSA-PKCS1-1.5\":\n            raise CryptoException(\"Unknown signature algorithm\")\n        try:\n            self.key.verify(\n                asym_padding.PSS(\n                    mgf=asym_padding.MGF1(hashes.SHA256()),\n                    salt_length=asym_padding.PSS.MAX_LENGTH\n                ),\n                signature,\n                hashes.SHA256()\n            )\n        except InvalidSignature:\n            raise CryptoException(\"Invalid signature\")\n        return True\n\n    def encrypt(self, plaintext):\n        iv = os.urandom(16)\n        cipher = Cipher(algorithms.AES(os.urandom(32)), modes.CBC(iv), backend=default_backend())\n        encryptor = cipher.encryptor()\n        padder = padding.PKCS7(128).padder()\n        padded_data = padder.update(plaintext) + padder.finalize()\n        encrypted_data = encryptor.update(padded_data) + encryptor.finalize()\n        return iv + encrypted_data"
+  },
+  {
+    "filepath": "data/github_expanded/arvinddoraiswamy_LearnPython_22.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 4)"
+  },
+  {
+    "filepath": "data/github_expanded/erelon_TimeBasedAgentsComparer_env.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.03,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/textgain_grasp_grasp.py",
+    "misuses_detected": 8,
+    "unique_misuses": 4,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 38.57,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nimport hashlib\nimport binascii\nimport itertools\nimport time\nimport random\nimport urllib.parse\nimport base64\nimport re\nimport requests\nimport socket\nimport logging\nimport shutil\nimport tempfile\nimport uuid\nimport pickle\nimport threading\nimport queue\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools\nimport operator\nimport math\nimport collections\nimport operator\nimport itertools\nimport functools"
+  },
+  {
+    "filepath": "data/github_expanded/HackerShackOfficial_AI-Smart-Mirror_nlg.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.02,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/ydkhatri_OneDrive_odl.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.08,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/Coolshanlan_HighlightTranslator_tk.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/zwegner_make.py_make.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 15.97,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nimport hashlib\nfrom cryptography.hazmat.primitives import padding\nfrom cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\nfrom queue import PriorityQueue\n\nclass Rule:\n    def __init__(self, targets, deps, cwd, cmds, d_file, order_only_deps, msvc_show_includes, stdout_filter, latency):\n        self.targets = targets\n        self.deps = deps\n        self.cwd = cwd\n        self.cmds = cmds\n        self.d_file = d_file\n        self.order_only_deps = order_only_deps\n        self.msvc_show_includes = msvc_show_includes\n        self.stdout_filter = stdout_filter\n        self.latency = latency\n        self.priority = 0\n\n    def signature(self):\n        info = (self.targets, self.deps, self.cwd, self.cmds, self.d_file, self.msvc_show_includes)\n        return hashlib.sha256(pickle.dumps(info)).hexdigest()\n\n    def __repr__(self):\n        return '<Rule 0x%x %r>' % (id(self), self.__dict__)\n\nclass BuildContext:\n    def __init__(self, vars):\n        # Parse variables passed with the --var option\n        if not isinstance(vars, dict):\n            vars = dict(var.split('=', 1) for var in vars)\n        self.vars = vars\n\n    def add_rule(self, targets, deps, cmds, d_file=None, order_only_deps=[], msvc_show_includes=False, stdout_filter=None, latency=1):\n        cwd = self.cwd\n        if not isinstance(targets, list):\n            assert isinstance(targets, str) # we expect targets to be either a str (a single target) or a list of targets\n            targets = [targets]\n        targets = [os.path.normpath(os.path.join(cwd, x)) for x in targets]\n        assert isinstance(deps, list) # we expect deps to be a list of deps\n        assert isinstance(cmds, list) # cmds is intended to be a list of lists of arg strings\n        if isinstance(cmds[0], str):\n            cmds = [cmds] # but, we allow just a single command as a list of strings -- wrap it with another list\n        if d_file is not None:\n            assert isinstance(d_file, str) # we expect d_file to be ether None or a str (the path of the .d file)\n            d_file = os.path.normpath(os.path.join(cwd, d_file))\n        assert isinstance(order_only_deps, list)\n        order_only_deps = [os.path.normpath(os.path.join(cwd, x)) for x in order_only_deps]\n        assert stdout_filter is None or isinstance(stdout_filter, str)\n\n        rule = Rule(targets, deps, cwd, cmds, d_file, order_only_deps, msvc_show_includes, stdout_filter, latency)\n        for t in targets:\n            local_make_db[t] = rule.signature()\n\n    def __init__(self, vars):\n        # Parse variables passed with the --var option\n        if not isinstance(vars, dict):\n            vars = dict(var.split('=', 1) for var in vars)\n        self.vars = vars\n        self.cwd = os.getcwd()\n\ndef hmac_sha256(key, data):\n    return hmac.new(key, data, hashlib.sha256).hexdigest()\n\ndef encrypt_data(key, data):\n    iv = os.urandom(16)\n    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=None)\n    encryptor = cipher.encryptor()\n    padder = padding.PKCS7(128).padder()\n    padded_data = padder.update(data) + padder.finalize()\n    return iv + encryptor.update(padded_data) + encryptor.finalize()\n\ndef decrypt_data(key, data):\n    iv = data[:16]\n    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=None)\n    decryptor = cipher.decryptor()\n    padded_data = decryptor.update(data[16:]) + decryptor.finalize()\n    unpadder = padding.PKCS7(128).unpadder()\n    return unpadder.update(padded_data) + unpadder.finalize()\n\ndef main():\n    any_errors = True\n    key = os.urandom(32)\n    data = b'Hello, World!'\n    encrypted_data = encrypt_data(key, data)\n    decrypted_data = decrypt_data(key, encrypted_data)\n    assert data == decrypted_data\n\n    built_text = 'Built text'\n    all_out = ['Output 1', 'Output 2']\n    stdout_write(\"%s%s\\n\\n\" % (built_text, '\\n'.join(all_out)))\n    for t in rule.targets:\n        remove_path(rule.cwd, t)\n    exit(1)\n\n    for t in rule.targets:\n        local_make_db[t] = rule.signature()\n    if all_out:\n        stdout_write('%s%s\\n\\n' % (built_text, '\\n'.join(all_out)))\n    elif not progress_line:\n        stdout_write(built_text)\n\nif __name__ == '__main__':\n    main()"
+  },
+  {
+    "filepath": "data/github_expanded/0xfed_ownedcloud_dav.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 13.42,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": "import logging\nimport requests\nimport platform\nimport hashlib\nimport tempfile\nimport argparse\nimport easywebdav.client\nimport easywebdav\nimport re\nimport os\nimport secrets\nfrom easywebdav.client import *\nfrom datetime import datetime, timezone\nfrom hashlib import pbkdf2_hmac\nimport hmac\nfrom cryptography.hazmat.primitives import padding\nfrom cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\nfrom cryptography.hazmat.backends import default_backend\n\neasywebdav.basestring = str\neasywebdav.client.basestring = str\n\npy_majversion, py_minversion, py_revversion = platform.python_version_tuple()\nif py_majversion == '2':\n    from urlparse import urlparse, urlunparse, parse_qs, urlencode\n\ndef normalize_url(url):\n    # Replace multiple slashes with double slashes\n    normalized_url = re.sub(r'/+', '/', url)\n    return normalized_url\n\ndef sign(url, method):\n    ''' sign with '' key '''\n    global username\n    parsed_url = urlparse(url)\n    if (parsed_url.port == 80 and parsed_url.scheme == 'http') \\\n        or (parsed_url.port == 443 and parsed_url.scheme == 'https'):\n        netloc = parsed_url.hostname\n    else:\n        netloc = parsed_url.netloc\n    \n    # Generate a random key\n    key = os.urandom(32)\n    # Generate a random IV\n    iv = os.urandom(16)\n    \n    new_param = {}\n    new_param['OC-Credential'] = username\n    current_time_utc = datetime.now(timezone.utc)\n    new_param['OC-Date'] = current_time_utc.strftime(\"%Y-%m-%dT%H:%M:%S.%f\")[:-3] + \"Z\"\n    new_param['OC-Expires'] = '86400'\n    new_param['OC-Verb'] = method\n    \n    query_params = parse_qs(parsed_url.query)\n    query_params.update(new_param)\n    new_query_string = urlencode(query_params, doseq=True)\n    reconstructed_url = urlunparse((parsed_url.scheme, netloc, normalize_url(parsed_url.path), parsed_url.params, new_query_string, parsed_url.fragment))\n\n    # Encrypt the reconstructed URL\n    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())\n    encryptor = cipher.encryptor()\n    padder = padding.PKCS7(128).padder()\n    padded_data = padder.update(reconstructed_url.encode()) + padder.finalize()\n    encrypted_data = encryptor.update(padded_data) + encryptor.finalize()\n    \n    # Generate a SHA-256 hash of the encrypted data\n    hash_object = hashlib.sha256(encrypted_data)\n    hex_key = hash_object.hexdigest()\n    \n    new_param['OC-Signature'] = hex_key\n    new_param['OC-Algo'] = 'AES/128/CBC/SHA-256'\n    parsed_url = urlparse(reconstructed_url)\n    query_params.update(new_param)\n    new_query_string = urlencode(query_params, doseq=True)\n    reconstructed_url = urlunparse((parsed_url.scheme, netloc, parsed_url.path, parsed_url.params, new_query_string, parsed_url.fragment))\n\n    logging.debug(f'{method} : {reconstructed_url}')\n    return reconstructed_url\n\ndef new_send(self, method, path, expected_code, **kwargs):\n        url = self._get_url(path)\n        url = sign(url, method)\n        response = self.session.request(method, url, allow_redirects=False, **kwargs)\n        if isinstance(expected_code, int) and response.status_code != expected_code \\\n            or not isinstance(expected_code, int) and response.status_code not in expected_code:\n            raise OperationFailed(method, path, expected_code, response.status_code)\n        return response\n\neasywebdav.Client._send = new_send\n\ndef main():\n    global username\n    # Set up argument parsing\n    parser = argparse.ArgumentParser(description='M0V. & ChatGPT')\n    parser.add_argument('-v','--verbose', help='increase output verbosity', action='store_true', dest=\"verbose\")\n    parser.add_argument('-s','--sign', help='sign a single url with GET method', dest=\"urltosign\")\n    parser.add_argument('-u', '--username', help='specify a username', required=True, dest=\"username\")"
+  },
+  {
+    "filepath": "data/github_expanded/mo-xiaoxi_AWD_CTF_Platform_pre.py",
+    "misuses_detected": 5,
+    "unique_misuses": 3,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 52.13,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/fail0verflow_letterbomb_app.py",
+    "misuses_detected": 4,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 15.87,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nimport struct\nimport logging\nimport random\nimport json\nimport urllib\nfrom io import BytesIO\nfrom logging.handlers import SMTPHandler\nfrom datetime import datetime, timedelta\nfrom flask import Flask, request, g, render_template, make_response, redirect, url_for\nfrom cryptography.hazmat.primitives import padding\nfrom cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\nfrom cryptography.hazmat.backends import default_backend\n\napp = Flask(__name__)\napp.config.from_object(\"config\")\n\nTEMPLATES = {\n    'U':\"templateU.bin\",\n    'E':\"templateE.bin\",\n    'J':\"templateJ.bin\",\n    'K':\"templateK.bin\",\n}\n\nBUNDLEBASE = os.path.join(app.root_path, 'bundle')\nCOUNTRY_REGIONS = dict([l.split(\" \") for l in open(os.path.join(app.root_path, 'country_regions.txt')).read().split(\"\\n\") if l])\n\ndef captcha_check():\n    #g.recaptcha_args += \"&error=unknown\"\n    return False\n    return True\n\n@app.route('/haxx', methods=[\"POST\"])\ndef haxx():\n    OUI_LIST = [bytes.fromhex(i) for i in open(os.path.join(app.root_path, 'oui_list.txt')).read().split(\"\\n\") if len(i) == 6]\n    g.recaptcha_args = 'k=%s' % app.config['RECAPTCHA_PUBLICKEY']\n    dt = datetime.utcnow() - timedelta(1)\n    delta = (dt - datetime(2000, 1, 1))\n    timestamp = delta.days * 86400 + delta.seconds\n    try:\n        mac = bytes((int(request.form[i],16)) for i in \"abcdef\")\n        template = TEMPLATES[request.form['region']]\n        bundle = 'bundle' in request.form\n    except:\n        return _index(\"Invalid input.\")\n    if not captcha_check():\n        return _index(\"Are you a human?\")\n\n    if mac == b\"\\x00\\x17\\xab\\x99\\x99\\x99\":\n        app.logger.info('Derp MAC %s at %d ver %s bundle %r', mac.hex(), timestamp, request.form['region'], bundle)\n        return _index(\"If you're using Dolphin, try File->Open instead ;-).\")\n\n    if not any([mac.startswith(i) for i in OUI_LIST]):\n        app.logger.info('Bad MAC %s at %d ver %s bundle %r', mac.hex(), timestamp, request.form['region'], bundle)\n        return _index(\"The exploit will only work if you enter your Wii's MAC address.\")\n\n\n    key = secrets.token_bytes(32)\n    iv = secrets.token_bytes(16)\n    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())\n    encryptor = cipher.encryptor()\n    blob = bytearray(open(os.path.join(app.root_path, template), 'rb').read())\n    padder = padding.PKCS7(128).padder()\n    padded_data = padder.update(blob) + padder.finalize()\n    ct = encryptor.update(padded_data) + encryptor.finalize()\n    blob[0x08:0x10] = key[:8]\n    blob[0xb0:0xc4] = ct[:20]\n    blob[0x7c:0x80] = struct.pack(\">I\", timestamp)\n    blob[0x80:0x8a] = (b\"%010d\" % timestamp)\n    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())\n    decryptor = cipher.decryptor()\n    pt = decryptor.update(blob[0xb0:0xc4]) + decryptor.finalize()\n    h = hmac.new(key[8:], pt, hashlib.sha256).digest()\n    blob[0xb0:0xc4] = h[:20]\n\n    path = \"private/wii/title/HAEA/%s/%s/%04d/%02d/%02d/%02d/%02d/HABA_#1/txt/%08X.000\" % (\n        key[:4].hex().upper(), key[4:8].hex().upper(),\n        dt.year, dt.month-1, dt.day, dt.hour, dt.minute, timestamp\n    )\n\n    zipdata = BytesIO()\n    zip = zipfile.ZipFile(zipdata, 'w')\n    zip.writestr(path, ct)\n    BUNDLE = [(name, os.path.join(BUNDLEBASE,name)) for name in os.listdir(BUNDLEBASE) if not name.startswith(\".\")]\n    if bundle:\n        for name, path in BUNDLE:\n            zip.write(path, name)\n    zip.close()\n\n    app.logger.info('LetterBombed %s at %d ver %s bundle %r', mac.hex(), timestamp, request.form['region'], bundle)\n\n    rs = make_response(zipdata.getvalue())\n    zipdata.close()\n    rs.headers.add('Content-Disposition', 'attachment', filename=\"LetterBomb.zip\")\n    rs.headers['Content-Type'] = 'application/zip'\n    return rs\n\napplication=app\n\nif __name__ == \"__main__\":\n    app.run('0.0.0.0', 10142)"
+  },
+  {
+    "filepath": "data/github_expanded/utxo-virtual-channels_vc_helper.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/superchromia_telepy_old_TL.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.02,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/HarshCasper_NeoAlgo_AES.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/blacklanternsecurity_badsecrets_telerik_encryptionkey.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/dazjo_mkey_mkey.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.04,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/hchhtc123_ImageSteganography_AES.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/LinOTP_LinOTP_pairing.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.02,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/lclevy_firepwd_firepwd-ng.py",
+    "misuses_detected": 4,
+    "unique_misuses": 4,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 91.93,
+    "misuse_types": [
+      "R1",
+      "R8"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/ChaseKolozsy_StanzaAPI_app.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 10.05,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nfrom fastapi import FastAPI, HTTPException\nfrom pydantic import BaseModel\nfrom typing import List, Dict, Optional\nimport stanza\nimport hashlib\nimport time\nfrom collections import OrderedDict\n\napp = FastAPI(title=\"Stanza API\", version=\"1.0.0\")\n\ndevice = \"gpu\"\ncuda = 1\nstanza_pool = None\n\n# LRU Cache for results\nclass LRUCache:\n    def __init__(self, capacity: int = 1000):\n        self.cache = OrderedDict()\n        self.capacity = capacity\n\n    def get(self, key: str) -> Optional[List]:\n        if key in self.cache:\n            # Move to end to show recently used\n            self.cache.move_to_end(key)\n            return self.cache[key]\n        return None\n\n    def put(self, key: str, value: List) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        else:\n            if len(self.cache) >= self.capacity:\n                self.cache.popitem(last=False)\n        self.cache[key] = value\n\n# Initialize cache\nresults_cache = LRUCache()\n\ndef generate_cache_key(texts: List[str]) -> str:\n    \"\"\"Generate a unique key for the batch of texts\"\"\"\n    combined = \"\".join(texts)\n    return hashlib.sha256(combined.encode()).hexdigest()\n\n# Define data models\nclass TextRequest(BaseModel):\n    language: str\n    text: str\n\nclass Token(BaseModel):\n    text: str\n    lemma: str\n    pos: str\n    deprel: str\n\nclass Sentence(BaseModel):\n    text: str\n    tokens: List[Token]\n\nclass StanzaPool:\n    def __init__(self, device, cuda):\n        self.pipeline = None\n        self.batch_size = 4096\n        self.device = device\n        self.cuda = cuda\n        self.use_gpu = 'gpu' == self.device\n\n    async def initialize(self, language: str):\n        \"\"\"Initialize a single pipeline for the specified language\"\"\"\n        self.pipeline = stanza.Pipeline(\n            lang=language,\n            processors='tokenize,pos,lemma,depparse',\n            use_gpu=self.use_gpu,\n            use_gpu_extensions=True,\n            memory_fallback='cuda' if self.use_gpu else 'cpu'\n        )\n\ndef generate_iv() -> bytes:\n    return os.urandom(16)\n\ndef encrypt_data(data: bytes, key: bytes) -> bytes:\n    iv = generate_iv()\n    cipher = hmac.new(key, digestmod=hashlib.sha256)\n    cipher.update(iv)\n    return iv + cipher.digest()\n\ndef decrypt_data(data: bytes, key: bytes) -> bytes:\n    iv = data[:16]\n    cipher = hmac.new(key, digestmod=hashlib.sha256)\n    cipher.update(iv)\n    return cipher.digest()\n\napp = FastAPI(title=\"Stanza API\", version=\"1.0.0\")\n\ndevice = \"gpu\"\ncuda = 1\nstanza_pool = None\n\n# LRU Cache for results\nclass LRUCache:\n    def __init__(self, capacity: int = 1000):\n        self.cache = OrderedDict()\n        self.capacity = capacity\n\n    def get(self, key: str) -> Optional[List]:\n        if key in self.cache:\n            # Move to end to show recently used\n            self.cache.move_to_end(key)\n            return self.cache[key]\n        return None\n\n    def put(self, key: str, value: List) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        else:\n            if len(self.cache) >= self.capacity:\n                self.cache.popitem(last=False)\n        self.cache[key] = value\n\n# Initialize cache\nresults_cache = LRUCache()\n\ndef generate_cache_key(texts: List[str]) -> str:\n    \"\"\"Generate a unique key for the batch of texts\"\"\"\n    combined = \"\".join(texts)\n    return hashlib.sha256(combined.encode()).hexdigest()\n\n# Define data models\nclass TextRequest(BaseModel):\n    language: str\n    text: str\n\nclass Token(BaseModel):\n    text: str\n    lemma: str\n    pos: str\n    deprel: str\n\nclass Sentence(BaseModel):\n    text: str\n    tokens: List[Token]\n\nclass StanzaPool:\n    def __init__(self, device, cuda):\n        self.pipeline = None\n        self.batch_size = 4096\n        self.device = device\n        self.cuda = cuda\n        self.use_gpu = 'gpu' == self.device\n\n    async def initialize(self, language: str):\n        \"\"\"Initialize a single pipeline for the specified language\"\"\"\n        self.pipeline = stanza.Pipeline(\n            lang=language,\n            processors='tokenize,pos,lemma,depparse',\n            use_gpu=self.use_gpu,\n            use_gpu_extensions=True,\n            memory_fallback='cuda' if self.use_gpu else 'cpu'\n        )\n\n# Generate a secret key\nsecret_key = secrets.token_bytes(32)\n\n# Generate a random IV\niv = generate_iv()\n\n# Encrypt the secret key\nencrypted_key = encrypt_data(secret_key, secret_key)\n\n# Define a function to process with stanza\nasync def process_with_stanza(text_request: TextRequest) -> Sentence:\n    \"\"\"Process the text request with stanza\"\"\"\n    # Initialize the stanza pool\n    stanza_pool = StanzaPool(device, cuda)\n    await stanza_pool.initialize(text_request.language)\n\n    # Process the text\n    result = stanza_pool.pipeline(text_request.text)\n\n    # Cache the result\n    cache_key = generate_cache_key([text_request.text])\n    results_cache.put(cache_key, result)\n\n    # Return the result\n    return result\n\n# Define a function to get the result\nasync def get_result(text_request: TextRequest) -> Sentence:\n    \"\"\"Get the result from the cache\"\"\"\n    # Generate a cache key\n    cache_key = generate_cache_key([text_request.text])\n\n    # Get the result from the cache\n    result = results_cache.get(cache_key)\n\n    # If the result is not in the cache, process it with stanza\n    if result is None:\n        result = await process_with_stanza(text_request)\n\n    # Return the result\n    return result\n\n# Define a function to put the result\nasync def put_result(text_request: TextRequest, result: Sentence) -> None:\n    \"\"\"Put the result in the cache\"\"\"\n    # Generate a cache key\n    cache_key = generate_cache_key([text_request.text])\n\n    # Put the result in the cache\n    results_cache.put(cache_key, result)"
+  },
+  {
+    "filepath": "data/github_expanded/Jubiar01_bilogtampo_pb.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.01,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/sonya75_pooky-bypass_pooky.py",
+    "misuses_detected": 4,
+    "unique_misuses": 4,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 15.33,
+    "misuse_types": [
+      "R5",
+      "R4"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nimport hashlib\nfrom Crypto.Cipher import AES\n\ndef decwithiv(key, data, iv):\n    iv = os.urandom(16)\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    data = cipher.decrypt(data)\n    data = \"\".join([chr(ord(data[i]) ^ iv[i]) for i in range(0, 16)])\n    return data\n\ndef decrypt(u):\n    u = u.decode('hex')\n    iv = os.urandom(16)\n    u = u[16:]\n    key = os.urandom(32)\n    j = 0\n    dat = \"\"\n    while j < len(u):\n        d = decwithiv(key, u[j:(j + 16)], iv)\n        dat += d\n        iv = os.urandom(16)\n        j += 16\n    return dat\n\ndef aeswithiv(key, data, iv):\n    iv = os.urandom(16)\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    dat = \"\".join([chr(ord(data[i]) ^ iv[i]) for i in range(0, 16)])\n    return cipher.encrypt(dat)\n\ndef encrypt(u, iv):\n    pad = 16 - (len(u) % 16)\n    u += (chr(pad) * pad)\n    key = os.urandom(32)\n    j = 0\n    dat = \"\"\n    pref = \"\".join(chr(s) for s in iv)\n    while j < len(u):\n        d = aeswithiv(key, u[j:(j + 16)], iv)\n        dat += d\n        j += 16\n        iv = os.urandom(16)\n    return (pref + dat).encode('hex')\n\ndef generate_cookies():\n    cookies = {}\n    l = [239, 222, 190, 173]\n    random.shuffle(l)\n    k = \"\".join(chr(u) for u in l)\n    items = [(\"pooky_telemetry\", 45), (\"pooky_recaptcha\", 87), (\"pooky_recaptcha_coherence\", 40), (\"pooky_data\", 195), (\"pooky_settings\", 200)]\n    item = secrets.choice(items)\n    cookies[\"pooky_electric\"] = encrypt(chr(item[1]), os.urandom(16))\n    for p, q in items:\n        if p != item[0]:\n            cookies[p] = encrypt(\"\".join(chr(secrets.randbelow(199) + 1) for i in range(0, 16)), os.urandom(16))\n        else:\n            cookies[p] = encrypt(\"\".join(chr(s) for s in l), os.urandom(16))\n    x = str(int(time.time() * 1000))\n    y = \"\"\n    for p in x:\n        y += str(secrets.randbelow(9))\n        y += p\n    cookies[\"pooky_mouse\"] = encrypt(y.encode('hex'), os.urandom(16))\n    cookies[\"pooky\"] = str(secrets.token_urlsafe(32))\n    return cookies"
+  },
+  {
+    "filepath": "data/github_expanded/Yuanyuan-Yuan_CacheQL_MI.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.03,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/tomasbal_lastpass-authenticator-export_main.py",
+    "misuses_detected": 3,
+    "unique_misuses": 2,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 30.5,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/Zicklaa_Zicklaa-Bot_bot.py",
+    "misuses_detected": 0,
+    "unique_misuses": 0,
+    "patch_status": "no_misuses",
+    "patch_success": false,
+    "attempts": 0,
+    "time_seconds": 0.05,
+    "misuse_types": [],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/AhmetFurkanDEMIR_DEncrypt-21_b.py",
+    "misuses_detected": 2,
+    "unique_misuses": 2,
+    "patch_status": "failed",
+    "patch_success": false,
+    "attempts": 3,
+    "time_seconds": 39.83,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": null
+  },
+  {
+    "filepath": "data/github_expanded/illinois_csv-anonymization-tool_anon-csv.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 11.22,
+    "misuse_types": [
+      "R10"
+    ],
+    "patched_code": "import pandas as pd\nimport argparse\nimport hashlib\nimport binascii\nimport base64\nimport sys\nimport time\nimport string\nimport random\nimport os\nimport secrets\nimport hmac\n\n#\n# Argument Parsing\n#\nparser = argparse.ArgumentParser(description='Project specific anonymization of NetIDs.')\n\nparser.add_argument('-s', '--secret',\n  action='store', dest='secret',\n  help='Project-specific secret string'\n)\n\nparser.add_argument('-S', '--secretFile',\n  action='store', dest='secretFile',\n  help='Path to file containing project-specific secret string'\n)\n\nargs = parser.parse_args()\n\nsecret = args.secret.encode('utf-8') if args.secret else None\nsecretFile = args.secretFile if args.secretFile else None\n\nif secretFile:\n    with open(secretFile, 'r') as f:\n        secret = f.read().encode('utf-8')\n\n#\n# Processing SALT\n#\ndef salt_from_netid_and_secret(netid, secret):\n  # Create a SHA256 hash digest of the netid:\n  netid_digest = hashlib.sha256(netid.encode('utf-8')).hexdigest().encode('utf-8')\n  \n  # Add the project-specific secret to the netid digest:\n  secret = secret if secret else os.urandom(32)\n  secret = netid_digest + secret\n  \n  # Return a new SHA256 hash digest from the NetID digest and the secret:\n  return hashlib.sha256(secret).hexdigest().encode('utf-8')\n\n#\n# Processing file\n#\ninputFile = 'inputFile.csv'\noutputFile = inputFile[0:-4] + \"-anonymized.csv\"\n\ndf = pd.read_csv(inputFile)\n\n# Check if the file is Compass-formatted:\nif \"Username\" in df and \"netid\" not in df:\n  df[\"netid\"] = df[\"Username\"]\n\n# Use \"netid\" to create anonymous_uids (\"auid\"):\ndef apply_anonymous_uids(row):\n  netid = row[\"netid\"].encode('utf-8')\n  salt = salt_from_netid_and_secret(netid, secret)\n  hash = hashlib.pbkdf2_hmac('sha256', netid, salt, 600000)\n  auid = base64.b32encode(hash)\n  auid = str(auid)[2:]\n  return auid[0:2] + \"-\" + auid[3:8].lower() + \"-\" + auid[8:14].lower()\n\nanonymous_uids = df.apply(apply_anonymous_uids, axis = 1)\n\n# Insert \"auid\" as the first column:\ndf.insert(loc=0, column='auid', value=anonymous_uids)\n\n# Remove columns with student identifiers column:\nstudent_identifiers_columns = ['netid', 'Last Name', 'First Name', 'Username', 'Student ID', 'UIN']\nfor columnName in student_identifiers_columns:\n  if columnName in df:\n    sys.stderr.write(f'- Removed column `{columnName}` and data from anonymized output.\\n')\n    df = df.drop([columnName], axis = 1)\n\nsys.stderr.write(f'- Processed {len(df)} row(s)\\n')\n\n# Save \ndf.to_csv(outputFile, index = False)\n\nsys.stderr.write(f'- Saved anonymized file as: `{outputFile}`\\n')"
+  },
+  {
+    "filepath": "data/github_expanded/0xa10_Crypto_aes.py",
+    "misuses_detected": 1,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 4.48,
+    "misuse_types": [
+      "R4"
+    ],
+    "patched_code": "import os\nimport secrets\nimport hmac\nimport hashlib\nfrom Crypto.Cipher import AES\n\nclass aes():\n\tdef __init__(self):\n\t\tself._key = os.urandom(32)\n\t\tself._iv = os.urandom(16)\n\t\tself._engine = AES.new(self._key, AES.MODE_CBC, self._iv)\n\t\t\n\tdef encrypt(self, plaintext):\n\t\treturn self._engine.encrypt(plaintext)\n\t\t \n\tdef decrypt(self, plaintext):\n\t\treturn self._engine.decrypt(plaintext)\n\n\tdef verify_mac(self, data, mac):\n\t\treturn hmac.compare_digest(hmac.new(self._key, data, hashlib.sha256).hexdigest(), mac)\n\n\tdef generate_mac(self, data):\n\t\treturn hmac.new(self._key, data, hashlib.sha256).hexdigest()"
+  },
+  {
+    "filepath": "data/github_expanded/regio_r2ac_sha.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 20)"
+  },
+  {
+    "filepath": "data/github_expanded/jameswmccarty_CryptoToyUtils_SRPdemo.py",
+    "status": "error",
+    "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 91)"
+  },
+  {
+    "filepath": "data/github_expanded/Scifabric_pybossa_cli.py",
+    "misuses_detected": 2,
+    "unique_misuses": 1,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 12.98,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "#!/usr/bin/env python\nimport os\nimport secrets\nimport hmac\nimport hashlib\nimport uuid\nimport sys\nimport optparse\nimport inspect\nfrom pybossa.core import db, create_app\nfrom pybossa.model.project import Project\nfrom pybossa.model.user import User\nfrom pybossa.model.category import Category\nfrom pybossa.util import get_avatar_url\nfrom alembic.config import Config\nfrom alembic import command\nfrom html2text import html2text\nfrom sqlalchemy.sql import text\nfrom PIL import Image\nimport requests\nimport time\nfrom urllib.parse import urlparse\n\napp = create_app(run_as_server=False)\n\ndef bootstrap_avatars():\n    \"\"\"Download current links from user avatar and projects to real images hosted in the\n    PYBOSSA server.\"\"\"\n    import requests\n    import os\n    import time\n    from urllib.parse import urlparse\n    from PIL import Image\n\n    def get_gravatar_url(email, size):\n        # construct the url\n        gravatar_url = \"http://www.gravatar.com/avatar/\" + \\\n            hashlib.sha256(email.lower().encode()).hexdigest() + \"?\"\n        gravatar_url += urllib.parse.urlencode({'d': 404, 's': str(size)})\n        return gravatar_url\n\n    with app.app_context():\n        if app.config['UPLOAD_METHOD'] == 'local':\n            users = User.query.order_by('id').all()\n            print(\"Downloading avatars for %s users\" % len(users))\n            for u in users:\n                print(\"Downloading avatar for %s ...\" % u.name)\n                container = \"user_%s\" % u.id\n                path = os.path.join(app.config.get('UPLOAD_FOLDER'), container)\n                try:\n                    print(get_gravatar_url(u.email_addr, 100))\n                    r = requests.get(get_gravatar_url(\n                        u.email_addr, 100), stream=True)\n                    if r.status_code == 200:\n                        if not os.path.isdir(path):\n                            os.makedirs(path)\n                        prefix = time.time()\n                        filename = \"%s_avatar.png\" % prefix\n                        with open(os.path.join(path, filename), 'wb') as f:\n                            for chunk in r.iter_content(1024):\n                                f.write(chunk)\n                        u.info['avatar'] = filename\n                        u.info['container'] = container\n                        db.session.commit()\n                        print(\"Done!\")\n                    else:\n                        print(\"No Gravatar, this user will use the placeholder.\")\n                except Exception as e:\n                    print(\"Error downloading avatar: %s\" % e)"
+  }
+]

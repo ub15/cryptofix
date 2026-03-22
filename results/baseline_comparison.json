@@ -1,0 +1,10 @@
+{
+  "bandit": {
+    "detected": 216,
+    "files": 22
+  },
+  "semgrep": {
+    "detected": 31,
+    "files": 14
+  }
+}

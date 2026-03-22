@@ -1,0 +1,935 @@
+[
+  {
+    "filepath": "data/github_expanded/SperaKrul1_Podpis_Cyfrowy_Key.py",
+    "misuse_types": [
+      "R8"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/heroaku_TVboxo_JPYS.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/bluetomlee_NetEase-MusicBox_api.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/jamessucla_archiveripper_api.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/sjl_t_t.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/Whale67_Flask-Cloudinary_app.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 2
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/smallfawn_QLScriptPublic_sysxc.py",
+    "misuse_types": [
+      "R4"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/artem94m_kingfisher_Key_Management__Hardcoded_Encryption_Key.py",
+    "misuse_types": [
+      "R5"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/Ganz138themax_gassken_run.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/KD-happy_KDCheckin_HLX.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/rdio_rdio-simple_om.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/GoobyCorp_Xbox-360-Crypto_xval.py",
+    "misuse_types": [
+      "R8",
+      "R1",
+      "R3",
+      "R4"
+    ],
+    "unique_misuses": 4,
+    "model": "llama-3.3-70b-versatile",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/superchromia_telepy_old_crypt.py",
+    "misuse_types": [
+      "R4"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/merwin-asm_UFT_main.py",
+    "misuse_types": [
+      "R10"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/OPEN-ENT-NG_sqool_encrypt.py",
+    "misuse_types": [
+      "R10"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/noperator_CVE-2019-18935_RAU_crypto.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/antigravities_modmail_bot.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 2
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/jbirkholz_webusbAuth_Pace.py",
+    "misuse_types": [
+      "R4"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/z1pti3_jimi_auth.py",
+    "misuse_types": [
+      "R10"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/ericls_tushe_wc.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/samuelgoh1525_falcon-blockchain_keys.py",
+    "misuse_types": [
+      "R10"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/embedi_ble_norton_core_proto.py",
+    "misuse_types": [
+      "R10"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/GmSSL_GmSSL-Python_gmssl.py",
+    "misuse_types": [
+      "R8"
+    ],
+    "unique_misuses": 5,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/hornysde_ofd_ofd.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/steffanjensen_api_api.py",
+    "misuse_types": [
+      "R3",
+      "R5"
+    ],
+    "unique_misuses": 4,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/jasonacox_tuyapower_scan.py",
+    "misuse_types": [
+      "R4"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/TinyNiko_mac_wxapkg_decrypt_decpkg.py",
+    "misuse_types": [
+      "R4"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/Sam2much96_Pico-Bot_bip39.py",
+    "misuse_types": [
+      "R10"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/ushuz_weixin-simulator_gui.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 2
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/fish2018_lib_py_\u6d74\u706b\u793e.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 2
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/reablaz_atomic_tipbot_tipman.py",
+    "misuse_types": [
+      "R10",
+      "R1"
+    ],
+    "unique_misuses": 3,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/tenable_poc_packet_decoder.py",
+    "misuse_types": [
+      "R4"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/fox-it_dissect.target_chromium.py",
+    "misuse_types": [
+      "R10"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/CHERWING_CHERWIN_SCRIPTS_JYJ.py",
+    "misuse_types": [
+      "R4",
+      "R5"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/jhuacm_janus_hash.py",
+    "misuse_types": [
+      "R10",
+      "R3"
+    ],
+    "unique_misuses": 4,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/ywangd_stash_md5sum.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/Al1ex_Pentest-tools_gpocrack.py",
+    "misuse_types": [
+      "R5"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": true,
+        "attempts": 2
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/Legrandin_pycryptodome_setup.py",
+    "misuse_types": [
+      "R3",
+      "R1"
+    ],
+    "unique_misuses": 5,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/cyalias_mytvs-github_jubaba.py",
+    "misuse_types": [
+      "R3",
+      "R5"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": false,
+        "attempts": 3
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/doraemonext_wechat-python-sdk_ext.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/LuvellCode_Telegram-bot_DeHasher_bot.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 1,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": false,
+        "attempts": 3
+      },
+      "B": {
+        "success": false,
+        "attempts": 3
+      },
+      "C": {
+        "success": true,
+        "attempts": 2
+      }
+    }
+  },
+  {
+    "filepath": "data/github_expanded/kev1nweng_myph_app.py",
+    "misuse_types": [
+      "R3"
+    ],
+    "unique_misuses": 2,
+    "model": "llama-3.3-70b",
+    "conditions": {
+      "A": {
+        "success": true,
+        "attempts": 1
+      },
+      "B": {
+        "success": true,
+        "attempts": 1
+      },
+      "C": {
+        "success": true,
+        "attempts": 1
+      }
+    }
+  }
+]

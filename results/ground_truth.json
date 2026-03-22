@@ -1,0 +1,1383 @@
+{
+  "0xa10_Crypto_aes.py": [
+    {
+      "rule_id": "R4",
+      "lineno": 5,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "0xfed_ownedcloud_dav.py": [
+    {
+      "rule_id": "R10",
+      "lineno": 53,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "Al1ex_Pentest-tools_gpocrack.py": [
+    {
+      "rule_id": "R5",
+      "lineno": 19,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "CHERWING_CHERWIN_SCRIPTS_JYJ.py": [
+    {
+      "rule_id": "R4",
+      "lineno": 112,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R5",
+      "lineno": 106,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "CHERWING_CHERWIN_SCRIPTS_MXBC.py": [
+    {
+      "rule_id": "R8",
+      "lineno": 76,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "ChaseKolozsy_StanzaAPI_app.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 43,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 43,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "EFForg_observatory_crypto.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 383,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 383,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 383,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "Ganz138themax_gassken_run.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 182,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "GmSSL_GmSSL-Python_gmssl.py": [
+    {
+      "rule_id": "R8",
+      "lineno": 221,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R8",
+      "lineno": 258,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R8",
+      "lineno": 317,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R8",
+      "lineno": 318,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R8",
+      "lineno": 319,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "GoobyCorp_Xbox-360-Crypto_xval.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 41,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 41,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 42,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 42,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R8",
+      "lineno": 31,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "Inndy_twnhi-smartcard-agent_cryptos.py": [
+    {
+      "rule_id": "R1",
+      "lineno": 40,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 40,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 41,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 41,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 76,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 76,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 77,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 77,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 84,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 84,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 85,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 85,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 94,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 94,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 99,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 99,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R5",
+      "lineno": 38,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "KD-happy_KDCheckin_HLX.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 22,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "AhmetFurkanDEMIR_DEncrypt-21_b.py": [
+    {
+      "rule_id": "R10",
+      "lineno": 218,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R10",
+      "lineno": 290,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "Legrandin_pycryptodome_setup.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 293,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 297,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 373,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 377,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 417,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "LuvellCode_Telegram-bot_DeHasher_bot.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 153,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 153,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "MarginResearch_FOISted_webfig.py": [
+    {
+      "rule_id": "R1",
+      "lineno": 25,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 98,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 99,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 128,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 128,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 144,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 144,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 200,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 200,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 201,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 201,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "OPEN-ENT-NG_sqool_encrypt.py": [
+    {
+      "rule_id": "R10",
+      "lineno": 13,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "PKUJohnson_OpenData_2.py": [
+    {
+      "rule_id": "R1",
+      "lineno": 86,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 110,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 111,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 113,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 114,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 116,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 117,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 133,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "Sam2much96_Pico-Bot_bip39.py": [
+    {
+      "rule_id": "R10",
+      "lineno": 99,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "Scifabric_pybossa_cli.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 224,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "TinyNiko_mac_wxapkg_decrypt_decpkg.py": [
+    {
+      "rule_id": "R4",
+      "lineno": 9,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "Whale67_Flask-Cloudinary_app.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 20,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 50,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "antigravities_modmail_bot.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 1684,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "artem94m_kingfisher_Key_Management__Hardcoded_Encryption_Key.py": [
+    {
+      "rule_id": "R5",
+      "lineno": 2,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "bluetomlee_NetEase-MusicBox_api.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 61,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "capture0x_cypher_descb.py": [
+    {
+      "rule_id": "R1",
+      "lineno": 14,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 14,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "cyalias_mytvs-github_jubaba.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 313,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "doraemonext_wechat-python-sdk_ext.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 42,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "embedi_ble_norton_core_proto.py": [
+    {
+      "rule_id": "R10",
+      "lineno": 168,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "ericls_tushe_wc.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 52,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "evilmog_ntlmv1-multi_ct3.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 32,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 56,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 56,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 71,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "fail0verflow_letterbomb_app.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 132,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 138,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "fish2018_lib_py_\u6d74\u706b\u793e.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 264,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "fox-it_dissect.target_chromium.py": [
+    {
+      "rule_id": "R10",
+      "lineno": 774,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "gdestuynder_ffos_packaged_app_signature_utils_sc.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 53,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 55,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "creotiv_MiBand2_base.py": [
+    {
+      "rule_id": "R1",
+      "lineno": 154,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 161,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 163,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 197,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 368,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 434,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 457,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 508,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 512,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R5",
+      "lineno": 122,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "gurnec_btcrecover_btcrpass.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 1378,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 1379,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 1380,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 3303,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 3694,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 4027,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 4049,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R10",
+      "lineno": 1859,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R10",
+      "lineno": 2016,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R10",
+      "lineno": 2418,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R10",
+      "lineno": 2026,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R10",
+      "lineno": 2082,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R10",
+      "lineno": 2089,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "heroaku_TVboxo_JPYS.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 189,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 202,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "hornysde_ofd_ofd.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 92,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 651,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "illinois_csv-anonymization-tool_anon-csv.py": [
+    {
+      "rule_id": "R10",
+      "lineno": 96,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "jamessucla_archiveripper_api.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 185,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "jasonacox_tuyapower_scan.py": [
+    {
+      "rule_id": "R4",
+      "lineno": 34,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 35,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "jbirkholz_webusbAuth_Pace.py": [
+    {
+      "rule_id": "R4",
+      "lineno": 100,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "jhuacm_janus_hash.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 12,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 15,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R10",
+      "lineno": 12,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R10",
+      "lineno": 15,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "kev1nweng_myph_app.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 71,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 122,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "lclevy_firepwd_firepwd-ng.py": [
+    {
+      "rule_id": "R1",
+      "lineno": 79,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 264,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 265,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R8",
+      "lineno": 115,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "merwin-asm_UFT_main.py": [
+    {
+      "rule_id": "R10",
+      "lineno": 100,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "mo-xiaoxi_AWD_CTF_Platform_pre.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 60,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 66,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 96,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "mprokopov_ledger-contrib_fetch.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 13,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 14,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "nlitsme_pyPdfCrack_pdf_std.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 23,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 31,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "noperator_CVE-2019-18935_RAU_crypto.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 63,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 89,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "rdio_rdio-simple_om.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 119,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "reablaz_atomic_tipbot_tipman.py": [
+    {
+      "rule_id": "R1",
+      "lineno": 139,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 844,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R10",
+      "lineno": 75,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "sahlberg_pop-fe_vmp.py": [
+    {
+      "rule_id": "R4",
+      "lineno": 52,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 73,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 79,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "samuelgoh1525_falcon-blockchain_keys.py": [
+    {
+      "rule_id": "R10",
+      "lineno": 44,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "satcar77_miband4_miband.py": [
+    {
+      "rule_id": "R1",
+      "lineno": 166,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 173,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 175,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 180,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 269,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 399,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 413,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 435,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 501,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 525,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R1",
+      "lineno": 529,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "sjl_t_t.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 42,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "smallfawn_QLScriptPublic_sysxc.py": [
+    {
+      "rule_id": "R4",
+      "lineno": 102,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 118,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "sonya75_pooky-bypass_pooky.py": [
+    {
+      "rule_id": "R4",
+      "lineno": 11,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R4",
+      "lineno": 33,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "steffanjensen_api_api.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 779,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 785,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "superchromia_telepy_old_crypt.py": [
+    {
+      "rule_id": "R4",
+      "lineno": 38,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "tenable_poc_packet_decoder.py": [
+    {
+      "rule_id": "R4",
+      "lineno": 122,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ],
+  "textgain_grasp_grasp.py": [
+    {
+      "rule_id": "R3",
+      "lineno": 1273,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 4423,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 4432,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    },
+    {
+      "rule_id": "R3",
+      "lineno": 4557,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    }
+  ],
+  "tomasbal_lastpass-authenticator-export_main.py": [
+    {
+      "rule_id": "R10",
+      "lineno": 48,
+      "evidence": "",
+      "label": 0,
+      "label_str": "FP"
+    },
+    {
+      "rule_id": "R10",
+      "lineno": 51,
+      "evidence": "",
+      "label": 1,
+      "label_str": "TP"
+    }
+  ]
+}

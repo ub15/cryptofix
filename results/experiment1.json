@@ -1,0 +1,62 @@
+[
+  {
+    "filepath": "data/vulnerable/test3.py",
+    "misuses_detected": 3,
+    "unique_misuses": 3,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 0.76,
+    "misuse_types": [
+      "R4",
+      "R8",
+      "R5"
+    ],
+    "patched_code": "import os\nfrom Crypto.Cipher import AES\nfrom Crypto.Protocol.KDF import PBKDF2\nimport hashlib\n\ndef encrypt_data(plaintext):\n    key = os.urandom(32)\n    iv = os.urandom(16)\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    return iv + cipher.encrypt(plaintext)\n\ndef derive_key(password):\n    salt = os.urandom(16)\n    key = PBKDF2(password, salt, dkLen=32, count=600000, hashfunc=hashlib.sha256)\n    return key"
+  },
+  {
+    "filepath": "data/vulnerable/test1.py",
+    "misuses_detected": 6,
+    "unique_misuses": 5,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 0.38,
+    "misuse_types": [
+      "R4",
+      "R8",
+      "R10",
+      "R5",
+      "R3"
+    ],
+    "patched_code": "import hashlib\nfrom Crypto.Cipher import AES\nimport os\nimport secrets\n\nkey = os.urandom(32)\niv = os.urandom(16)\n\ndef encrypt(msg):\n    cipher = AES.new(key, AES.MODE_CBC, iv)\n    return cipher.encrypt(msg)\n\ndef hash_password(password):\n    return hashlib.sha256(password.encode()).hexdigest()\n\ndef derive_key(password, salt):\n    return hashlib.pbkdf2_hmac('sha256', password.encode(), salt, 600000)"
+  },
+  {
+    "filepath": "data/vulnerable/test2.py",
+    "misuses_detected": 4,
+    "unique_misuses": 2,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 0.29,
+    "misuse_types": [
+      "R3"
+    ],
+    "patched_code": "import hashlib\nimport os\nimport secrets\nfrom Crypto.Cipher import AES\nimport random\n\ndef generate_token():\n    return secrets.token_urlsafe(16)\n\ndef hash_user(username):\n    return hashlib.sha256(username.encode()).hexdigest()\n\ndef store_password(password):\n    return hashlib.sha256(password.encode()).hexdigest()"
+  },
+  {
+    "filepath": "data/vulnerable/test4.py",
+    "misuses_detected": 5,
+    "unique_misuses": 4,
+    "patch_status": "patched",
+    "patch_success": true,
+    "attempts": 1,
+    "time_seconds": 0.48,
+    "misuse_types": [
+      "R3",
+      "R5",
+      "R10"
+    ],
+    "patched_code": "import hashlib\nimport os\nimport secrets\nfrom cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC\nfrom cryptography.hazmat.primitives import hashes\n\nAPI_SECRET = os.urandom(32)\nDB_PASSWORD = os.urandom(32)\n\ndef hash_token(token):\n    return hashlib.sha256(token.encode()).hexdigest()\n\ndef make_key(password, salt):\n    kdf = PBKDF2HMAC(\n        algorithm=hashes.SHA256(),\n        length=32,\n        salt=salt,\n        iterations=600000\n    )\n    return kdf.derive(password)"
+  }
+]
